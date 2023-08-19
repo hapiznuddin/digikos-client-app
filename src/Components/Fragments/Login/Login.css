@@ -1,0 +1,33 @@
+.bgImage {
+    background-image: url('/public/bg-login.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right;
+
+    
+    height: 24vh;
+    width: 100vw;
+}
+
+@media (min-width: 768px) {
+    .bgImage {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    
+    height: 100vh;
+    width: 400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bgImage {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 100vh;
+    width: 1000px;
+    }
+}
