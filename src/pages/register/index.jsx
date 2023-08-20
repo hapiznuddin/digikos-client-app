@@ -1,4 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import RegisterPage from "../../Components/Fragments/Register/RegistPage";
 
 const Register = () => {
   return (
@@ -10,6 +11,7 @@ const Register = () => {
       </Helmet>
       <div>
       </div>
+      <RegisterPage/>
     </HelmetProvider>
   );
 };

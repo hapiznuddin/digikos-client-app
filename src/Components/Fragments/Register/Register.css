@@ -1,5 +1,5 @@
-.bgImage {
-  background-image: url("/bg-login.png");
+.bgImageReg {
+  background-image: url("/bg-register.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top right;
@@ -8,7 +8,7 @@
 }
 
 @media (min-width: 768px) {
-  .bgImage {
+  .bgImageReg {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: left center;
@@ -18,7 +18,7 @@
 }
 
 @media (min-width: 1024px) {
-  .bgImage {
+  .bgImageReg {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: left center;

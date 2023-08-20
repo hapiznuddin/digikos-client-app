@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ButtonPrimary from "../../Elements/Button";
 import InputField from "../../Elements/Input";
 import "./Login.css";
@@ -42,8 +43,14 @@ const LoginPage = () => {
           </div>
           <ButtonPrimary className="text-lg font-semibold">Login</ButtonPrimary>
           <div className="flex justify-center gap-1">
-            <p className="text-neutral-500 text-sm md:text-base">Belum punya akun?</p>
-            <p className="text-primary-600 font-medium text-sm md:text-base hover:text-primary-400 cursor-pointer hover:underline">Daftar</p>
+            <p className="text-neutral-500 text-sm md:text-base">
+              Belum punya akun?
+            </p>
+            <p className="text-primary-600 font-medium text-sm md:text-base hover:text-primary-400 cursor-pointer hover:underline">
+            <Link to={"/register"}>
+                Daftar
+              </Link>
+            </p>
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-2 mt-6 text-xs text-neutral-400 md:text-sm lg:flex-row">
