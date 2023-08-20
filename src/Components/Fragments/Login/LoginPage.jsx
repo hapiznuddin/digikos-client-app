@@ -4,9 +4,9 @@ import "./Login.css";
 
 const LoginPage = () => {
   return (
-    <div className="flex flex-col md:flex-row md:gap-6 lg:flex-row">
-      <div className="flex flex-col gap-10 justify-between w-full px-6 mt-16 mb-6 md:mt-24 md:w-5/6 md:px-24 lg:px-64">
-        <div className="flex flex-col gap-6">
+    <div className="flex flex-col md:flex-row lg:flex-row">
+      <div className="flex flex-col gap-10 justify-between items-center w-full px-6 mt-16 mb-6 md:mt-24 md:w-5/6 md:px-24 lg:w-3/4 ">
+        <div className="flex flex-col gap-6 w-full lg:w-3/5 ">
           <div className="flex justify-center mb-12">
             <img
               src="/digikos.png"
@@ -38,15 +38,15 @@ const LoginPage = () => {
               minLength={8}
               required={true}
             />
-            <p className="text-neutral-400 text-sm">Lupa Password</p>
+            <p className="text-neutral-400 text-sm ">Lupa Password</p>
           </div>
           <ButtonPrimary className="text-lg font-semibold">Login</ButtonPrimary>
           <div className="flex justify-center gap-1">
-            <p className="text-neutral-500">Belum punya akun?</p>
-            <p className="text-primary-600 font-medium">Daftar</p>
+            <p className="text-neutral-500 text-sm md:text-base">Belum punya akun?</p>
+            <p className="text-primary-600 font-medium text-sm md:text-base hover:text-primary-400 cursor-pointer hover:underline">Daftar</p>
           </div>
         </div>
-        <div className="flex justify-center gap-3 text-sm text-neutral-400">
+        <div className="flex flex-col justify-center items-center gap-2 mt-6 text-xs text-neutral-400 md:text-sm lg:flex-row">
           <p>&copy; 2023 digikos. All Right Reserved </p>
           <p>Sistem Manajemen Kost</p>
         </div>
