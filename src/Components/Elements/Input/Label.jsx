@@ -8,7 +8,7 @@ const Label = ({ name, children }) => {
   return (
     <label
       htmlFor={name}
-      className="block text-lg font-medium text-neutral-800 md:text-xl md:font-medium"
+      className="label block text-lg font-medium text-neutral-800 md:text-xl md:font-medium"
     >
       {children}
     </label>

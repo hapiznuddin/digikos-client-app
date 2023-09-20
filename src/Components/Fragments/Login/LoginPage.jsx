@@ -41,7 +41,7 @@ const LoginPage = () => {
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4 w-full md:gap-5 lg:gap-6">
+          <div className="flex flex-col gap-4 w-full md:gap-4">
             <InputField
               label="Email"
               type="email"
@@ -61,7 +61,7 @@ const LoginPage = () => {
             />
             <p className="text-neutral-400 text-sm ">Lupa Password</p>
           </div>
-          <ButtonPrimary type="submit" className="text-lg font-semibold w-full mt-6">Login</ButtonPrimary>
+          <ButtonPrimary type="submit" className="text-lg font-semibold mt-6">Login</ButtonPrimary>
           </form>
           <div className="flex justify-center gap-1">
             <p className="text-neutral-500 text-sm md:text-base">

@@ -22,7 +22,7 @@ const RegisterPage = () => {
               Daftar dibawah untuk buat akunmu
             </p>
           </div>
-          <div className="flex flex-col gap-4 w-full md:gap-5 lg:gap-6">
+          <div className="flex flex-col gap-4 w-full md:gap-4">
             <InputField
               label="Username"
               type="text"

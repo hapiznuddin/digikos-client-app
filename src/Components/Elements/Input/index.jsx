@@ -36,7 +36,7 @@ const InputField = forwardRef((props, ref) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 md:gap-2">
+    <div className="flex flex-col">
       <Label htmlFor={name}>{label}</Label>
       <Input
         disabled={disabled}

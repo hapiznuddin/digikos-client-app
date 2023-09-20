@@ -32,7 +32,7 @@ const Input = forwardRef((props, ref) => {
         defaultValue={defaultValue}
         minLength={minLength}
         ref={ref}
-        className="bg-neutral-25 text-neutral-800 rounded-full py-3 px-4 w-full md:text-xl 
+        className="input input-ghost w-full min-w-xs bg-neutral-25 text-neutral-800 rounded-full md:text-lg 
             border border-neutral-300 shadow-inner focus:outline-primary-500 hover:border-primary-400"
       />
   );
