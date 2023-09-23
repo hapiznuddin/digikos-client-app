@@ -16,7 +16,7 @@ const Input = forwardRef((props, ref) => {
     defaultValue: PropTypes.string,
     minLength: PropTypes.number,
     disabled: PropTypes.bool,
-    onChangeCapture: PropTypes.func
+    onChangeCapture: PropTypes.func,
   };
   return (
       <input
@@ -32,8 +32,8 @@ const Input = forwardRef((props, ref) => {
         defaultValue={defaultValue}
         minLength={minLength}
         ref={ref}
-        className="input input-ghost w-full min-w-xs bg-neutral-25 text-neutral-800 rounded-full md:text-lg 
-            border border-neutral-300 shadow-inner focus:outline-primary-500 hover:border-primary-400"
+        className={`input input-ghost w-full min-w-xs bg-neutral-25 text-neutral-800 rounded-full md:text-lg 
+            border border-neutral-300 shadow-inner focus:outline-primary-500 hover:border-primary-400`}
       />
   );
 });

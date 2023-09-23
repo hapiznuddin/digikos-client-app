@@ -1,27 +1,70 @@
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../Elements/Button";
 import InputField from "../../Elements/Input";
 import "./Login.css";
-import { LoginApi } from "../../../services/AuthApi";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useLoginUser } from "../../../features/auth/useLoginuser";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    const headers = {
-        "Content-Type": "application/json",
-        Accept : "application/json",
-    }
-    LoginApi(data, headers, (status, response) => {
-      if (status) {
-        console.log(response);
-      } else {
-        console.log(response);
-      }
-    })
-  }
+  const navigate = useNavigate();
+  const handleForm = (e) => {
+    formik.setFieldValue(e.target.name, e.target.value);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async () => {
+      const { email, password } = formik.values;
+      mutate(
+        {
+          email,
+          password,
+        },
+        {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        }
+      );
+    },
+    validationSchema: yup.object().shape({
+      email: yup.string().required("Email wajib diisi").email(),
+      password: yup.string().required("Password wajib diisi").min(8),
+    }),
+  });
+
+  const { mutate, isLoading } = useLoginUser({
+    onSuccess: (data) => {
+      console.log(data);
+      Cookies.set("token", data.token, { expires: 2 });
+      Cookies.set("role", data.role, { expires: 2 });
+      if (data.role === "User") {
+        navigate("/", { replace: true });
+      } 
+    },
+    onError: (data) => {
+      console.log(data);
+      Swal.fire({
+        title: "Gagal",
+        text: "Email atau password salah",
+        icon: "error",
+        timer: 1500,
+      })
+    },
+  });
+
+  const { email, password } = formik.errors;
 
   return (
+    <>
+    {isLoading ? (<div className="flex fixed inset-0 bg-neutral-100/30 z-50 justify-center items-center drop-shadow-xl">
+        <span className="loading loading-infinity w-24 bg-primary-500"/>
+      </div>): null}
     <div className="flex flex-col md:flex-row lg:flex-row">
       <div className="flex flex-col gap-10 justify-between items-center w-full px-6 mt-16 mb-6 md:mt-24 md:w-5/6 md:px-24 lg:w-3/4 ">
         <div className="flex flex-col gap-6 w-full lg:w-3/5 ">
@@ -40,37 +83,44 @@ const LoginPage = () => {
               Login dibawah untuk akses akunmu
             </p>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4 w-full md:gap-4">
-            <InputField
-              label="Email"
-              type="email"
-              name="email"
-              placeholder="Masukkan email"
-              required={true}
-              {...register("email", { required: true })}
-            />
-            <InputField
-              label="Password"
-              type="password"
-              name="password"
-              placeholder="Masukkan password"
-              minLength={8}
-              required={true}
-              {...register("password", { required: true, minLength: 8 })}
-            />
-            <p className="text-neutral-400 text-sm ">Lupa Password</p>
-          </div>
-          <ButtonPrimary type="submit" className="text-lg font-semibold mt-6">Login</ButtonPrimary>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="flex flex-col gap-4 w-full md:gap-4">
+              <div className="flex flex-col gap-1">
+                <InputField
+                  label="Email"
+                  type="email"
+                  name="email"
+                  onChange={handleForm}
+                  placeholder="Masukkan email"
+                />
+                {formik.errors ? (
+                  <p className="text-error-500">{email}</p>
+                ) : null}
+              </div>
+              <div className="flex flex-col gap-1">
+                <InputField
+                  label="Password"
+                  type="password"
+                  name="password"
+                  onChange={handleForm}
+                  placeholder="Masukkan password"
+                />
+                {formik.errors ? (
+                  <p className="text-error-500">{password}</p>
+                ) : null}
+              </div>
+              <p className="text-neutral-400 text-sm ">Lupa Password</p>
+            </div>
+            <ButtonPrimary type="submit" className="text-lg font-semibold mt-6">
+              Login
+            </ButtonPrimary>
           </form>
           <div className="flex justify-center gap-1">
             <p className="text-neutral-500 text-sm md:text-base">
               Belum punya akun?
             </p>
             <p className="text-primary-600 font-medium text-sm md:text-base hover:text-primary-400 cursor-pointer hover:underline">
-            <Link to={"/register"}>
-                Daftar
-              </Link>
+              <Link to={"/register"}>Daftar</Link>
             </p>
           </div>
         </div>
@@ -81,6 +131,7 @@ const LoginPage = () => {
       </div>
       <div className="bgImage mt-24 md:mt-0 md:z-10" />
     </div>
+    </>
   );
 };
 
