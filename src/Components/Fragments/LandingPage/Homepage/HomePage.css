@@ -1,0 +1,7 @@
+.bgHome{
+  background-image: url("/bg-homepage.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 100vh;
+}
