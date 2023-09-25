@@ -13,9 +13,9 @@ const View360 = () => {
         maxWidth: '100%',
       }}
       allow="xr-spatial-tracking; vr; gyroscope; accelerometer; fullscreen; autoplay; xr"
-      scrolling="no"
+      // scrolling="no"
       allowFullScreen={true}
-      frameBorder="0"
+      // frameBorder="0"
       src="https://webobook.com/public/651120fa7769b651bd3168c2,en?ap=true&si=false&sm=false&sp=false&sfr=true&sl=false&sop=false&"
     ></iframe>
       </div>

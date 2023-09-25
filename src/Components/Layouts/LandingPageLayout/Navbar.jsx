@@ -19,7 +19,7 @@ const Navbar = () => {
         {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
       </div>
       <div className="navbar-center hidden  md:flex">
-        <ul className="menu menu-horizontal text-xl text-neutral-800 font-medium">
+        <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
           <li>
             <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
               Beranda
@@ -59,13 +59,13 @@ const Navbar = () => {
         <div className="justify-end gap-2 w-full hidden md:flex">
           <ButtonPrimary
             onClick={() => navigate("/login")}
-            className="w-24 text-lg bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
+            className="w-20 text-sm lg:w-24 lg:text-lg bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
           >
             Login
           </ButtonPrimary>
           <ButtonPrimary
             onClick={() => navigate("/register")}
-            className="w-24 text-lg shadow-none"
+            className="w-20 text-sm lg:w-24 lg:text-lg shadow-none"
           >
             Daftar
           </ButtonPrimary>
