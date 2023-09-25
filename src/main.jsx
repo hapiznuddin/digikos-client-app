@@ -7,6 +7,7 @@ import Login from "./pages/login/index.jsx";
 import Register from "./pages/register/index.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
+import NotFoundPage from "./Components/Fragments/NotFoundPage/NotFoundPage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <h1>404</h1>,
+    errorElement: <NotFoundPage />,
   },
   {
     path: "/login",

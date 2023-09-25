@@ -12,7 +12,7 @@ const View360 = () => {
         borderRadius: '16px',
         maxWidth: '100%',
       }}
-      allow="xr-spatial-tracking; vr; gyroscope; accelerometer; fullscreen; autoplay; xr"
+      allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen; autoplay;"
       // scrolling="no"
       allowFullScreen={true}
       // frameBorder="0"

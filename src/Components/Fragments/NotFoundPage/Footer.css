@@ -1,0 +1,6 @@
+.bgFooter {
+  background-image: url("/bg-footer.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
