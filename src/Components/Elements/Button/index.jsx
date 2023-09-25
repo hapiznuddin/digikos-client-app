@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { twMerge } from "tailwind-merge";
 
 const ButtonPrimary = ({ children, onClick, className, type }) => {
   ButtonPrimary.propTypes = {
@@ -9,8 +10,10 @@ const ButtonPrimary = ({ children, onClick, className, type }) => {
   };
   return (
     <button
-      className={`btn btn-block bg-primary-500 text-neutral-25 rounded-full shadow-xl 
-      hover:bg-primary-600 active:bg-primary-700 active:scale-95 normal-case ${className}`}
+      className={twMerge(
+        "btn btn-block bg-primary-500 text-neutral-25 rounded-full shadow-xl hover:bg-primary-600 active:bg-primary-700 active:scale-95 normal-case",
+        className
+      )}
       onClick={onClick}
       type={type}
     >

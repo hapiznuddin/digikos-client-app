@@ -1,11 +1,17 @@
 import { RiMenu3Fill } from "react-icons/ri";
 import ButtonPrimary from "../../Elements/Button";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <div className="navbar px-4 mt-2 md:px-10 lg:px-28 md:mt-6 z-10">
+    <motion.div
+      className="sticky top-0 navbar py-4 px-4 md:px-10 lg:px-28 md:mt-6 z-10"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1, ease: "circOut" }}
+    >
       <div className="navbar-start">
         <div className=" flex justify-betwee w-full">
           <img src="/digikos.png" className="w-24 aspect-auto lg:w-[150px]" />
@@ -110,8 +116,10 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default Navbar;
+
+
