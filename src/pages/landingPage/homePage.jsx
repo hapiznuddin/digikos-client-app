@@ -1,15 +1,11 @@
-import { Helmet } from "react-helmet";
-import { HelmetProvider } from "react-helmet-async";
+import {HelmetProvider } from "react-helmet-async";
 import HomePageLanding from "../../Components/Fragments/LandingPage/Homepage/HomePageLanding";
+import HeadMetaData from "../../Components/HeadMetaData";
 
 const HomePage = () => {
   return (
     <HelmetProvider>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Beranda | Digikos</title>
-      </Helmet>
+        <HeadMetaData title="Beranda"/>
       <div>
         <HomePageLanding />
       </div>
