@@ -1,6 +1,8 @@
 import { FaPhoneAlt } from "react-icons/fa"
 import { HiMail } from "react-icons/hi"
 import { IoLocationSharp } from "react-icons/io5"
+import "./Footer.css";
+
 
 const Footer = () => {
   return (

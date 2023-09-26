@@ -11,9 +11,9 @@ const HomePageLanding = () => {
           <HeroSection />
         </div>
         <FacilitySection />
-        <div className="mt-20">
-          <img src="/bg-facility.webp" />
-        </div>
+        <div className="bgFacility mt-20 h-[190px] w-full"/>
+        <div className="bgRoom mt-8 h-[1000px] w-full" />
+        <div className="w-full h-5 bg-[#FAF8FB]"/>
       </div>
     </LandingPageLayout>
   );

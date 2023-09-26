@@ -4,3 +4,17 @@
   background-repeat: no-repeat;
   background-position: top;
 }
+
+.bgFacility{
+  background-image: url("/bg-facility.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bgRoom{
+  background-image: url("/bg-room.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+}
