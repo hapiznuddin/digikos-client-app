@@ -1,15 +1,18 @@
-import Navbar from "../../../Layouts/LandingPageLayout/Navbar";
+import LandingPageLayout from "../../../Layouts/LandingPageLayout";
 import HeroSection from "./HeroSection";
 import "./HomePage.css";
 
 const HomePageLanding = () => {
   return (
-    <div className="flex justify-center items-center">
-      <div className="bgHome w-full pb-6 h-full md:h-[500px] lg:h-screen rounded-[24px] md:rounded-[48px] m-2 md:m-6">
-        <Navbar />
+    <LandingPageLayout>
+    <div className="flex flex-col justify-center items-center">
+      <div className="bgHome  pb-6 h-full md:h-[500px] lg:h-[935px] rounded-[24px] md:rounded-[48px] m-2 -mt-[70px] md:m-4 md:-mt-24 lg:-mt-24">
+        
         <HeroSection />
       </div>
+        
     </div>
+    </LandingPageLayout>
   );
 };
 

@@ -1,15 +1,12 @@
-import Footer from "../../Layouts/LandingPageLayout/Footer";
-import Navbar from "../../Layouts/LandingPageLayout/Navbar";
+import LandingPageLayout from "../../Layouts/LandingPageLayout";
 import ErrorSection from "./ErrorSection";
 import "./Footer.css";
 
 const NotFoundPage = () => {
   return (
-    <div>
-      <Navbar />
+    <LandingPageLayout>
       <ErrorSection />
-      <Footer/>
-    </div>
+    </LandingPageLayout>
   );
 };
 

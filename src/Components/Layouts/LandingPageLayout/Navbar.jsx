@@ -2,12 +2,31 @@ import { RiMenu3Fill } from "react-icons/ri";
 import ButtonPrimary from "../../Elements/Button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const navbarClasses = `sticky ${isSticky ? 'bg-neutral-25 shadow-sm' : ''} top-0 navbar py-4 px-4 md:px-10 lg:px-28 md:mt-6 z-10`;
   return (
     <motion.div
-      className="sticky top-0 navbar py-4 px-4 md:px-10 lg:px-28 md:mt-6 z-10"
+      className={navbarClasses}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: "circOut" }}

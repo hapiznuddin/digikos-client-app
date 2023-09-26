@@ -5,9 +5,9 @@ import View360 from "./View360";
 const HeroSection = () => {
   return (
     <>
-      <main className="flex flex-col md:flex-row lg:flex-row justify-between items-center w-full px-4 gap-10 mt-4 
-        md:px-10 md:gap-4 md:mt-8
-        lg:px-28 lg:gap-12 lg:mt-20 ">
+      <main className="flex flex-col md:flex-row lg:flex-row justify-between items-center w-full px-4 gap-10 mt-20 
+        md:px-10 md:gap-4 md:mt-32
+        lg:px-28 lg:gap-12 lg:mt-40 ">
         <div className="flex flex-col justify-center w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
           <div className="flex flex-col justify-center">
             <motion.h1
