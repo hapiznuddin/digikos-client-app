@@ -5,10 +5,10 @@ import View360 from "./View360";
 const HeroSection = () => {
   return (
     <>
-      <main className="flex flex-col md:flex-row lg:flex-row justify-between items-center w-full px-4 gap-10 mt-20 
-        md:px-10 md:gap-4 md:mt-32
-        lg:px-28 lg:gap-12 lg:mt-40 ">
-        <div className="flex flex-col justify-center w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
+      <main className="flex flex-col md:flex-row lg:flex-row justify-center items-center w-full gap-10 mt-20 
+        md:px-10 md:gap-4 md:mt-32 mx-auto
+        lg: lg:gap-12 lg:mt-40 ">
+        <div className="flex flex-col justify-center lg:ml-8 w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
           <div className="flex flex-col justify-center">
             <motion.h1
               className="text-neutral-800 text-2xl md:text-2xl lg:text-5xl font-bold"
@@ -50,12 +50,12 @@ const HeroSection = () => {
           </motion.div>
         </div>
         <motion.div
-          className="flex justify-center items-center w-full md:mx-auto md:w-1/2"
+          className="flex justify-center items-center w-full md:mx-auto md:w-1/2 lg:max-w-full"
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "backOut" }}
         >
-          <img src="/bg-cta.webp" className="w-full bg-cover" />
+          <img src="/bg-cta.webp" className="max-w-full bg-cover" />
         </motion.div>
       </main>
       <dialog id="my_modal_2" className="modal">

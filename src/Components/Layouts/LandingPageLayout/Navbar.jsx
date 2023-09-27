@@ -23,7 +23,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const navbarClasses = `sticky ${isSticky ? 'bg-neutral-25 shadow-sm' : ''} top-0 navbar py-4 px-4 md:px-10 lg:px-28 md:mt-6 z-10`;
+  const navbarClasses = `sticky ${isSticky ? 'bg-neutral-25 shadow-sm' : ''} top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-10`;
   return (
     <motion.div
       className={navbarClasses}
@@ -31,13 +31,10 @@ const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: "circOut" }}
     >
-      <div className="navbar-start">
-        <div className=" flex justify-betwee w-full">
-          <img src="/digikos.png" className="w-24 aspect-auto lg:w-[150px]" />
-        </div>
-        {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
+      <div className="w-fit">
+          <img src="/digikos.png" className="w-24 aspect-auto lg:w-[200px]" />
       </div>
-      <div className="navbar-center hidden  md:flex">
+      <div className="hidden md:flex justify-center items-center w-full">
         <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
           <li>
             <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
@@ -74,8 +71,8 @@ const Navbar = () => {
           </li> */}
         </ul>
       </div>
-      <div className="navbar-end">
-        <div className="justify-end gap-2 w-full hidden md:flex">
+      <div className="flex justify-center items-center">
+        <div className=" gap-2 hidden  md:flex">
           <ButtonPrimary
             onClick={() => navigate("/login")}
             className="w-20 text-sm lg:w-24 lg:text-lg bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
@@ -89,45 +86,43 @@ const Navbar = () => {
             Daftar
           </ButtonPrimary>
         </div>
-        <div className="dropdown dropdown-end text-right">
+        <div className="dropdown dropdown-end text-right w-full">
           <label tabIndex={0} className="btn btn-ghost md:hidden">
             <RiMenu3Fill size={24} />
             {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> */}
           </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-neutral-25 rounded-box w-52"
-          >
+          <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-60 mt-4">
             <li>
-              <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Beranda
               </a>
             </li>
             <li>
-              <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Fasilitas
               </a>
             </li>
             <li>
-              <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Kamar
               </a>
             </li>
             <li>
-              <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Kontak
               </a>
             </li>
+            <div className="divider w-full -my-1"></div> 
             <div className="flex justify-between gap-1 w-full mt-4">
               <ButtonPrimary
                 onClick={() => navigate("/login")}
-                className="w-[90px] text-xs btn-sm bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
+                className="w-[110px] text-base btn- bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
               >
                 Login
               </ButtonPrimary>
               <ButtonPrimary
                 onClick={() => navigate("/register")}
-                className="w-[90px] text-xs btn-sm shadow-none"
+                className="w-[110px] text-base btn- shadow-none"
               >
                 Daftar
               </ButtonPrimary>

@@ -9,13 +9,13 @@ const HomePageLanding = () => {
   return (
     <LandingPageLayout>
       <div className="flex flex-col justify-center items-center">
-        <div className="bgHome  pb-6 h-full md:h-[500px] lg:h-[935px] rounded-[24px] md:rounded-[48px] m-2 -mt-[70px] md:m-4 md:-mt-24 lg:-mt-24">
+        <div className="bgHome  pb-6 h-full  md:h-[500px] lg:h-[935px] rounded-[24px] md:rounded-[48px] m-2 -mt-[70px] md:m-4 md:-mt-24 lg:-mt-24">
           <HeroSection />
         </div>
         <FacilitySection />
-        <div className="bgFacility mt-20 h-[190px] w-full" />
+        <div className="bgFacility mt-20 h-[205px] w-full" />
         <div className="bgRoom mt-8 h-[1000px] w-full">
-          <div className="w-full flex flex-col justify-center items-center h-full gap-24">
+          <div className="w-full flex flex-col justify-center items-center h-full gap-24 mt-[500px] md:mt-56 lg:mt-4">
             <h1
               className="text-neutral-900 text-3xl md:text-4xl lg:text-5xl font-semibold"
               data-aos="fade-down"
@@ -24,12 +24,12 @@ const HomePageLanding = () => {
             >
               Pilihan Kamar
             </h1>
-            <div className="w-full flex flex-wrap gap-10 justify-center items-center">
+            <div className="max-w-screen-xl flex flex-wrap gap-8  justify-center items-center">
               <RoomSection />
             </div>
           </div>
         </div>
-        <div className="w-full h-5 bg-[#FAF8FB]" />
+        <div className="w-full h-screen md:h-[550px] lg:h-5 bg-[#FAF8FB]" />
       </div>
     </LandingPageLayout>
   );

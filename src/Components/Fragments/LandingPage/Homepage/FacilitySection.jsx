@@ -9,10 +9,10 @@ import { TbAirConditioning } from "react-icons/tb";
 
 const FacilitySection = () => {
   useEffect(() => {
-    AOS.init({ once: false });
+    AOS.init({ once: true });
   }, []);
   return (
-    <div className="flex flex-col justify-center items-center mt-20 lg:mt-36 gap-8 md:gap-10 lg:gap-14 w-full md:w-10/12 lg:w-6/12">
+    <div className="flex flex-col justify-center items-center mx-auto mt-20 lg:mt-36 gap-8 md:gap-10 lg:gap-14 w-full md:max-w-screen-md lg:max-w-screen-lg">
       <div>
         <h1
           className="text-neutral-900 text-3xl md:text-4xl lg:text-5xl font-semibold"
@@ -25,7 +25,7 @@ const FacilitySection = () => {
       </div>
       <div className="flex flex-wrap gap-8 justify-center">
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -35,7 +35,7 @@ const FacilitySection = () => {
           Kamar Mandi Luar/Dalam
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -45,7 +45,7 @@ const FacilitySection = () => {
           Keamanan 24 Jam
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-left"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -55,7 +55,7 @@ const FacilitySection = () => {
           Ruang Jemur
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -78,7 +78,7 @@ const FacilitySection = () => {
           Kantin
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -88,7 +88,7 @@ const FacilitySection = () => {
           WiFi
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-left"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
@@ -98,7 +98,7 @@ const FacilitySection = () => {
           AC
         </div>
         <div
-          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-lg font-medium gap-3"
+          className="badge badge-lg py-6 px-8 bg-primary-400 text-neutral-25 text-sm lg:text-lg font-medium gap-3"
           data-aos="fade-left"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
