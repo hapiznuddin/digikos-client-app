@@ -8,7 +8,7 @@ import Register from "./pages/register/index.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ChakraProvider } from "@chakra-ui/react";
-import ErrorPage from "./pages/errorPage.jsx";
+// import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
   },
   {
     path: "/login",

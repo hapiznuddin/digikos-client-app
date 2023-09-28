@@ -2,12 +2,15 @@ import LandingPageLayout from "../../../Layouts/LandingPageLayout";
 import HeroSection from "./HeroSection";
 import FacilitySection from "./FacilitySection";
 import RoomSection from "./RoomSection";
+// import { BsPersonCircle } from "react-icons/bs";
+
 import "./HomePage.css";
 import "aos/dist/aos.css";
+import TestimonialSection from "./TestimonialSection";
 
 const HomePageLanding = () => {
   return (
-    <LandingPageLayout>
+    <LandingPageLayout classNameFooter="-mt-80 md:-mt-80 lg:-mt-80">
       <div className="flex flex-col justify-center items-center">
         <div className="bgHome  pb-6 h-full  md:h-[500px] lg:h-[935px] rounded-[24px] md:rounded-[48px] m-2 -mt-[70px] md:m-4 md:-mt-24 lg:-mt-24">
           <HeroSection />
@@ -30,6 +33,17 @@ const HomePageLanding = () => {
           </div>
         </div>
         <div className="w-full h-screen md:h-[550px] lg:h-5 bg-[#FAF8FB]" />
+        <div className="w-full h-[1200px] md:h-[1000px] py-80 md:py-20 lg:py-16 mb-28 bg-[#FAF8FB]">
+          <h1
+            className="text-neutral-900 text-3xl text-center md:text-4xl lg:text-5xl font-semibold mb-24"
+            data-aos="fade-down"
+            data-aos-duration="900"
+            data-aos-easing="ease-out-quad"
+          >
+            Kata Mereka
+          </h1>
+          <TestimonialSection />
+        </div>
       </div>
     </LandingPageLayout>
   );

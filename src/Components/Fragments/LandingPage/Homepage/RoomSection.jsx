@@ -41,24 +41,26 @@ const RoomSection = () => {
               </SkeletonText>
               <div className="card-actions w-full flex flex-col gap-4">
                 <Skeleton className="flex gap-1 justify-between items-center w-full">
-                <div className="flex items-center">
-                  <p className="text-neutral-800 font-bold text-xl">
-                    {rupiahFormatter(room.room_price)}
-                  </p>
-                  <p className="text-sm font-regular text-neutral-700">
-                    /bulan
-                  </p>
-                </div>
-                <div className="flex gap-1">
-                  <p className="text-neutral-800 text-lg font-semibold">4.5</p>
-                  <AiFillStar size={24} className="text-secondary-500" />
-                </div>
+                  <div className="flex items-center">
+                    <p className="text-neutral-800 font-bold text-xl">
+                      {rupiahFormatter(room.room_price)}
+                    </p>
+                    <p className="text-sm font-regular text-neutral-700">
+                      /bulan
+                    </p>
+                  </div>
+                  <div className="flex gap-1">
+                    <p className="text-neutral-800 text-lg font-semibold">
+                      4.5
+                    </p>
+                    <AiFillStar size={24} className="text-secondary-500" />
+                  </div>
                 </Skeleton>
                 <Skeleton className="w-full">
                   <ButtonPrimary className="w-">Lihat Kamar</ButtonPrimary>
                 </Skeleton>
               </div>
-              </div>
+            </div>
           </>
         ) : (
           <>
@@ -73,19 +75,21 @@ const RoomSection = () => {
                 </p>
               </div>
               <div className="card-actions w-full flex flex-col gap-4">
-                <div className="flex gap-1 justify-between items-center w-full">
-                <div className="flex items-center">
-                  <p className="text-neutral-800 font-bold text-xl">
-                    {rupiahFormatter(room.room_price)}
-                  </p>
-                  <p className="text-sm font-regular text-neutral-700">
-                    /bulan
-                  </p>
-                </div>
-                <div className="flex gap-1">
-                  <p className="text-neutral-800 text-lg font-semibold">4.5</p>
-                  <AiFillStar size={24} className="text-secondary-500" />
-                </div>
+                <div className="flex flex-col md:flex-row gap-1 justify-between items-center w-full">
+                  <div className="flex items-center">
+                    <p className="text-neutral-800 font-bold md:text-xl">
+                      {rupiahFormatter(room.room_price)}
+                    </p>
+                    <p className="text-sm font-regular text-neutral-700">
+                      /bulan
+                    </p>
+                  </div>
+                  <div className="flex gap-1">
+                    <p className="text-neutral-800 md:text-lg font-semibold">
+                      4.5
+                    </p>
+                    <AiFillStar size={24} className="text-secondary-500" />
+                  </div>
                 </div>
                 <ButtonPrimary className="w-">Lihat Kamar</ButtonPrimary>
               </div>
