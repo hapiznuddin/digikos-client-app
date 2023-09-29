@@ -3,10 +3,21 @@ import ButtonPrimary from "../../Elements/Button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+
+// const token = Cookies.get("token");
+const role = Cookies.get("role");
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (role === "User") {
+      setIsLogin(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,14 +27,16 @@ const Navbar = () => {
         setIsSticky(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const navbarClasses = `sticky ${isSticky ? 'bg-neutral-25 shadow-sm' : ''} top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-10`;
+  const navbarClasses = `sticky ${
+    isSticky ? "bg-neutral-25 shadow-sm" : ""
+  } top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-10`;
   return (
     <motion.div
       className={navbarClasses}
@@ -32,7 +45,7 @@ const Navbar = () => {
       transition={{ duration: 1, ease: "circOut" }}
     >
       <div className="w-fit">
-          <img src="/digikos.png" className="w-24 aspect-auto lg:w-[200px]" />
+        <img src="/digikos.png" className="w-24 aspect-auto lg:w-[200px]" />
       </div>
       <div className="hidden md:flex justify-center items-center w-full">
         <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
@@ -71,27 +84,48 @@ const Navbar = () => {
           </li> */}
         </ul>
       </div>
-      <div className="flex justify-center items-center">
-        <div className=" gap-2 hidden  md:flex">
-          <ButtonPrimary
-            onClick={() => navigate("/login")}
-            className="w-20 text-sm lg:w-24 lg:text-lg bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
-          >
-            Login
-          </ButtonPrimary>
-          <ButtonPrimary
-            onClick={() => navigate("/register")}
-            className="w-20 text-sm lg:w-24 lg:text-lg shadow-none"
-          >
-            Daftar
-          </ButtonPrimary>
+      <div className="flex justify-center items-center w-64 ">
+        {isLogin ? (
+          <div className="dropdown dropdown-end">
+          <div className="hidden md:flex gap-2 justify-center items-center w-full px-2 ">
+            <button className="btn btn-ghost  m-1 rounded-full text-base font-medium normal-case  hover:bg-primary-50/50" tabIndex={0}>
+            <div className="avatar">
+              <div className="w-9 rounded-full">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" />
+              </div>
+            </div>
+            <p className="text-base font-medium">Nama User</p>
+            </button>
+          </div>
+          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a>Item 1</a></li>
+            <li><a>Item 2</a></li>
+          </ul>
         </div>
-        <div className="dropdown dropdown-end text-right w-full">
-          <label tabIndex={0} className="btn btn-ghost md:hidden">
+        ) : (
+          <div className=" gap-2 hidden md:flex bg-primary-600">
+            <ButtonPrimary
+              onClick={() => navigate("/login")}
+              className="w-20 text-sm lg:w-24 lg:text-lg bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
+            >
+              Login
+            </ButtonPrimary>
+            <ButtonPrimary
+              onClick={() => navigate("/register")}
+              className="w-20 text-sm lg:w-24 lg:text-lg shadow-none"
+            >
+              Daftar
+            </ButtonPrimary>
+          </div>
+        )}
+        <div className="dropdown dropdown-end text-right w-full md:hidden">
+          <label tabIndex={0} className="btn m-1 btn-ghost md:hidden">
             <RiMenu3Fill size={24} />
-            {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> */}
           </label>
-          <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-60 mt-4">
+          <ul
+            tabIndex={0}
+            className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-60 mt-4"
+          >
             <li>
               <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Beranda
@@ -112,7 +146,7 @@ const Navbar = () => {
                 Kontak
               </a>
             </li>
-            <div className="divider w-full -my-1"></div> 
+            <div className="divider w-full -my-1"></div>
             <div className="flex justify-between gap-1 w-full mt-4">
               <ButtonPrimary
                 onClick={() => navigate("/login")}
@@ -135,5 +169,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

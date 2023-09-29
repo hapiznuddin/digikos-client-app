@@ -2,6 +2,7 @@
 // import {FaChevronRight, FaChevronLeft} from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { BiSolidQuoteAltRight, BiSolidQuoteAltLeft } from "react-icons/bi";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -89,8 +90,12 @@ const TestimonialSection = () => {
                 </div>
                 <h1 className="text-lg font-semibold">{testimoni.name}</h1>
               </div>
-              <div className="card-body text-center ">
+              <div className="card-body text-center -mt-6">
+                <div className="flex flex-col justify-center items-center gap-4 ">
+                <BiSolidQuoteAltLeft size={24}/>
                 <p>{testimoni.desctiption}</p>
+                <BiSolidQuoteAltRight size={24}/>
+                </div>
               </div>
             </div>
           </SwiperSlide>

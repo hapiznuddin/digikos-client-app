@@ -65,7 +65,7 @@ const RoomSection = () => {
         ) : (
           <>
             <figure className="overflow-hidden w-full">
-              <img src={imageRoom} alt="Shoes" />
+              <img src={imageRoom} alt="Foto Kamar" className="bg-cover bg-center" />
             </figure>
             <div className="flex flex-col w-full py-5 px-8 gap-4 ">
               <div className="flex flex-col gap-2 w-full ">
