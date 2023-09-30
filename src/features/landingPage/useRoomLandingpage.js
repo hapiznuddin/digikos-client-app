@@ -5,7 +5,11 @@ export const useRoomLandingpage = () => {
   const { data, isLoading} = useQuery({
     queryKey: ["roomLandingpage"],
     queryFn: async () => {
-      const roomResponse = await axiosInstance.get("/class-room-landingpage");
+      const headers = {
+        'content-type': "application/json",
+        'accept': "application/json",
+      }
+      const roomResponse = await axiosInstance.get("/class-room-landingpage", {headers});
       return roomResponse;
     },
   });
