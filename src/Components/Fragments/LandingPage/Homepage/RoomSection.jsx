@@ -3,8 +3,10 @@ import { AiFillStar } from "react-icons/ai";
 import ButtonPrimary from "../../../Elements/Button";
 import "aos/dist/aos.css";
 import { SkeletonLandingPage } from "../../../Elements/Skeleton/SkeletonLandingPage";
+import { useNavigate } from "react-router-dom";
 
 const RoomSection = () => {
+  const navigate = useNavigate();
   const rupiahFormatter = (amount) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -66,7 +68,7 @@ const RoomSection = () => {
                         <AiFillStar size={24} className="text-secondary-500" />
                       </div>
                     </div>
-                    <ButtonPrimary className="w-">Lihat Kamar</ButtonPrimary>
+                    <ButtonPrimary onClick={() => navigate(`/detailRoom/room=${room.id}`)} >Lihat Kamar</ButtonPrimary>
                   </div>
                 </div>
               </div>
