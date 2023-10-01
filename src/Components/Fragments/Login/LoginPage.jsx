@@ -41,9 +41,10 @@ const LoginPage = () => {
   const { mutate, isLoading } = useLoginUser({
     onSuccess: (data) => {
       Cookies.set("token", data.token, { expires: 7 });
+      Cookies.set("name", data.name, { expires: 7 });
       Cookies.set("role", data.role, { expires: 7 });
       if (data.role === "User") {
-        navigate("/", { replace: true });
+        navigate("/");
       } 
     },
     onError: (data) => {

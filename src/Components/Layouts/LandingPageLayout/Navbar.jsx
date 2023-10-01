@@ -1,55 +1,88 @@
 import { RiMenu3Fill } from "react-icons/ri";
 import ButtonPrimary from "../../Elements/Button";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { AiOutlineUser } from "react-icons/ai";
 import { RxDashboard } from "react-icons/rx";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../../../lib/axios";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { axiosInstance } from "../../../lib/axios";
+import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
+const role = Cookies.get("role");
+const name = Cookies.get("name"); 
 
 const Navbar = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [profileImage, setProfileImage] = useState(true);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["navbarGetUser"],
-    queryFn: async () => {
+  
+  // const { data, isLoading } = useGetUser({
+  //   onSuccess: (data) => {
+  //     if (data?.data.role_id === 1) {
+  //       setIsLogin(true);
+  //     }
+  //   },
+  //   onError: (data) => {
+  //     console.log(data);
+  //   },
+  // });
+  
+  const {mutate, isLoading} = useMutation({
+    mutationFn: async () => {
       const headers = {
         "content-type": "application/json",
         accept: "application/json",
         authorization: `Bearer ${token}`,
-      };
-      const getUser = await axiosInstance.get("/user", { headers });
-      return getUser;
+      }
+      const logout = await axiosInstance.post("/logout", null, {headers});
+      return logout.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("navbarGetUser");
+      Cookies.remove("token");
+      Cookies.remove("role");
+      Cookies.remove("name");
+      setIsLogin(false);
     },
     onError: (data) => {
       console.log(data);
-    },
+    }
   });
+
+const logout = () => {
+  mutate();
+}
 
   const urlImage =
     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60";
 
-  useEffect(() => {
-    if (data?.data.role_id === null) {
-      setProfileImage(false);
-    }
-  }, [data]);
+    // useEffect(() => {
+    //   if ( location.pathname === "/" && !hasRefreshed ) {
+    //     window.location.reload();
+    //     setHasRefreshed(true);
+    //   }
+    // }, [ location, hasRefreshed ]);
 
   useEffect(() => {
-    if (data?.data.role_id === 1) {
-      setIsLogin(true);
+    if (name === null) {
+      setProfileImage(false);
     }
-  }, [data]);
+
+    setTimeout(() => {
+      if (role === "User" && name !== null) {
+        setIsLogin(true);
+      }
+    }, 100);
+
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,7 +139,9 @@ const Navbar = () => {
       <div className="flex justify-center items-center w-64 ">
         {isLoading ? (
           <div className="hidden md:flex gap-2 items-center">
-            <Skeleton w={"40"} h={"12"} />
+            {/* <Skeleton w={"40"} h={"12"} /> */}
+
+            <span className="loading loading-infinity w-14 bg-primary-500"></span>
           </div>
         ) : (
           <>
@@ -126,7 +161,7 @@ const Navbar = () => {
                         )}
                       </div>
                     </div>
-                    <p className="text-base font-medium">{data?.data.name}</p>
+                    <p className="text-base font-medium">{name}</p>
                   </button>
                 </div>
                 <ul
@@ -145,9 +180,11 @@ const Navbar = () => {
                       <p>Dashboard</p>
                     </a>
                   </li>
-                  <div className="divider w-full my-1 px-2"/>
-                  <button className="btn flex gap-2 justify-center items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base">
-                    <FiLogOut size={24}/>
+                  <div className="divider w-full my-1 px-2" />
+                  <button className="btn flex gap-2 justify-center items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base"
+                    onClick={logout}
+                  >
+                    <FiLogOut size={24} />
                     Logout
                   </button>
                 </ul>
@@ -198,72 +235,72 @@ const Navbar = () => {
                 Kontak
               </a>
             </li>
-            <div className="divider w-full my-1 px-4"/>
+            <div className="divider w-full my-1 px-4" />
             {isLoading ? (
-          <div className="flex gap-2 items-center">
-            <SkeletonCircle size="10" w={10} />
-            <Skeleton w={"20"} h={"5"} />
-          </div>
-        ) : (
-          <>
-            {isLogin ? (
-              <ul className="menu w-full rounded-box flex">
-                <li>
-                  <details>
-                    <summary className="rounded-full">
-                      <div className=" m-1 rounded-full flex gap-2 justify-start items-center text-base font-medium normal-case w-full">
-                        <div className="avatar">
-                          <div className="w-8 rounded-full">
-                          {profileImage ? (
-                          <img src={urlImage} />
-                        ) : (
-                          <FaRegUserCircle size={32} />
-                        )}
-                          </div>
-                        </div>
-                        <p className="text-base font-medium">Nama User</p>
-                      </div>
-                    </summary>
-                    <ul>
-                      <li className="text-base">
-                        <a>
-                          <AiOutlineUser size={24} />
-                          <p>Profil</p>
-                        </a>
-                      </li>
-                      <li className="text-base">
-                        <a>
-                          <RxDashboard size={24} />
-                          <p>Dashboard</p>
-                        </a>
-                      </li>
-                      <div className="divider w-full my-1 px-2"/>
-                      <button className="btn flex gap-2 justify-center w-full items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base">
-                    <FiLogOut size={24}/>
-                    Logout
-                  </button>
-                    </ul>
-                  </details>
-                </li>
-              </ul>
-            ) : (
-              <div className="flex justify-between gap-1 w-full mt-4">
-                <ButtonPrimary
-                  onClick={() => navigate("/login")}
-                  className="w-[110px] text-base btn- bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
-                >
-                  Login
-                </ButtonPrimary>
-                <ButtonPrimary
-                  onClick={() => navigate("/register")}
-                  className="w-[110px] text-base btn- shadow-none"
-                >
-                  Daftar
-                </ButtonPrimary>
+              <div className="flex gap-2 items-center">
+                <SkeletonCircle size="10" w={10} />
+                <Skeleton w={"20"} h={"5"} />
               </div>
+            ) : (
+              <>
+                {isLogin ? (
+                  <ul className="menu w-full rounded-box flex">
+                    <li>
+                      <details>
+                        <summary className="rounded-full">
+                          <div className=" m-1 rounded-full flex gap-2 justify-start items-center text-base font-medium normal-case w-full">
+                            <div className="avatar">
+                              <div className="w-8 rounded-full">
+                                {profileImage ? (
+                                  <img src={urlImage} />
+                                ) : (
+                                  <FaRegUserCircle size={32} />
+                                )}
+                              </div>
+                            </div>
+                            <p className="text-base font-medium">Nama User</p>
+                          </div>
+                        </summary>
+                        <ul>
+                          <li className="text-base">
+                            <a>
+                              <AiOutlineUser size={24} />
+                              <p>Profil</p>
+                            </a>
+                          </li>
+                          <li className="text-base">
+                            <a>
+                              <RxDashboard size={24} />
+                              <p>Dashboard</p>
+                            </a>
+                          </li>
+                          <div className="divider w-full my-1 px-2" />
+                          <button className="btn flex gap-2 justify-center w-full items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base">
+                            <FiLogOut size={24} />
+                            Logout
+                          </button>
+                        </ul>
+                      </details>
+                    </li>
+                  </ul>
+                ) : (
+                  <div className="flex justify-between gap-1 w-full mt-4">
+                    <ButtonPrimary
+                      onClick={() => navigate("/login")}
+                      className="w-[110px] text-base btn- bg-primary-50 text-primary-500 shadow-none hover:bg-primary-100 active:bg-primary-100"
+                    >
+                      Login
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                      onClick={() => navigate("/register")}
+                      className="w-[110px] text-base btn- shadow-none"
+                    >
+                      Daftar
+                    </ButtonPrimary>
+                  </div>
+                )}
+              </>
             )}
-            </>
-        )}
           </ul>
         </div>
       </div>
