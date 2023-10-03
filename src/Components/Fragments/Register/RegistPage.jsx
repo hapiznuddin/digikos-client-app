@@ -142,7 +142,7 @@ const RegisterPage = () => {
                 Daftar
               </ButtonPrimary>
             </form>
-            <div className="flex justify-center gap-1">
+            <div className="flex justify-center gap-1 md:flex-col md:items-center lg:flex-row">
               <p className="text-neutral-500 text-sm md:text-base">
                 Sudah punya akun sebelumnya?
               </p>

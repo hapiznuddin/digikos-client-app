@@ -19,9 +19,6 @@ const ImageRoomSection = forwardRef((props, ref) => {
 
   const { data: image, isLoading: loadingImage } = useImageRoomPage({
     id,
-    onSuccess: (image) => {
-      console.log(image);
-    },
     onError: (image) => {
       console.log(image);
     },
@@ -61,8 +58,8 @@ const ImageRoomSection = forwardRef((props, ref) => {
           </div>
         </div>
       ) : (
-        <div className="flex gap-4 justify-center items-center h-[550px] w-full mt-8 overflow-hidden ">
-          <div className="w-3/4 h-full rounded-2xl">
+        <div className="relative md:flex gap-4 justify-center items-center md:h-[400px] lg:h-[550px] w-full mt-8 overflow-hidden">
+          <div className="md:w-3/4 md:h-full rounded-2xl">
             <Link
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
@@ -70,9 +67,12 @@ const ImageRoomSection = forwardRef((props, ref) => {
                 src={imageurl0}
                 className="w-full h-full rounded-2xl bg-cover bg-center"
               />
+            <div className="absolute bottom-4 right-4 z-10 bg-neutral-25 py-1 px-2 rounded-full text-xs font-medium md:hidden">
+              Lihat Gambar
+            </div>
             </Link>
           </div>
-          <div className="flex flex-col w-1/3 gap-4 h-full">
+          <div className="hidden md:flex flex-col w-1/3 gap-4 md:h-full lg:h-full">
             <Link className="h-full" onClick={() => document.getElementById("my_modal_3").showModal()}>
               <img
                 src={imageurl1}
@@ -84,13 +84,16 @@ const ImageRoomSection = forwardRef((props, ref) => {
                 src={imageurl2}
                 className=" h-full rounded-2xl bg-cover bg-center"
               />
+              <div className="absolute bottom-4 right-4 z-10 bg-neutral-25 py-1 px-2 rounded-full text-lg shadow-md font-medium">
+              Lihat Gambar
+            </div>
             </Link>
           </div>
         </div>
       )}
       {/* //* popup dialog galeri */}
-      <dialog id="my_modal_3" className="modal  mx-auto">
-        <div className="modal-box max-w-screen-xl">
+      <dialog id="my_modal_3" className="modal mx-auto">
+        <div className="modal-box h-[70%] md:h-[85%] md:max-w-screen-xl">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               <AiOutlineClose size={24} />
@@ -106,17 +109,17 @@ const ImageRoomSection = forwardRef((props, ref) => {
             onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
             thumbs={{ swiper: thumbsSwiper }}
             modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper2 w-full h-[650px]"
+            className="mySwiper2 mt-2 w-full h-[80%] md:h-[650px]"
           >
             {image?.data.map((image, index) => {
               const imagePath = `${import.meta.env.VITE_DIGIKOS_URL}${
                 image.path
               }`;
               return (
-                <SwiperSlide className=" px-10" key={index}>
+                <SwiperSlide className=" md:px-10" key={index}>
                   <img
                     src={imagePath}
-                    className="w-full h-full aspect-video object-cover object-bottom rounded-xl"
+                    className="w-full h-full md:h-full aspect-video object-cover object-bottom rounded-xl"
                   />
                 </SwiperSlide>
               );
@@ -129,7 +132,7 @@ const ImageRoomSection = forwardRef((props, ref) => {
             freeMode={true}
             watchSlidesProgress={true}
             modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper mt-4 w-full h-32  px-10"
+            className="mySwiper mt-4 w-full h-20 md:h-32 px-10"
           >
             {image?.data.map((image, index) => {
               const imagePath = `${import.meta.env.VITE_DIGIKOS_URL}${

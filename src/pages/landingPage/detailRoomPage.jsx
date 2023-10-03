@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom"
 import DetailRoom from "../../Components/Fragments/LandingPage/RoomPage/DetailRoom";
 import { HelmetProvider } from "react-helmet-async";
@@ -6,6 +6,9 @@ import HeadMetaData from "../../Components/HeadMetaData";
 const DetailRoomPage = () => {
   const {id} = useParams();
   const roomRef = useRef(id);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <HelmetProvider>
         <HeadMetaData title="Detail Kamar"/>

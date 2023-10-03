@@ -1,6 +1,6 @@
 import { RiMenu3Fill } from "react-icons/ri";
 import ButtonPrimary from "../../Elements/Button";
-import {useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
@@ -110,7 +110,9 @@ const logout = () => {
       transition={{ duration: 1, ease: "circOut" }}
     >
       <div className="w-fit">
-        <img src="/digikos.png" className="w-24 aspect-auto lg:w-[200px]" />
+        <Link to={"/"}>
+        <img src="/digikos.png" className="w-24 aspect-auto md:w-48 lg:w-[200px]" />
+        </Link>
       </div>
       <div className="hidden md:flex justify-center items-center w-full">
         <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
