@@ -19,7 +19,7 @@ const Footer = (props) => {
     >
       <div className="bgFooter h-[280px] w-full" />
       <div className=" bg-secondary-500 flex flex-col justify-center items-center w-full -mt-1">
-        <div className="bg-secondary-500 w-full h-full justify-center items-start flex flex-col lg:flex-row py-10 lg:py-20 gap-12 lg:gap-20 px-16 ">
+        <div className=" w-full h-full justify-center items-start flex flex-col lg:flex-row py-10 lg:py-20 gap-12 lg:gap-20 px-16 ">
           <div
             className="flex flex-col justify-center items-center lg:items-start gap-4 lg:gap-8 w-full lg:w-96"
             data-aos="fade-up"

@@ -14,7 +14,12 @@ const RoomSection = () => {
     }).format(amount);
   };
 
-  const { data, isLoading } = useRoomLandingpage();
+  const { data, isLoading } = useRoomLandingpage({
+
+    onError: (data) => {
+      console.log(data);
+    },
+  });
 
   return (
     <>
@@ -68,7 +73,7 @@ const RoomSection = () => {
                         <AiFillStar size={24} className="text-secondary-500" />
                       </div>
                     </div>
-                    <ButtonPrimary onClick={() => navigate(`/detailRoom/room=${room.id}`)} >Lihat Kamar</ButtonPrimary>
+                    <ButtonPrimary onClick={() => navigate(`/detailRoom/${room.id}`)} >Lihat Kamar</ButtonPrimary>
                   </div>
                 </div>
               </div>

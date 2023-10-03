@@ -1,14 +1,23 @@
 import { useRef } from "react";
 import { useParams } from "react-router-dom"
-import LandingPageLayout from "../../Components/Layouts/LandingPageLayout";
 import DetailRoom from "../../Components/Fragments/LandingPage/RoomPage/DetailRoom";
+import { HelmetProvider } from "react-helmet-async";
+import HeadMetaData from "../../Components/HeadMetaData";
 const DetailRoomPage = () => {
   const {id} = useParams();
   const roomRef = useRef(id);
   return (
-    <LandingPageLayout>
-      <DetailRoom ref={roomRef}/>
-    </LandingPageLayout>
+    <HelmetProvider>
+        <HeadMetaData title="Detail Kamar"/>
+      <div>
+        <DetailRoom ref={roomRef}/>
+      </div>
+      {/* <div className="fixed bottom-4 right-4">
+        <ButtonPrimary className='px-2 shadow-2xl' onClick={scrollToTop} disabled={onTop}>
+          <HiChevronDoubleUp size={32}/>
+        </ButtonPrimary>
+      </div> */}
+    </HelmetProvider>
   )
 }
 

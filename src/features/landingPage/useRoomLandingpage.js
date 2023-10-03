@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 
-export const useRoomLandingpage = () => {
-  const { data, isLoading} = useQuery({
+export const useRoomLandingpage = ({onSuccess, onError}) => {
+  return useQuery({
     queryKey: ["roomLandingpage"],
     queryFn: async () => {
       const headers = {
@@ -12,10 +12,8 @@ export const useRoomLandingpage = () => {
       const roomResponse = await axiosInstance.get("/class-room-landingpage", {headers});
       return roomResponse;
     },
-  });
+    onSuccess,
+    onError
 
-  return {
-    data,
-    isLoading
-  }
+  });
 };
