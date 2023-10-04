@@ -8,6 +8,8 @@ import ImageRoomSection from "./ImageRoomSection";
 import { PiCubeLight } from "react-icons/pi";
 import FacilityRoomSection from "./FacilityRoomSection";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import InputPengajuan from "./InputPengajuan";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;
@@ -111,7 +113,7 @@ const DetailRoom = forwardRef((props, ref) => {
               </div>
             </div>
             <div className="divider " />
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-10 mb-32">
               <div className="flex gap-4 items-center justify-start">
                 <div className="flex gap-1 items-center justify-start">
                   <AiFillStar className="text-secondary-500 text-3xl md:text-4xl" />
@@ -123,19 +125,73 @@ const DetailRoom = forwardRef((props, ref) => {
                   (12 review)
                 </p>
               </div>
-              <div className="flex flex-col">
-                <div className="flex">
-
+              <div className="flex flex-col gap-8">
+                <div className="flex justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="avatar">
+                      <div className="w-16 rounded-full bg-neutral-200">
+                        <IoPersonCircleOutline
+                          size={64}
+                          className="text-neutral-600"
+                        />
+                        {/* <img src="" className="bg-primary-100" /> */}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <h1 className="text-neutral-800 text-xl font-semibold">
+                        Reviewer
+                      </h1>
+                      <p className="text-neutral-600 text-sm">Lantai 1 no 10</p>
+                      <p className="text-neutral-600 text-xs">6/10/2023</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-1 items-center justify-start">
+                    <AiFillStar className="text-secondary-500 text-2xl " />
+                    <p className="text-secondary-500 text-2xl font-semibold">
+                      4.5
+                    </p>
+                  </div>
+                </div>
+                <div className="flex text-sm md:text-base text-neutral-600">
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, velit. At nisi rem consequuntur vel consectetur sunt rerum omnis cupiditate ea vitae ab facere</p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-8">
+                <div className="flex justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="avatar">
+                      <div className="w-16 rounded-full bg-neutral-200">
+                        <IoPersonCircleOutline
+                          size={64}
+                          className="text-neutral-600"
+                        />
+                        {/* <img src="" className="bg-primary-100" /> */}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <h1 className="text-neutral-800 text-xl font-semibold">
+                        Reviewer
+                      </h1>
+                      <p className="text-neutral-600 text-sm">Lantai 1 no 10</p>
+                      <p className="text-neutral-600 text-xs">6/10/2023</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-1 items-center justify-start">
+                    <AiFillStar className="text-secondary-500 text-2xl " />
+                    <p className="text-secondary-500 text-2xl font-semibold">
+                      4.5
+                    </p>
+                  </div>
+                </div>
+                <div className="flex text-sm md:text-base text-neutral-600">
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, velit. At nisi rem consequuntur vel consectetur sunt rerum omnis cupiditate ea vitae ab facere</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* //* Form Booking */}
-          <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-96 bg-primary-50">
-          </div>
-          <div className="btm-nav h-32 lg:hidden bg-primary-100">
-          </div>
+          <InputPengajuan/>
         </div>
       </div>
     </LandingPageLayout>

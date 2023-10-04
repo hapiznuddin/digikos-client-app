@@ -18,6 +18,7 @@ const InputField = forwardRef((props, ref) => {
     defaultValue,
     disabled,
     minLength,
+    classNameLabel,
   } = props;
 
   InputField.propTypes = {
@@ -33,11 +34,12 @@ const InputField = forwardRef((props, ref) => {
     defaultValue: PropTypes.string,
     disabled: PropTypes.bool,
     minLength: PropTypes.number,
+    classNameLabel: PropTypes.string,
   };
 
   return (
     <div className="flex flex-col">
-      <Label htmlFor={name}>{label}</Label>
+      <Label htmlFor={name} className={classNameLabel}>{label}</Label>
       <Input
         disabled={disabled}
         onChange={onChange}

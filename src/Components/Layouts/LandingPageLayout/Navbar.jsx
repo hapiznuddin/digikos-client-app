@@ -8,55 +8,40 @@ import { RxDashboard } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "../../../lib/axios";
-import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
-const role = Cookies.get("role");
-const name = Cookies.get("name"); 
+import Cookies from "js-cookie";
+import { useLogout } from "../../../features/auth/useLogout";
+
+
 
 const Navbar = () => {
-  const queryClient = useQueryClient();
+  const token = Cookies.get("token");
+  const role = Cookies.get("role");
+  const name = Cookies.get("name"); 
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [profileImage, setProfileImage] = useState(true);
 
-  
-  // const { data, isLoading } = useGetUser({
-  //   onSuccess: (data) => {
-  //     if (data?.data.role_id === 1) {
-  //       setIsLogin(true);
-  //     }
-  //   },
-  //   onError: (data) => {
-  //     console.log(data);
-  //   },
-  // });
-  
-  const {mutate, isLoading} = useMutation({
-    mutationFn: async () => {
-      const headers = {
-        "content-type": "application/json",
-        accept: "application/json",
-        authorization: `Bearer ${token}`,
-      }
-      const logout = await axiosInstance.post("/logout", null, {headers});
-      return logout.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries("navbarGetUser");
+  const {mutate, isLoading, isSuccess} = useLogout({
+    token,
+    onSuccess: (data) => {
+      console.log(data?.data.message);
       Cookies.remove("token");
       Cookies.remove("role");
       Cookies.remove("name");
-      setIsLogin(false);
+      navigate("/");
     },
     onError: (data) => {
+      // Cookies.remove("token");
+      // Cookies.remove("role");
+      // Cookies.remove("name");
+      setIsLogin(false);
+      navigate("/");
       console.log(data);
     }
   });
-
+  console.log(isLogin);
 const logout = () => {
   mutate();
 }
@@ -71,18 +56,23 @@ const logout = () => {
     //   }
     // }, [ location, hasRefreshed ]);
 
+    useEffect(() => {
+      if (isSuccess) {
+        setIsLogin(false);
+      }
+    }, [ isSuccess ]);
+
+    useEffect(() => {
+        if (role === "User") {
+          setIsLogin(true);
+        }
+    }, [ role ]);
+
   useEffect(() => {
     if (name === null) {
       setProfileImage(false);
     }
-
-    setTimeout(() => {
-      if (role === "User" && name !== null) {
-        setIsLogin(true);
-      }
-    }, 100);
-
-  }, []);
+  }, [ name ]);
 
   useEffect(() => {
     const handleScroll = () => {

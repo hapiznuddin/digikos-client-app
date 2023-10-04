@@ -43,9 +43,9 @@ const LoginPage = () => {
       Cookies.set("token", data.token, { expires: 7 });
       Cookies.set("name", data.name, { expires: 7 });
       Cookies.set("role", data.role, { expires: 7 });
-      if (data.role === "User") {
-        navigate("/");
-      } 
+        if (data.role === "User") {
+          navigate("/");
+        } 
     },
     onError: (data) => {
       console.log(data);
@@ -67,7 +67,7 @@ const LoginPage = () => {
       </div>): null}
     <div className="flex flex-col md:flex-row lg:flex-row">
       <div className="flex flex-col gap-10 justify-between items-center w-full px-6 mt-16 mb-6 md:mt-24 md:w-5/6 md:px-24 lg:w-3/4 ">
-        <div className="flex flex-col gap-6 w-full lg:w-3/5 ">
+        <div className="flex flex-col gap-6 w-full lg:max-w-lg">
           <div className="flex justify-center mb-12">
             <img
               src="/digikos.png"
@@ -75,7 +75,7 @@ const LoginPage = () => {
               className="mx-auto w-32 md:w-48"
             />
           </div>
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-semibold md:text-3xl lg:text-4xl">
               Selamat Datang
             </h1>
@@ -92,6 +92,7 @@ const LoginPage = () => {
                   name="email"
                   onChange={handleForm}
                   placeholder="Masukkan email"
+                  classNameLabel="text-base md:text-xl"
                 />
                 {formik.errors ? (
                   <p className="text-error-500">{email}</p>
@@ -104,6 +105,7 @@ const LoginPage = () => {
                   name="password"
                   onChange={handleForm}
                   placeholder="Masukkan password"
+                  classNameLabel="text-base md:text-xl"
                 />
                 {formik.errors ? (
                   <p className="text-error-500">{password}</p>

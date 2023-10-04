@@ -1,4 +1,4 @@
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../Elements/Button";
 import InputField from "../../Elements/Input";
 import "./Register.css";
@@ -34,7 +34,7 @@ const RegisterPage = () => {
         {
           "Content-Type": "application/json",
           Accept: "application/json",
-        },
+        }
       );
     },
     validationSchema: yup.object().shape({
@@ -69,12 +69,14 @@ const RegisterPage = () => {
 
   return (
     <>
-      {isLoading ? (<div className="flex fixed inset-0 bg-neutral-100/30 z-50 justify-center items-center drop-shadow-xl">
-        <span className="loading loading-infinity w-24 bg-primary-500"/>
-      </div>): null}
+      {isLoading ? (
+        <div className="flex fixed inset-0 bg-neutral-100/30 z-50 justify-center items-center drop-shadow-xl">
+          <span className="loading loading-infinity w-24 bg-primary-500" />
+        </div>
+      ) : null}
       <div className="flex flex-col md:flex-row lg:flex-row">
         <div className="flex flex-col gap-10 justify-between items-center w-full px-6 mt-16 mb-6 md:mt-24 md:w-5/6 md:px-24 lg:w-3/4 ">
-          <div className="flex flex-col gap-6 w-full lg:w-3/5 ">
+          <div className="flex flex-col gap-6 w-full lg:max-w-lg ">
             <div className="flex justify-center mb-12">
               <img
                 src="/digikos.png"
@@ -105,6 +107,7 @@ const RegisterPage = () => {
                     name="name"
                     placeholder="Masukkan username"
                     onChange={handleForm}
+                    classNameLabel="text-base md:text-xl"
                   />
                   {formik.errors ? (
                     <p className="text-error-500">{name}</p>
@@ -117,6 +120,7 @@ const RegisterPage = () => {
                     name="email"
                     placeholder="Masukkan email"
                     onChange={handleForm}
+                    classNameLabel="text-base md:text-xl"
                   />
                   {formik.errors ? (
                     <p className="text-error-500">{email}</p>
@@ -129,6 +133,7 @@ const RegisterPage = () => {
                     name="password"
                     placeholder="Masukkan password"
                     onChange={handleForm}
+                    classNameLabel="text-base md:text-xl"
                   />
                   {formik.errors ? (
                     <p className="text-error-500">{password}</p>
