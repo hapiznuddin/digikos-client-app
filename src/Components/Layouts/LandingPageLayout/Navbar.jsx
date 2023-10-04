@@ -8,11 +8,8 @@ import { RxDashboard } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
-
 import Cookies from "js-cookie";
 import { useLogout } from "../../../features/auth/useLogout";
-
-
 
 const Navbar = () => {
   const token = Cookies.get("token");
@@ -41,7 +38,6 @@ const Navbar = () => {
       console.log(data);
     }
   });
-  console.log(isLogin);
 const logout = () => {
   mutate();
 }
@@ -76,7 +72,7 @@ const logout = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 10) {
         setIsSticky(true);
       } else {
         setIsSticky(false);

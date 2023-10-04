@@ -1,14 +1,16 @@
 import PropTypes from "prop-types";
 
-const SelectField = ({children}) => {
+const SelectField = ({children, onChange, value}) => {
   SelectField.propTypes = {
     children: PropTypes.node,
-    name: PropTypes.string,
-    label: PropTypes.string,
-    classNameLabel: PropTypes.string
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+
   }
   return (
-    <select className="select select-bordered w-full rounded-full">
+    <select className="select select-bordered w-full rounded-full border focus:outline-primary-500 hover:border-primary-400"
+      onChange={onChange} value={value}
+    >
       {children}
     </select>
   );

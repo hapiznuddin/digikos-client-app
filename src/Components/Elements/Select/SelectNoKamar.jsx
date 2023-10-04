@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Label from "../Input/Label";
 
 
-const SelectOption = ({ name, label, classNameLabel }) => {
-  SelectOption.propTypes = {
+const SelectNoKamar = ({ name, label, classNameLabel }) => {
+  SelectNoKamar.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     classNameLabel: PropTypes.string,
@@ -14,13 +14,14 @@ const SelectOption = ({ name, label, classNameLabel }) => {
     <Label htmlFor={name} className={classNameLabel}>{label}</Label>
     <SelectField>
       <option disabled selected>
-        Who shot first?
+        Pilih nomor kamar
       </option>
-      <option>Han Solo</option>
-      <option>Greedo</option>
+      <option>1.1</option>
+      <option>1.2</option>
+      <option>2.3</option>
     </SelectField>
     </div>
   );
 };
 
-export default SelectOption;
+export default SelectNoKamar;

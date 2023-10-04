@@ -70,7 +70,7 @@ const ImageRoomSection = forwardRef((props, ref) => {
                 src={imageurl0}
                 className="w-full h-full rounded-2xl bg-cover bg-center"
               />
-            <div className="absolute bottom-4 right-4 z-10 bg-neutral-25 py-1 px-2 rounded-full text-xs font-medium md:hidden">
+            <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-2 rounded-full text-xs font-medium md:hidden">
               Lihat Gambar
             </div>
             </Link>
