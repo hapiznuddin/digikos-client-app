@@ -6,9 +6,17 @@ import LandingPageLayout from "../../../Layouts/LandingPageLayout";
 import { useDetailRoomPage } from "../../../../features/landingPage/roomPage/useDetailRoomPage";
 import ImageRoomSection from "./ImageRoomSection";
 import { PiCubeLight } from "react-icons/pi";
+import FacilityRoomSection from "./FacilityRoomSection";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;
+  const rupiahFormatter = (amount) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(amount);
+  };
 
   const { data: room, isLoading: loadingRoom } = useDetailRoomPage({
     id,
@@ -35,62 +43,99 @@ const DetailRoom = forwardRef((props, ref) => {
           <div className="flex gap-1 items-center justify-center">
             <p className="text-neutral-800 md:text-2xl font-semibold">4.5</p>
             <AiFillStar className="text-secondary-500 text-2xl lg:text-3xl" />
-            <p className="text-neutral-800 md:text-xl font-semibold">(120)</p>
+            <p className="text-neutral-800 md:text-xl font-semibold">(12)</p>
           </div>
         </div>
         <ImageRoomSection ref={ref} />
         <div className="flex mt-12 gap-8 w-full">
-          <div className="flex flex-col gap-6 w-3/5">
+          <div className="flex flex-col gap-6 w-full lg:w-3/5">
             <div className="flex flex-col gap-6">
-              <h1 className="text-neutral-800 text-3xl font-semibold">
+              <h1 className="text-neutral-800 text-2xl lg:text-3xl font-semibold">
                 Deskripsi Kamar
               </h1>
-              <p className="text-neutral-600 text-base">
+              <p className="text-neutral-600 text-sm lg:text-base">
                 {room?.data.room_description}
               </p>
             </div>
             <div className="divider " />
             <div className="flex flex-col gap-10">
-                <h1 className="text-neutral-800 text-3xl font-semibold">
-                  Spesifikasi tipe kamar
-                </h1>
+              <h1 className="text-neutral-800 text-2xl lg:text-3xl font-semibold">
+                Spesifikasi tipe kamar
+              </h1>
               <div className="flex flex-col gap-8">
                 <div className="flex gap-4">
                   <PiCubeLight size={32} />
-                  <p className="text-neutral-700 text-xl">
+                  <p className="text-neutral-700 text-lg lg:text-xl">
                     {room?.data.room_size}
                   </p>
                 </div>
                 <div className="flex gap-4">
                   {PepiconsPencilElectricityCircleOff()}
-                  <p className="text-neutral-700 text-xl">
+                  <p className="text-neutral-700 text-lg lg:text-xl">
                     Tidak termasuk listrik
                   </p>
                 </div>
               </div>
             </div>
             <div className="divider " />
+            <FacilityRoomSection ref={ref} />
+            <div className="divider " />
             <div className="flex flex-col gap-10">
-              <h1 className="text-neutral-800 text-3xl font-semibold">Fasilitas</h1>
+              <h1 className="text-neutral-800 text-2xl lg:text-3xl font-semibold">
+                Peraturan Kamar
+              </h1>
               <div className="flex flex-col gap-8">
-                <div className="flex gap-4">
+                <div className="flex gap-4 items-center">
                   <PiCubeLight size={32} />
-                  <p className="text-neutral-700 text-xl">
-                    {room?.data.room_size}
+                  <p className="text-neutral-700 text-lg lg:text-xl">
+                    Kamar ini diisi maksimal 2 orang
                   </p>
                 </div>
-                <div className="flex gap-4">
-                  {PepiconsPencilElectricityCircleOff()}
-                  <p className="text-neutral-700 text-xl">
-                    Tidak termasuk listrik
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between">
+                    <div className="flex gap-4 items-center">
+                      <FaRegMoneyBillAlt size={32} />
+                      <p className="text-neutral-700 font-semibold text-lg lg:text-xl">
+                        Deposit
+                      </p>
+                    </div>
+                    <p className="text-neutral-700 font-semibold text-lg lg:text-xl">
+                      {rupiahFormatter(room?.data.room_deposite)}
+                    </p>
+                  </div>
+                  <p className="text-neutral-600 text-sm md:text-base pl-12">
+                    Dikembalikan diakhir periode sewa jika tidak ditemukan
+                    kerusakan pada kamar.
                   </p>
+                </div>
+              </div>
+            </div>
+            <div className="divider " />
+            <div className="flex flex-col">
+              <div className="flex gap-4 items-center justify-start">
+                <div className="flex gap-1 items-center justify-start">
+                  <AiFillStar className="text-secondary-500 text-3xl md:text-4xl" />
+                  <p className="text-neutral-800 text-2xl md:text-3xl lg:text-4xl font-semibold">
+                    4.5
+                  </p>
+                </div>
+                <p className="text-neutral-800 text-xl  lg:text-3xl font-semibold">
+                  (12 review)
+                </p>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex">
+
                 </div>
               </div>
             </div>
           </div>
 
           {/* //* Form Booking */}
-          <div className="flex flex-col gap-6 w-2/5 h-96 bg-primary-50"></div>
+          <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-96 bg-primary-50">
+          </div>
+          <div className="btm-nav h-32 lg:hidden bg-primary-100">
+          </div>
         </div>
       </div>
     </LandingPageLayout>

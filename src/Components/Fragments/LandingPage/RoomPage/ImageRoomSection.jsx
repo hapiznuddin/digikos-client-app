@@ -26,10 +26,13 @@ const ImageRoomSection = forwardRef((props, ref) => {
 
   const imagePath0 = image?.data[0].path;
   const imageurl0 = `${import.meta.env.VITE_DIGIKOS_URL}${imagePath0}`;
-  const imagePath1 = image?.data[1].path;
-  const imageurl1 = `${import.meta.env.VITE_DIGIKOS_URL}${imagePath1}`;
-  const imagePath2 = image?.data[2].path;
-  const imageurl2 = `${import.meta.env.VITE_DIGIKOS_URL}${imagePath2}`;
+  const imageurl1 = image && image.data && image.data.length > 1
+  ? `${import.meta.env.VITE_DIGIKOS_URL}${image.data[1].path}`
+  : null;
+  
+  const imageurl2 = image && image.data && image.data.length > 2
+  ? `${import.meta.env.VITE_DIGIKOS_URL}${image.data[2].path}`
+  : null;
   return (
     <>
       {loadingImage ? (
@@ -44,16 +47,16 @@ const ImageRoomSection = forwardRef((props, ref) => {
           </Skeleton>
           <div className="flex flex-col w-1/3 gap-4 h-full">
             <Skeleton className="h-full">
-              <img
+            {imageurl1 ? (<img
                 src={imageurl1}
                 className=" h-full rounded-2xl bg-cover bg-center"
-              />
+              />): <Skeleton className="h-full w-full bg-neutral-300 rounded-2xl"/>}
             </Skeleton>
             <Skeleton className="h-full">
-              <img
+            {imageurl2 ? (<img
                 src={imageurl2}
                 className=" h-full rounded-2xl bg-cover bg-center"
-              />
+              />): <Skeleton className="h-full w-full bg-neutral-300 rounded-2xl"/>}
             </Skeleton>
           </div>
         </div>
@@ -74,17 +77,17 @@ const ImageRoomSection = forwardRef((props, ref) => {
           </div>
           <div className="hidden md:flex flex-col w-1/3 gap-4 md:h-full lg:h-full">
             <Link className="h-full" onClick={() => document.getElementById("my_modal_3").showModal()}>
-              <img
+            {imageurl1 ? (<img
                 src={imageurl1}
                 className=" h-full rounded-2xl bg-cover bg-center"
-              />
+              />): <div className="h-full w-full bg-neutral-300 rounded-2xl"/>}
             </Link>
             <Link className="h-full" onClick={() => document.getElementById("my_modal_3").showModal()}>
-              <img
+              {imageurl2 ? (<img
                 src={imageurl2}
                 className=" h-full rounded-2xl bg-cover bg-center"
-              />
-              <div className="absolute bottom-4 right-4 z-10 bg-neutral-25 py-1 px-2 rounded-full text-lg shadow-md font-medium">
+              />): <div className="h-full w-full bg-neutral-300 rounded-2xl"/>}
+              <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-2 rounded-full text-lg shadow-md font-medium">
               Lihat Gambar
             </div>
             </Link>
@@ -93,7 +96,7 @@ const ImageRoomSection = forwardRef((props, ref) => {
       )}
       {/* //* popup dialog galeri */}
       <dialog id="my_modal_3" className="modal mx-auto">
-        <div className="modal-box h-[70%] md:h-[85%] md:max-w-screen-xl">
+        <div className="modal-box h-[70%] md:h-full md:max-w-screen-xl">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               <AiOutlineClose size={24} />
@@ -109,7 +112,7 @@ const ImageRoomSection = forwardRef((props, ref) => {
             onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
             thumbs={{ swiper: thumbsSwiper }}
             modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper2 mt-2 w-full h-[80%] md:h-[650px]"
+            className="mySwiper2 mt-2 w-full h-[80%] md:h-[640px]"
           >
             {image?.data.map((image, index) => {
               const imagePath = `${import.meta.env.VITE_DIGIKOS_URL}${

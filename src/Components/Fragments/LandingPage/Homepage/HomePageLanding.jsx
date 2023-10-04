@@ -16,7 +16,7 @@ const HomePageLanding = () => {
           <HeroSection />
         </div>
         <FacilitySection />
-        <div className="bgFacility mt-20 h-[205px] w-full" />
+        <div className="bgFacility mt-20 h-[220px] w-full" />
         <div className="bgRoom mt-8 h-[1000px] w-full">
           <div className="w-full flex flex-col justify-center items-center h-full gap-24 mt-[500px] md:mt-56 lg:mt-4">
             <h1

@@ -3,7 +3,7 @@ import { axiosInstance } from "../../../lib/axios";
 
 export const useDetailRoomPage = ({id, onSuccess, onError}) => {
   return useQuery({
-    queryKey: ["detailRoom"],
+    queryKey: ["detailRoom", id],
     queryFn: async () => {
       const headers = {
         'content-type': "application/json",
