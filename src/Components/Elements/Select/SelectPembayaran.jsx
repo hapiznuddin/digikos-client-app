@@ -15,7 +15,7 @@ const SelectPembayaran = ({ name, label, classNameLabel, onChange, value }) => {
     <div className="flex flex-col">
     <Label htmlFor={name} className={classNameLabel}>{label}</Label>
     <SelectField onChange={onChange} value={value}>
-      <option disabled selected>
+      <option value='' disabled selected>
         Pilih jangka bayar
       </option>
       <option value="bulan">Perbulan</option>

@@ -59,7 +59,7 @@ const FacilitySection = () => {
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
-          data-aos-delay="700"
+          data-aos-delay="500"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ const FacilitySection = () => {
           data-aos="fade-right"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
-          data-aos-delay="600"
+          data-aos-delay="400"
         >
           <FaWifi size={32} />
           WiFi
@@ -92,7 +92,7 @@ const FacilitySection = () => {
           data-aos="fade-left"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
-          data-aos-delay="600"
+          data-aos-delay="400"
         >
           <TbAirConditioning size={32} />
           AC
@@ -102,7 +102,7 @@ const FacilitySection = () => {
           data-aos="fade-left"
           data-aos-duration="900"
           data-aos-easing="ease-out-quad"
-          data-aos-delay="800"
+          data-aos-delay="500"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

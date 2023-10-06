@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import PropTypes from "prop-types";
 
 const SelectField = ({children, onChange, value}) => {
@@ -5,11 +6,11 @@ const SelectField = ({children, onChange, value}) => {
     children: PropTypes.node,
     onChange: PropTypes.func,
     value: PropTypes.string,
-
   }
+
   return (
-    <select className="select select-bordered w-full rounded-full border focus:outline-primary-500 hover:border-primary-400"
-      onChange={onChange} value={value}
+    <select className="select select-bordered w-full rounded-full text-lg font-medium border focus:outline-primary-500 hover:border-primary-400"
+      onChange={onChange} value={value}  
     >
       {children}
     </select>

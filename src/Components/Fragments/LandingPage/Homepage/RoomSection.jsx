@@ -3,10 +3,9 @@ import { AiFillStar } from "react-icons/ai";
 import ButtonPrimary from "../../../Elements/Button";
 import "aos/dist/aos.css";
 import { SkeletonLandingPage } from "../../../Elements/Skeleton/SkeletonLandingPage";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const RoomSection = () => {
-  const navigate = useNavigate();
   const rupiahFormatter = (amount) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -15,7 +14,6 @@ const RoomSection = () => {
   };
 
   const { data, isLoading } = useRoomLandingpage({
-
     onError: (data) => {
       console.log(data);
     },
@@ -73,7 +71,9 @@ const RoomSection = () => {
                         <AiFillStar size={24} className="text-secondary-500" />
                       </div>
                     </div>
-                    <ButtonPrimary onClick={() => navigate(`/detailRoom/${room.id}`)} >Lihat Kamar</ButtonPrimary>
+                    <Link to={`/detailRoom/${room.id}`} className="w-full">
+                      <ButtonPrimary>Lihat Kamar</ButtonPrimary>
+                    </Link>
                   </div>
                 </div>
               </div>

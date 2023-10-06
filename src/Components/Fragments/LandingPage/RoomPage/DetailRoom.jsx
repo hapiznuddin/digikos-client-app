@@ -191,7 +191,7 @@ const DetailRoom = forwardRef((props, ref) => {
           </div>
 
           {/* //* Form Booking */}
-          <InputPengajuan hargaKamar={room?.data.room_price}/>
+          <InputPengajuan hargaKamar={room?.data.room_price} idKamar={room?.data.id}/>
         </div>
       </div>
     </LandingPageLayout>

@@ -17,6 +17,7 @@ const InputPengajuan = ({hargaKamar}) => {
   const [isLogin, setIsLogin] = useState(false);
   const [pembayaran, setPembayaran] = useState('bulan');
   const [harga, setHarga] = useState(hargaKamar);
+  const [lantai, setLantai] = useState('');
 
   const rupiahFormatter = (amount) => {
     return new Intl.NumberFormat("id-ID", {
@@ -55,6 +56,7 @@ const InputPengajuan = ({hargaKamar}) => {
       setIsLogin(false);
     }
   };
+
   return (
     <>
       <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-full bg-neutral-25 shadow-lg rounded-3xl border border-neutral-100 p-4">
@@ -72,10 +74,12 @@ const InputPengajuan = ({hargaKamar}) => {
             <SelectPembayaran
               label="Jangka Pembayaran"
               classNameLabel="md:text-base"
+              className = "text-lg"
+              value={pembayaran}
               onChange={(e) => setPembayaran(e.target.value)}
             />
-            <SelectLantai label="Lantai" classNameLabel="md:text-base" />
-            <SelectNoKamar label="Nomor Kamar" classNameLabel="md:text-base" />
+            <SelectLantai label="Lantai" classNameLabel="md:text-base" onChange={(e) => setLantai(e.target.value)} value={lantai}/>
+            <SelectNoKamar label="Nomor Kamar" classNameLabel="md:text-base" floor={lantai}/>
           </div>
         </form>
         <ButtonPrimary
@@ -95,8 +99,8 @@ const InputPengajuan = ({hargaKamar}) => {
       <div className="btm-nav h-[140px] lg:hidden bg-neutral-25 shadow-[0_-3px_4px_0_rgba(0,0,0,0.05)]">
         <div className="flex flex-col w-full gap-2 justify-end mb-12 px-12">
           <div className="flex justify-center w-full">
-            <p className="text-neutral-800 text-2xl font-bold">Rp 1.000.000</p>
-            <p className="text-neutral-800 text-lg font-medium">/bulan</p>
+            <p className="text-neutral-800 text-2xl font-bold">{rupiahFormatter(harga)}</p>
+            <p className="text-neutral-800 text-lg font-medium">/{pembayaran}</p>
           </div>
           <ButtonPrimary className="btn text-base font-normal mt-2"
           onClick={()=>document.getElementById('my_modal_4').showModal()}
@@ -108,6 +112,10 @@ const InputPengajuan = ({hargaKamar}) => {
 
       <dialog id="my_modal_4" className="modal">
   <div className="modal-box w-11/12 max-w-2xl">
+  <div className="flex items-end py-4">
+          <p className="text-neutral-800 text-3xl font-bold">{rupiahFormatter(harga)}</p>
+          <p className="text-neutral-800 text-xl font-medium">/{pembayaran}</p>
+        </div>
 <form>
       <div className="flex flex-col w-full gap-4">
             <InputField
@@ -118,9 +126,11 @@ const InputPengajuan = ({hargaKamar}) => {
             <SelectPembayaran
               label="Jangka Pembayaran"
               classNameLabel="md:text-base"
+              value={pembayaran}
+              onChange={(e) => setPembayaran(e.target.value)}
             />
-            <SelectLantai label="Lantai" classNameLabel="md:text-base" />
-            <SelectNoKamar label="Nomor Kamar" classNameLabel="md:text-base" />
+            <SelectLantai label="Lantai" classNameLabel="md:text-base" onChange={(e) => setLantai(e.target.value)} value={lantai}/>
+            <SelectNoKamar label="Nomor Kamar" classNameLabel="md:text-base" floor={lantai}/>
           </div>
 </form>
     <div className="modal-action ">
