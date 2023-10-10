@@ -9,10 +9,9 @@ import { IoClose } from "react-icons/io5";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "../../../../lib/axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useRentApply } from "../../../../features/landingPage/roomPage/useRentApply";
 
 const InputPengajuan = ({ hargaKamar }) => {
   InputPengajuan.propTypes = {
@@ -60,8 +59,8 @@ const InputPengajuan = ({ hargaKamar }) => {
   const formik = useFormik({
     initialValues: {
       start_date: "",
-      payment_term: "perbulan",
-      lantai: "",
+      payment_term: "bulan",
+      floor: "",
       number_room: "",
     },
     onSubmit: async () => {
@@ -76,24 +75,13 @@ const InputPengajuan = ({ hargaKamar }) => {
     validationSchema: yup.object().shape({
       start_date: yup.string().required("Tanggal wajib diisi"),
       payment_term: yup.string().required("Jangka pembayaran wajib diisi"),
-      lantai: yup.string().required("Lantai wajib diisi"),
+      floor: yup.string().required("Lantai wajib diisi"),
       number_room: yup.string().required("Nomor kamar wajib diisi"),
     }),
   });
-  console.log(formik.values);
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async (body) => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const pengajuanTahap1 = await axiosInstance.post("/rent-stage-1", body, {
-        headers,
-      });
-      return pengajuanTahap1.data;
-    },
+  const { mutate, isLoading } = useRentApply({
+    token,
     onSuccess: (data) => {
       console.log(data.rent_id);
       Swal.fire({
@@ -110,6 +98,9 @@ const InputPengajuan = ({ hargaKamar }) => {
     },
   });
 
+  const { start_date, number_room, payment_term, floor } = formik.errors;
+
+  console.log(formik.errors.payment_term);
   return (
     <>
       <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-full bg-neutral-25 shadow-lg rounded-3xl border border-neutral-100 p-4">
@@ -120,31 +111,47 @@ const InputPengajuan = ({ hargaKamar }) => {
           <p className="text-neutral-800 text-xl font-medium">/{pembayaran}</p>
         </div>
         <form onSubmit={formik.handleSubmit}>
-          <div className="flex flex-col w-full gap-4">
-            <InputField
-              type="date"
-              label="Mulai Kost"
-              name="start_date"
-              classNameLabel="md:text-base"
-              onChange={handleForm}
-            />
-            <SelectPembayaran
-              label="Jangka Pembayaran"
-              classNameLabel="md:text-base"
-              className="text-lg"
-              name="payment_term"
-              value={pembayaran}
-              onChangeCapture={(e) => setPembayaran(e.target.value)}
-              onChange={handleForm}
-            />
+          <div className="flex flex-col w-full gap-3">
+            <div className="flex flex-col gap-1">
+              <InputField
+                type="date"
+                label="Mulai Kost"
+                name="start_date"
+                classNameLabel="md:text-base"
+                onChange={handleForm}
+              />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{start_date}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
+              <SelectPembayaran
+                label="Jangka Pembayaran"
+                classNameLabel="md:text-base"
+                className="text-lg"
+                name="payment_term"
+                value={pembayaran}
+                onChangeCapture={(e) => setPembayaran(e.target.value)}
+                onChange={handleForm}
+              />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{payment_term}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
             <SelectLantai
               label="Lantai"
               classNameLabel="md:text-base"
-              name="lantai"
+              name="floor"
               value={lantai}
               onChangeCapture={(e) => setLantai(e.target.value)}
               onChange={handleForm}
             />
+            {formik.errors ? (
+                <p className="text-error-500 text-sm">{floor}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
             <SelectNoKamar
               label="Nomor Kamar"
               classNameLabel="md:text-base"
@@ -152,6 +159,10 @@ const InputPengajuan = ({ hargaKamar }) => {
               floor={lantai}
               onChange={handleForm}
             />
+            {formik.errors ? (
+                <p className="text-error-500 text-sm">{number_room}</p>
+              ) : null}
+            </div>
           </div>
           {isLogin ? (
             <ButtonPrimary type="submit" className=" text-lg font-medium mt-6">
@@ -205,6 +216,7 @@ const InputPengajuan = ({ hargaKamar }) => {
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex flex-col w-full gap-4">
+            <div className="flex flex-col gap-1">
               <InputField
                 type="date"
                 label="Mulai Kost"
@@ -212,6 +224,11 @@ const InputPengajuan = ({ hargaKamar }) => {
                 classNameLabel="md:text-base"
                 onChange={handleForm}
               />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{start_date}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
               <SelectPembayaran
                 label="Jangka Pembayaran"
                 classNameLabel="md:text-base"
@@ -221,14 +238,24 @@ const InputPengajuan = ({ hargaKamar }) => {
                 onChangeCapture={(e) => setPembayaran(e.target.value)}
                 onChange={handleForm}
               />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{payment_term}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
               <SelectLantai
                 label="Lantai"
                 classNameLabel="md:text-base"
-                name="lantai"
+                name="floor"
                 value={lantai}
                 onChangeCapture={(e) => setLantai(e.target.value)}
                 onChange={handleForm}
               />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{floor}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-1">
               <SelectNoKamar
                 label="Nomor Kamar"
                 classNameLabel="md:text-base"
@@ -236,6 +263,10 @@ const InputPengajuan = ({ hargaKamar }) => {
                 floor={lantai}
                 onChange={handleForm}
               />
+              {formik.errors ? (
+                <p className="text-error-500 text-sm">{floor}</p>
+              ) : null}
+            </div>
             </div>
           </form>
           <div className="modal-action ">

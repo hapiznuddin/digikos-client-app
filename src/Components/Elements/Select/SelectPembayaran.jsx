@@ -19,9 +19,9 @@ const SelectPembayaran = ({ name, label, classNameLabel, onChange, value, onChan
       <option value='' disabled selected>
         Pilih jangka bayar
       </option>
-      <option value="perbulan">Perbulan</option>
-      <option value="per 6 bulan">Per 6 bulan</option>
-      <option value="pertahun">Pertahun</option>
+      <option value="bulan">bulan</option>
+      <option value="6 bulan"> 6 bulan</option>
+      <option value="tahun">tahun</option>
     </SelectField>
     </div>
   );
