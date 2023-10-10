@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import DetailRoomPage from "./pages/landingPage/detailRoomPage.jsx";
+import RentalApplicationPage from "./pages/landingPage/rentalApplicationPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/detailRoom/:id",
     element: <DetailRoomPage />,
+  },
+  {
+    path: "/pengajuanSewa/:id",
+    element: <RentalApplicationPage />,
   }
 ]);
 

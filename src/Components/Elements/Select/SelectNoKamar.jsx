@@ -7,12 +7,15 @@ import { axiosInstance } from "../../../lib/axios";
 import { useStore } from "../../../lib/idClassRoom";
 import { useEffect } from "react";
 
-const SelectNoKamar = ({ name, label, classNameLabel, floor }) => {
+const SelectNoKamar = ({ name, label, classNameLabel, floor, onChange, value, onChangeCapture }) => {
   SelectNoKamar.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     classNameLabel: PropTypes.string,
     floor: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    onChangeCapture: PropTypes.func,
   };
   const id = useStore((state) => state.id);
 
@@ -30,9 +33,8 @@ const SelectNoKamar = ({ name, label, classNameLabel, floor }) => {
       return numberRoom;
     },
 
-    onError: (data) => {
-      refetch();
-      console.log(data);
+    onError: () => {
+      // refetch();
     },
   });
 
@@ -46,7 +48,7 @@ const SelectNoKamar = ({ name, label, classNameLabel, floor }) => {
       <Label htmlFor={name} className={classNameLabel}>
         {label}
       </Label>
-      <SelectField>
+      <SelectField value={value} onChange={onChange} name={name} onChangeCapture={onChangeCapture}>
             <option value='' disabled selected>
               Pilih nomor kamar
             </option>

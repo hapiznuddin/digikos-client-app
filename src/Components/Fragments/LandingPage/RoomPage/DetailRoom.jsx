@@ -32,11 +32,7 @@ const DetailRoom = forwardRef((props, ref) => {
       <div className=" flex flex-col gap-2 mt-8 lg:mt-20 w-full px-8 md:max-w-screen-md lg:max-w-screen-xl mx-auto ">
         <div className="flex justify-between items-center">
           {loadingRoom ? (
-            <Skeleton>
-              <h1 className="text-neutral-800 lg:text-3xl font-semibold">
-                {room?.data.room_name}
-              </h1>
-            </Skeleton>
+            <Skeleton w={"200px"} h={"30px"}/>
           ) : (
             <h1 className="text-neutral-800 text-xl md:text-2xl lg:text-3xl font-semibold">
               {room?.data.room_name}
