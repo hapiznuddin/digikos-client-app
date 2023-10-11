@@ -95,7 +95,7 @@ const logout = () => {
 
   const navbarClasses = `sticky ${
     isSticky ? "bg-neutral-25 shadow-sm" : ""
-  } top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-10`;
+  } top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-20`;
   return (
     <motion.div
       className={navbarClasses}
