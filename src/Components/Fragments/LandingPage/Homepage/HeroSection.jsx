@@ -1,11 +1,14 @@
+/* eslint-disable react/display-name */
 import ButtonPrimary from "../../../Elements/Button";
 import { motion } from "framer-motion";
 import View360 from "./View360";
+import { forwardRef } from "react";
 
-const HeroSection = () => {
+const HeroSection = forwardRef((props, ref) => {
+
   return (
     <>
-      <main className="flex flex-col md:flex-row lg:flex-row justify-center items-center w-full gap-10 mt-20 
+      <main ref={ref} className="flex flex-col md:flex-row lg:flex-row justify-center items-center w-full gap-10 mt-20 
         md:px-10 md:gap-4 md:mt-32 mx-auto
         lg: lg:gap-12 lg:mt-40 ">
         <div className="flex flex-col justify-center lg:ml-8 w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
@@ -68,6 +71,6 @@ const HeroSection = () => {
       </dialog>
     </>
   );
-};
+});
 
 export default HeroSection;

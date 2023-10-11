@@ -7,8 +7,8 @@ const OccupantInformation = () => {
               <h1 className="text-neutral-800 text-lg md:text-xl lg:text-2xl font-semibold">
                 Informasi Penyewa
               </h1>
-              <button className="btn btn-ghost btn-sm rounded-full text-base gap-1 text-neutral-600 normal-case hover:bg-primary-50 hover:text-primary-500">
-                <BiEdit size={24}/>
+              <button className="btn btn-ghost btn-sm rounded-full text-sm md:text-base gap-1 text-neutral-600 normal-case hover:bg-primary-50 hover:text-primary-500">
+                <BiEdit size={20}/>
                 Edit Profil
               </button>
             </div>

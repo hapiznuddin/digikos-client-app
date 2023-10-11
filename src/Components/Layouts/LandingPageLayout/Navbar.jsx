@@ -10,8 +10,16 @@ import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import { useLogout } from "../../../features/auth/useLogout";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) => {
+  Navbar.propTypes = {
+    onClickHome: PropTypes.func,
+    onClickFacility: PropTypes.func,
+    onClickRoom: PropTypes.func,
+    onClickContact: PropTypes.func,
+  };
+
   const token = Cookies.get("token");
   const role = Cookies.get("role");
   const name = Cookies.get("name"); 
@@ -103,22 +111,22 @@ const logout = () => {
       <div className="hidden md:flex justify-center items-center w-full">
         <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
           <li>
-            <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a onClick={onClickHome} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
               Beranda
             </a>
           </li>
           <li>
-            <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a onClick={onClickFacility} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
               Fasilitas
             </a>
           </li>
           <li>
-            <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a onClick={onClickRoom} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
               Kamar
             </a>
           </li>
           <li>
-            <a className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a onClick={onClickContact} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
               Kontak
             </a>
           </li>
@@ -157,10 +165,10 @@ const logout = () => {
                   className="dropdown-content z-[1] menu p-2 gap-2 shadow-md bg-neutral-25 rounded-box w-64 flex flex-col justify-between"
                 >
                   <li className="text-base font-medium">
-                    <a>
+                    <Link to={"/user/profil"}>
                       <AiOutlineUser size={24} />
                       <p>Profil</p>
-                    </a>
+                    </Link>
                   </li>
                   <li className="text-base font-medium">
                     <a>
@@ -204,22 +212,22 @@ const logout = () => {
             className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-60 mt-4"
           >
             <li>
-              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a onClick={onClickHome} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Beranda
               </a>
             </li>
             <li>
-              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a onClick={onClickFacility} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Fasilitas
               </a>
             </li>
             <li>
-              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a onClick={onClickRoom} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Kamar
               </a>
             </li>
             <li>
-              <a className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a onClick={onClickContact} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
                 Kontak
               </a>
             </li>

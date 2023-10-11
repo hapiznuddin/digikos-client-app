@@ -1,18 +1,21 @@
+/* eslint-disable react/display-name */
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 import { BiCheckShield } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
 import { LiaBathSolid } from "react-icons/lia";
 import { MdOutlineDryCleaning } from "react-icons/md";
 import { TbAirConditioning } from "react-icons/tb";
 
-const FacilitySection = () => {
+
+const FacilitySection = forwardRef((props, ref) => {
+
   useEffect(() => {
     AOS.init({ once: true });
   }, []);
   return (
-    <div className="flex flex-col justify-center items-center mx-auto mt-20 lg:mt-36 gap-8 md:gap-10 lg:gap-14 w-full md:max-w-screen-md lg:max-w-screen-lg">
+    <div ref={ref} className="flex flex-col justify-center items-center mx-auto mt-20 lg:mt-36 gap-8 md:gap-10 lg:gap-14 w-full md:max-w-screen-md lg:max-w-screen-lg">
       <div>
         <h1
           className="text-neutral-900 text-3xl md:text-4xl lg:text-5xl font-semibold"
@@ -132,6 +135,6 @@ const FacilitySection = () => {
       </div>
     </div>
   );
-};
+});
 
 export default FacilitySection;

@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { Skeleton } from "@chakra-ui/react";
 import LandingPageLayout from "../../../Layouts/LandingPageLayout";
@@ -10,9 +10,17 @@ import FacilityRoomSection from "./FacilityRoomSection";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import InputPengajuan from "./InputPengajuan";
+import { useNavigate } from "react-router-dom";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;
+  const navigate = useNavigate();
+  const contactRef = useRef();
+  const scrollToRef = (ref) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const rupiahFormatter = (amount) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -28,7 +36,7 @@ const DetailRoom = forwardRef((props, ref) => {
   });
 
   return (
-    <LandingPageLayout>
+    <LandingPageLayout classNameFooter={"mt-32 md:mt-40"} onClickHome={() => {navigate("/")}} onClickFacility={() => {navigate("/")}} onClickRoom={() => {navigate("/")}} onClickContact={() => {scrollToRef(contactRef)}}>
       <div className=" flex flex-col gap-2 mt-8 lg:mt-20 w-full px-8 md:max-w-screen-md lg:max-w-screen-xl mx-auto ">
         <div className="flex justify-between items-center">
           {loadingRoom ? (
@@ -190,6 +198,7 @@ const DetailRoom = forwardRef((props, ref) => {
           <InputPengajuan hargaKamar={room?.data.room_price} idKamar={room?.data.id}/>
         </div>
       </div>
+      <div ref={contactRef}/>
     </LandingPageLayout>
   );
 });

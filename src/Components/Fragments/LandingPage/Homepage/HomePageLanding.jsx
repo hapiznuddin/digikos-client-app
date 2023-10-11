@@ -5,17 +5,30 @@ import RoomSection from "./RoomSection";
 import "./HomePage.css";
 import "aos/dist/aos.css";
 import TestimonialSection from "./TestimonialSection";
+import { useRef } from "react";
 
 const HomePageLanding = () => {
+  const homeRef = useRef();
+  const facilityRef = useRef();
+  const roomRef = useRef();
+  const contactRef = useRef();
+
+  const scrollToRef = (ref) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
-    <LandingPageLayout classNameFooter="-mt-80 md:-mt-80 lg:-mt-80" >
+    <LandingPageLayout classNameFooter="-mt-80 md:-mt-80 lg:-mt-80" onClickHome={() => scrollToRef(homeRef)} onClickFacility={() => scrollToRef(facilityRef)} onClickRoom={() => scrollToRef(roomRef)} onClickContact={() => scrollToRef(contactRef)}>
+      <div ref={homeRef}/>
       <div className="flex flex-col justify-center items-center">
         <div className="bgHome  pb-6 h-full  md:h-[500px] lg:h-[935px] rounded-[24px] md:rounded-[48px] m-2 -mt-[70px] md:m-4 md:-mt-24 lg:-mt-24">
-          <HeroSection />
+          <HeroSection  />
         </div>
-        <FacilitySection />
+        <div ref={facilityRef}/>
+        <FacilitySection  />
         <div className="bgFacility mt-20 h-[220px] w-full" />
-        <div className="bgRoom mt-8 h-[1000px] w-full">
+        <div ref={roomRef} className="bgRoom mt-8 h-[1000px] w-full">
           <div className="w-full flex flex-col justify-center items-center h-full gap-24 mt-[500px] md:mt-56 lg:mt-4">
             <h1
               className="text-neutral-900 text-3xl md:text-4xl lg:text-5xl font-semibold"
@@ -43,6 +56,7 @@ const HomePageLanding = () => {
           <TestimonialSection />
         </div>
       </div>
+      <div ref={contactRef} className="flex flex-col justify-center items-center"/>   
     </LandingPageLayout>
   );
 };
