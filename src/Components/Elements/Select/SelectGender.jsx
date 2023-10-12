@@ -2,8 +2,15 @@ import SelectField from ".";
 import PropTypes from "prop-types";
 import Label from "../Input/Label";
 
-
-const SelectGender = ({ name, label, classNameLabel, onChange, value, onChangeCapture }) => {
+const SelectGender = ({
+  name,
+  label,
+  classNameLabel,
+  onChange,
+  value,
+  onChangeCapture,
+  defaultValue,
+}) => {
   SelectGender.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
@@ -11,17 +18,26 @@ const SelectGender = ({ name, label, classNameLabel, onChange, value, onChangeCa
     onChange: PropTypes.func,
     value: PropTypes.string,
     onChangeCapture: PropTypes.func,
-  }
+    defaultValue: PropTypes.string,
+  };
   return (
     <div className="flex flex-col">
-    <Label htmlFor={name} className={classNameLabel}>{label}</Label>
-    <SelectField onChange={onChange} value={value} name={name} onChangeCapture={onChangeCapture}>
-      <option value='' disabled selected>
-        Pilih jenis Kelamin
-      </option>
-      <option value="Laki-laki">Laki-laki</option>
-      <option value="Perempuan">Perempuan</option>
-    </SelectField>
+      <Label htmlFor={name} className={classNameLabel}>
+        {label}
+      </Label>
+      <SelectField
+        onChange={onChange}
+        value={value}
+        name={name}
+        onChangeCapture={onChangeCapture}
+        defaultValue={defaultValue}
+      >
+        <option value="" disabled selected>
+          Pilih jenis Kelamin
+        </option>
+        <option value="Laki-laki">Laki-laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </SelectField>
     </div>
   );
 };
