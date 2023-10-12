@@ -4,21 +4,22 @@ import SelectGender from "../../../../Elements/Select/SelectGender";
 import SelectPekerjaan from "../../../../Elements/Select/SelectPekerjaan";
 import TextAreaField from "../../../../Elements/TextArea/TextAreaField";
 import UserLandingPage from "../UserLandingPage";
-import { IoCameraOutline } from "react-icons/io5";
-import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { usePostProfile } from "../../../../../features/landingPage/userPage/usePostProfile";
 import { useGetProfile } from "../../../../../features/landingPage/userPage/useGetProfile";
+import PictureProfile from "./PictureProfile";
+import { useEffect, useState } from "react";
+import { useUpdateProfile } from "../../../../../features/landingPage/userPage/useUpdateProfile";
+import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
 
 const ProfileLandingPage = () => {
   const token = Cookies.get("token");
-  const [picture, setPicture] = useState(null);
-  const img = useRef();
+  const [statusData, setStatusData] = useState(null);
 
-  const { data, refetch } = useGetProfile({
+  const {data, refetch } = useGetProfile({
     token,
     onSuccess: (data) => {
       formik.setValues({
@@ -29,20 +30,28 @@ const ProfileLandingPage = () => {
         phone: data?.data.phone || "",
         occupation: data?.data.occupation || "",
       });
+      setStatusData(data?.status);
     },
     onError: (data) => {
       console.log(data);
-    }
-  })
-  console.log(data)
+    },
+  });
 
+  
+  const setId = useIdOccupantStore((state) => state.setId);
+  
+  useEffect(() => {
+    setId(data?.data.id);
+  }, [data, setId]);
+  
+  // const idRef = useRef(data?.data.id);
   const handleForm = (e) => {
     formik.setFieldValue(e.target.name, e.target.value);
   };
 
   const formik = useFormik({
     initialValues: {
-      name: "" ,
+      name: "",
       date_birth: "",
       gender: "",
       address: "",
@@ -52,14 +61,25 @@ const ProfileLandingPage = () => {
     onSubmit: async () => {
       const { name, date_birth, gender, address, phone, occupation } =
         formik.values;
-      mutate({
-        name,
-        date_birth,
-        gender,
-        address,
-        phone,
-        occupation,
-      });
+      if (statusData === 200) {
+        updateProfile({
+          name,
+          date_birth,
+          gender,
+          address,
+          phone,
+          occupation,
+        });
+      } else {
+        createProfile({
+          name,
+          date_birth,
+          gender,
+          address,
+          phone,
+          occupation,
+        });
+      }
     },
     validationSchema: yup.object({
       name: yup.string().required("Nama harus diisi"),
@@ -71,57 +91,50 @@ const ProfileLandingPage = () => {
     }),
   });
 
-  const { name, date_birth, gender, address, phone, occupation } = formik.errors;
+  const { name, date_birth, gender, address, phone, occupation } =
+    formik.errors;
 
-  const { mutate, isLoading } = usePostProfile({
-  token,
-    onSuccess: () => {
-      refetch();
-      Swal.fire({
-        title: "Berhasil",
-        text: "Profil berhasil dibuat",
-        icon: "success",
-        timer: 1500,
-      })
-    },
-    onError: (data) => {
-      console.log(data);
-    },
-  });
+  const { mutate: createProfile, isLoading: profileIsLoading } = usePostProfile(
+    {
+      token,
+      onSuccess: () => {
+        refetch();
+        Swal.fire({
+          title: "Berhasil",
+          text: "Profil berhasil dibuat",
+          icon: "success",
+          timer: 1500,
+        });
+      },
+      onError: (data) => {
+        console.log(data);
+      },
+    }
+  );
 
-
+  const { mutate: updateProfile, isLoading: updateIsLoading } =
+    useUpdateProfile({
+      token,
+      onSuccess: () => {
+        refetch();
+        Swal.fire({
+          title: "Berhasil",
+          text: "Profil berhasil diperbarui",
+          icon: "success",
+          timer: 1500,
+        });
+      },
+      onError: (data) => {
+        console.log(data);
+      },
+    });
   return (
     <UserLandingPage>
-      <div className="md:w-[420px] lg:w-[600px] mx-auto flex flex-col gap-4 py-12 px-8 justify-center items-center">
+      <div className="w-full md:w-[420px] lg:w-[600px] mx-auto flex flex-col gap-4 py-12 px-8 justify-center items-center">
         <h1 className="text-neutral-800 text-xl lg:text-2xl font-semibold">
           Informasi Pribadi
         </h1>
-        <div className="flex flex-col bg-neutral-200 w-32 h-32 rounded-full relative mt-4">
-          <img
-            src={
-              picture
-                ? picture
-                : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-            }
-            className="w-full h-full rounded-full"
-          />
-          <div
-            className="absolute bottom-1 right-0 bg-neutral-25 shadow w-9 h-9 rounded-full flex justify-center items-center z-10 cursor-pointer"
-            onClick={() => img.current.click()}
-          >
-            <IoCameraOutline size={24} />
-          </div>
-          <input
-            type="file"
-            className="hidden"
-            accept="image/*"
-            ref={img}
-            onChange={(e) => {
-              let pic = URL.createObjectURL(e.target.files[0]);
-              setPicture(pic);
-            }}
-          />
-        </div>
+        <PictureProfile />
         <form className="w-full ">
           <div className="flex flex-col w-full gap-2 ">
             <div className="flex flex-col gap-1">
@@ -136,7 +149,7 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{name}</p>
-              ): null}
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <InputField
@@ -149,7 +162,7 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{date_birth}</p>
-              ): null}
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <SelectGender
@@ -161,7 +174,7 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{gender}</p>
-              ): null}
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <TextAreaField
@@ -175,7 +188,7 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{address}</p>
-              ): null}
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <InputField
@@ -189,7 +202,7 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{phone}</p>
-              ): null}
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <SelectPekerjaan
@@ -201,27 +214,47 @@ const ProfileLandingPage = () => {
               />
               {formik.errors ? (
                 <p className="text-error-500 text-sm">{occupation}</p>
-              ): null}
+              ) : null}
             </div>
           </div>
         </form>
-        <div className="flex w-full justify-between mt-4">
+        <div className="flex flex-col-reverse gap-4 lg:flex-row lg:gap-0 w-full justify-between mt-4">
           <ButtonPrimary
-            className="w-64 text-lg font-medium bg-primary-100 text-primary-500 hover:bg-primary-200 hover:text-primary-600 active:text-neutral-25 active:bg-primary-300"
+            className="w-full lg:w-64 text-lg font-medium bg-primary-100 text-primary-500 hover:bg-primary-200 hover:text-primary-600 active:text-neutral-25 active:bg-primary-300"
             type={"button"}
             onClick={() => window.history.back()}
           >
             Batal
           </ButtonPrimary>
-          <ButtonPrimary
-            className="w-64 text-lg font-medium"
-            type={"button"}
-            onClick={() => {
-              formik.handleSubmit();
-            }}
-          >
-            {isLoading ? (<span className="loading loading-infinity loading-md"></span>) : "Simpan"}
-          </ButtonPrimary>
+          {statusData === 200 ? (
+            <ButtonPrimary
+              className="w-full lg:w-64 text-lg font-medium"
+              type={"button"}
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              {updateIsLoading ? (
+                <span className="loading loading-infinity loading-md"></span>
+              ) : (
+                "Update"
+              )}
+            </ButtonPrimary>
+          ) : (
+            <ButtonPrimary
+              className="w-full lg:w-64 text-lg font-medium"
+              type={"button"}
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              {profileIsLoading ? (
+                <span className="loading loading-infinity loading-md"></span>
+              ) : (
+                "Simpan"
+              )}
+            </ButtonPrimary>
+          )}
         </div>
       </div>
     </UserLandingPage>

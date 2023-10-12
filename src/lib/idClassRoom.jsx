@@ -5,3 +5,8 @@ export const useStore = create((set) => ({
   id: null,
   setId: (newId) => set({ id: newId }),
 }))
+
+export const useIdOccupantStore = create((set) => ({
+  id: null,
+  setId: (newId) => set({ id: newId }),
+}))
