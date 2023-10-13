@@ -5,12 +5,13 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { RxDashboard } from "react-icons/rx";
-import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import { useLogout } from "../../../features/auth/useLogout";
 import PropTypes from "prop-types";
+import { useGetProfilePic } from "../../../features/landingPage/userPage/useGetProfilePic";
+import { useIdOccupantStore } from "../../../lib/idClassRoom";
 
 const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) => {
   Navbar.propTypes = {
@@ -26,7 +27,20 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [profileImage, setProfileImage] = useState(true);
+  const id = useIdOccupantStore((state) => state.id);
+
+  const {data, refetch} = useGetProfilePic({
+    id,
+    token,
+    onSuccess: () => {
+    },
+    onError: (data) => {
+      console.log(data);
+      refetch();
+    }
+  })
+
+  const imgProfilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;
 
   const {mutate, isLoading, isSuccess} = useLogout({
     token,
@@ -53,13 +67,6 @@ const logout = () => {
   const urlImage =
     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60";
 
-    // useEffect(() => {
-    //   if ( location.pathname === "/" && !hasRefreshed ) {
-    //     window.location.reload();
-    //     setHasRefreshed(true);
-    //   }
-    // }, [ location, hasRefreshed ]);
-
     useEffect(() => {
       if (isSuccess) {
         setIsLogin(false);
@@ -71,12 +78,6 @@ const logout = () => {
           setIsLogin(true);
         }
     }, [ role ]);
-
-  useEffect(() => {
-    if (name === null) {
-      setProfileImage(false);
-    }
-  }, [ name ]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,6 +97,7 @@ const logout = () => {
   const navbarClasses = `sticky ${
     isSticky ? "bg-neutral-25 shadow-sm" : ""
   } top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-20`;
+
   return (
     <motion.div
       className={navbarClasses}
@@ -150,11 +152,7 @@ const logout = () => {
                   >
                     <div className="avatar">
                       <div className="w-9 rounded-full">
-                        {profileImage ? (
-                          <img src={urlImage} />
-                        ) : (
-                          <FaRegUserCircle size={32} />
-                        )}
+                          <img src={imgProfilePic ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"} />
                       </div>
                     </div>
                     <p className="text-base font-medium">{name}</p>
@@ -247,11 +245,7 @@ const logout = () => {
                           <div className=" m-1 rounded-full flex gap-2 justify-start items-center text-base font-medium normal-case w-full">
                             <div className="avatar">
                               <div className="w-8 rounded-full">
-                                {profileImage ? (
-                                  <img src={urlImage} />
-                                ) : (
-                                  <FaRegUserCircle size={32} />
-                                )}
+                                  <img src={imgProfilePic ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}/>
                               </div>
                             </div>
                             <p className="text-base font-medium">Nama User</p>
