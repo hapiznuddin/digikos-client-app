@@ -19,7 +19,7 @@ const ProfileLandingPage = () => {
   const token = Cookies.get("token");
   const [statusData, setStatusData] = useState(null);
 
-  const {data, refetch } = useGetProfile({
+  const { data, refetch } = useGetProfile({
     token,
     onSuccess: (data) => {
       formik.setValues({
@@ -37,13 +37,12 @@ const ProfileLandingPage = () => {
     },
   });
 
-  
+  // * Global State setId
   const setId = useIdOccupantStore((state) => state.setId);
-  
   useEffect(() => {
     setId(data?.data.id);
   }, [data, setId]);
-  
+
   // const idRef = useRef(data?.data.id);
   const handleForm = (e) => {
     formik.setFieldValue(e.target.name, e.target.value);
@@ -128,6 +127,7 @@ const ProfileLandingPage = () => {
         console.log(data);
       },
     });
+
   return (
     <UserLandingPage>
       <div className="w-full md:w-[420px] lg:w-[600px] mx-auto flex flex-col gap-4 py-12 px-8 justify-center items-center">

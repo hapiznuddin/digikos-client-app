@@ -6,11 +6,13 @@ import { useFormik } from "formik";
 import { usePostProfilePic } from "../../../../../features/landingPage/userPage/usePostProfilePic";
 import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
 import { useGetProfilePic } from "../../../../../features/landingPage/userPage/useGetProfilePic";
+import { useUpdateProfilePic } from "../../../../../features/landingPage/userPage/useUpdateProfilePic";
 
 const PictureProfile = () => {
   const token = Cookies.get("token");
   const img = useRef();
   const [picture, setPicture] = useState(null);
+  const [status, setStatus] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const id = useIdOccupantStore((state) => state.id);
 
@@ -24,6 +26,19 @@ const PictureProfile = () => {
     },
   });
 
+  const { mutate: updateProfilePic } = useUpdateProfilePic({
+    token,
+    setUploadProgress,
+    onSuccess: (data) => {
+      console.log(data);
+      setUploadProgress(0);
+      refetch();
+    },
+    onError: (data) => {
+      console.log(data);
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       profile_pic: "",
@@ -32,7 +47,11 @@ const PictureProfile = () => {
       if (picture) {
         const formData = new FormData();
         formData.append("profile_pic", img.current.files[0]);
-        mutate(formData);
+        if (status === 200) {
+          updateProfilePic(formData);
+        } else {
+          mutate(formData);
+        }
       }
     },
   });
@@ -40,9 +59,11 @@ const PictureProfile = () => {
   const { data, isLoading, refetch } = useGetProfilePic({
     token,
     id,
-    onError: (data) => {
+    onSuccess: (data) => {
+      setStatus(data.status);
+    },
+    onError: () => {
       refetch();
-      console.log(data);
     },
   });
 
@@ -51,19 +72,17 @@ const PictureProfile = () => {
     <div className="flex flex-col bg-neutral-200 w-24 h-24 lg:w-32 lg:h-32 rounded-full relative mt-4">
       {isLoading ? (
         <img
-        src={
-          "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-        }
-        className="w-full h-full rounded-full"
-      />
+          src={"https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}
+          className="w-full h-full rounded-full"
+        />
       ) : (
         <img
           src={
             picture
               ? picture
               : profilePic
-                ? profilePic
-                : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+              ? profilePic
+              : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
           }
           className="w-full h-full rounded-full"
         />
