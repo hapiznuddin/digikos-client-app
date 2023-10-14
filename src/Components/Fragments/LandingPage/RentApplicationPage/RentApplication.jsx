@@ -18,9 +18,8 @@ import InputField from "../../../Elements/Input";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import RequirementDocument from "./RequirementDocument";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { axiosInstance } from "../../../../lib/axios";
+import { useGetRent1 } from "../../../../features/landingPage/rentPage/useGetRent1";
 
 const steps = [
   { description: "Ajukan sewa" },
@@ -43,22 +42,11 @@ const RentApplication = forwardRef((props, ref) => {
   };
   const [tambahanPenyewa, setTambahanPenyewa] = useState(1);
 
-  const { data } = useQuery({
-    queryKey: ["getRent", id],
-    queryFn: async () => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      }
-      const getRent = await axiosInstance.get(`/rent-stage-1?id=${id}`, {
-        headers: headers
-      })
-      return getRent
-    },
+  const { data } = useGetRent1({
+    id,
+    token,
     onSuccess: (data) => {
-      console.log(data?.data)
-      setPriceRoom(data?.data.total_payment)
+      setPriceRoom(data?.data.total_price)
       setDeposit(data?.data.classroom?.deposit)
     },
     onError: (data) => {
@@ -156,7 +144,7 @@ const RentApplication = forwardRef((props, ref) => {
             </div>
             <div className="flex flex-col justify-center gap-2">
               <h1 className="text-neutral-800 text-lg font-semibold">{data?.data.classroom?.name}</h1>
-              <p className="text-neutral-600 text-base">ukuran</p>
+              <p className="text-neutral-600 text-base">{data?.data.classroom?.size}</p>
               <p className="text-neutral-600 text-base">lantai {data?.data.room?.floor} nomor {data?.data.room?.number_room}</p>
             </div>
           </div>
@@ -173,7 +161,7 @@ const RentApplication = forwardRef((props, ref) => {
             <h1 className="text-neutral-800 text-lg font-semibold mt-4 mb-2">Rincian pembayaran pertama</h1>
             <div className="flex justify-between">
               <h1 className="text-neutral-700 font-medium">Biaya sewa kos</h1>
-              <p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.total_payment)}</p>
+              <p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.total_price)}</p>
             </div>
             <div className="flex justify-between">
               <h1 className="text-neutral-700 font-medium">Deposit</h1>

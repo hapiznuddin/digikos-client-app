@@ -2,6 +2,8 @@ import { BiEdit } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import { useGetProfile } from "../../../../features/landingPage/userPage/useGetProfile"
 import Cookies from "js-cookie"
+import { useIdOccupantStore } from "../../../../lib/idClassRoom"
+import { useEffect } from "react"
 
 const OccupantInformation = () => {
   const token = Cookies.get("token")
@@ -11,6 +13,10 @@ const OccupantInformation = () => {
       console.log(data)
     }
   })
+  const setId = useIdOccupantStore((state) => state.setId);
+  useEffect(() => {
+    setId(data?.data.id);
+  }, [data, setId]);
   return (
     <div className="flex flex-col w-full gap-6">
             <div className="flex justify-between">

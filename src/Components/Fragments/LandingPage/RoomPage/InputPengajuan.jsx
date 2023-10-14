@@ -69,7 +69,7 @@ const InputPengajuan = ({ hargaKamar }) => {
         start_date,
         number_room,
         payment_term: pembayaran,
-        total_payment: harga,
+        total_price: harga,
       });
     },
     validationSchema: yup.object().shape({
@@ -100,7 +100,6 @@ const InputPengajuan = ({ hargaKamar }) => {
 
   const { start_date, number_room, payment_term, floor } = formik.errors;
 
-  console.log(formik.errors.payment_term);
   return (
     <>
       <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-full bg-neutral-25 shadow-lg rounded-3xl border border-neutral-100 p-4">

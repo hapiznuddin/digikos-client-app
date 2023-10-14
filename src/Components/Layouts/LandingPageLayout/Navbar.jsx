@@ -27,6 +27,7 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [img, setImg] = useState(false);
   const id = useIdOccupantStore((state) => state.id);
 
   const {data, refetch} = useGetProfilePic({
@@ -41,6 +42,13 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
   })
 
   const imgProfilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;
+  useEffect(() => {
+    if (data?.data.path === undefined) {
+      setImg(false);
+    } else {
+      setImg(true);
+    }
+  }, [data]);
 
   const {mutate, isLoading, isSuccess} = useLogout({
     token,
@@ -63,9 +71,6 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
 const logout = () => {
   mutate();
 }
-
-  const urlImage =
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60";
 
     useEffect(() => {
       if (isSuccess) {
@@ -152,7 +157,7 @@ const logout = () => {
                   >
                     <div className="avatar">
                       <div className="w-9 rounded-full">
-                          <img src={imgProfilePic ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"} />
+                          <img src={img ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"} />
                       </div>
                     </div>
                     <p className="text-base font-medium">{name}</p>
@@ -245,7 +250,7 @@ const logout = () => {
                           <div className=" m-1 rounded-full flex gap-2 justify-start items-center text-base font-medium normal-case w-full">
                             <div className="avatar">
                               <div className="w-8 rounded-full">
-                                  <img src={imgProfilePic ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}/>
+                                  <img src={img ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}/>
                               </div>
                             </div>
                             <p className="text-base font-medium">Nama User</p>
