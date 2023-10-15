@@ -4,10 +4,11 @@ import { useGetProfile } from "../../../../features/landingPage/userPage/useGetP
 import Cookies from "js-cookie"
 import { useIdOccupantStore } from "../../../../lib/idClassRoom"
 import { useEffect } from "react"
+import { Skeleton } from "@chakra-ui/react"
 
 const OccupantInformation = () => {
   const token = Cookies.get("token")
-  const { data } = useGetProfile({
+  const { data, isLoading } = useGetProfile({
     token,
     onError: (data) => {
       console.log(data)
@@ -33,23 +34,23 @@ const OccupantInformation = () => {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
                 <h1 className="text-neutral-700 text-lg font-semibold">Nama Penyewa</h1>
-                <h1 className="text-neutral-500 text-base font-medium">{data?.data.name}</h1>
+                {isLoading ? (<Skeleton className="w-28 h-5"/>) : (<h1 className="text-neutral-500 text-base font-medium">{data?.data.name}</h1>)}
               </div>
               <div className="flex flex-col gap-1">
                 <h1 className="text-neutral-700 text-lg font-semibold">Nomor HP</h1>
-                <h1 className="text-neutral-500 text-base font-medium">{data?.data.phone}</h1>
+                {isLoading ? (<Skeleton className="w-40 h-5"/>) : (<h1 className="text-neutral-500 text-base font-medium">{data?.data.phone}</h1>)}
               </div>
               <div className="flex flex-col gap-1">
                 <h1 className="text-neutral-700 text-lg font-semibold">Alamat</h1>
-                <h1 className="text-neutral-500 text-base font-medium">{data?.data.address}</h1>
+                {isLoading ? (<Skeleton className="w-56 h-5"/>) : (<h1 className="text-neutral-500 text-base font-medium">{data?.data.address}</h1>)}
               </div>
               <div className="flex flex-col gap-1">
                 <h1 className="text-neutral-700 text-lg font-semibold">Jenis Kelamin</h1>
-                <h1 className="text-neutral-500 text-base font-medium">{data?.data.gender}</h1>
+                {isLoading ? (<Skeleton className="w-28 h-5"/>) : (<h1 className="text-neutral-500 text-base font-medium">{data?.data.gender}</h1>)}
               </div>
               <div className="flex flex-col gap-1">
                 <h1 className="text-neutral-700 text-lg font-semibold">Pekerjaan</h1>
-                <h1 className="text-neutral-500 text-base font-medium">{data?.data.occupation}</h1>
+                {isLoading ? (<Skeleton className="w-28 h-5"/>) : (<h1 className="text-neutral-500 text-base font-medium">{data?.data.occupation}</h1>)}
               </div>
             </div>
           </div>

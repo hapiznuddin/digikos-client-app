@@ -12,6 +12,7 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useRentApply } from "../../../../features/landingPage/roomPage/useRentApply";
+import { Skeleton } from "@chakra-ui/react";
 
 const InputPengajuan = ({ hargaKamar }) => {
   InputPengajuan.propTypes = {
@@ -23,6 +24,7 @@ const InputPengajuan = ({ hargaKamar }) => {
   const [pembayaran, setPembayaran] = useState("bulan");
   const [harga, setHarga] = useState(hargaKamar);
   const [lantai, setLantai] = useState("");
+  const [isLoadingHarga, setIsLoadingHarga] = useState(false);
 
   const rupiahFormatter = (amount) => {
     return new Intl.NumberFormat("id-ID", {
@@ -40,6 +42,14 @@ const InputPengajuan = ({ hargaKamar }) => {
       setHarga(hargaKamar * 12);
     }
   }, [pembayaran, hargaKamar]);
+
+  useEffect(() => {
+    if(hargaKamar === undefined) {
+      setIsLoadingHarga(true);
+    } else {
+      setIsLoadingHarga(false);
+    }
+  }, [ hargaKamar ]);
 
   useEffect(() => {
     const isLoggedIn = () => {
@@ -104,9 +114,10 @@ const InputPengajuan = ({ hargaKamar }) => {
     <>
       <div className="hidden lg:sticky lg:top-28 lg:flex lg:flex-col gap-6 w-2/5 h-full bg-neutral-25 shadow-lg rounded-3xl border border-neutral-100 p-4">
         <div className="flex items-end">
-          <p className="text-neutral-800 text-3xl font-bold">
+
+          {isLoadingHarga ? (<Skeleton className="w-60 h-8 absolute rounded-xl"/>) : (<p className="text-neutral-800 text-3xl font-bold">
             {rupiahFormatter(harga)}
-          </p>
+          </p>)}
           <p className="text-neutral-800 text-xl font-medium">/{pembayaran}</p>
         </div>
         <form onSubmit={formik.handleSubmit}>

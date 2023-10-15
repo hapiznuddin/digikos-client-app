@@ -4,6 +4,7 @@ import { forwardRef, useRef, useState } from "react";
 import LandingPageLayout from "../../../Layouts/LandingPageLayout";
 import {
   Box,
+  Skeleton,
   Step,
   StepIcon,
   StepIndicator,
@@ -20,6 +21,11 @@ import RequirementDocument from "./RequirementDocument";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useGetRent1 } from "../../../../features/landingPage/rentPage/useGetRent1";
+import { useFormik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import { axiosInstance } from "../../../../lib/axios";
+import { useIdOccupantStore } from "../../../../lib/idClassRoom";
+import Swal from "sweetalert2";
 
 const steps = [
   { description: "Ajukan sewa" },
@@ -35,6 +41,7 @@ const RentApplication = forwardRef((props, ref) => {
   const contactRef = useRef();
   const [priceRoom, setPriceRoom] = useState(0);
   const [deposit, setDeposit] = useState(0);
+  const idOccupant = useIdOccupantStore((state) => state.id);
   const scrollToRef = (ref) => {
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
@@ -42,7 +49,7 @@ const RentApplication = forwardRef((props, ref) => {
   };
   const [tambahanPenyewa, setTambahanPenyewa] = useState(1);
 
-  const { data } = useGetRent1({
+  const { data, isLoading } = useGetRent1({
     id,
     token,
     onSuccess: (data) => {
@@ -53,6 +60,8 @@ const RentApplication = forwardRef((props, ref) => {
       console.log(data)
     }
   })
+
+  const roomImg = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.room_image?.path}`;
 
   const rupiahFormatter = (value) => {
     return new Intl.NumberFormat("id-ID", {
@@ -69,7 +78,50 @@ const RentApplication = forwardRef((props, ref) => {
     }
   }
 
+  const handleChangeInput = (e) => {
+    formik.setFieldValue(e.target.name , e.target.value)
+  }
 
+  const formik = useFormik({
+    initialValues: {
+      additional_occupant: ""
+    },
+    onSubmit: async () => {
+      mutate({
+        rent_id: id, 
+        occupant_id: idOccupant, 
+        total_payment: totalPayment(),
+        additional_occupant: formik.values.additional_occupant
+      })
+    }
+  })
+
+  
+  const {mutate} = useMutation({
+    mutationFn: async (body) => {
+      const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization : `Bearer ${token}`,
+      }
+      const rentStage2 = await axiosInstance.put("/rent-stage-2", body, { headers: headers })
+      return rentStage2
+    },
+    onSuccess: () => {
+      Swal.fire({
+        title: "Berhasil",
+        text: "Pengajuan sewa berhasil",
+        icon: "success",
+        timer: 1500,
+      // }).then(() => {
+      //   navigate(`/pengajuanSewa/${data.rent_id}`);
+      });
+    },
+    onError: (data) => {
+      console.log(data)
+    }
+  })
+  
   return (
     <LandingPageLayout classNameFooter={"mt-32 md:mt-40"} onClickHome={() => {navigate("/")}} onClickFacility={() => {navigate("/")}} onClickRoom={() => {navigate("/")}} onClickContact={() => {scrollToRef(contactRef)}}>
       <div className="flex flex-col gap-12 mt-8 lg:mt-20 w-full px-8 md:max-w-screen-md lg:max-w-screen-xl mx-auto">
@@ -119,6 +171,7 @@ const RentApplication = forwardRef((props, ref) => {
                 name="additional_occupant"
                 classNameLabel="md:text-lg"
                 placeholder="Masukkan nama penyewa tambahan"
+                onChange={handleChangeInput}
               />
             </div>
             <div className="flex gap-4">
@@ -140,46 +193,46 @@ const RentApplication = forwardRef((props, ref) => {
         <div className="lg:sticky lg:top-28 top-12 w-full lg:w-2/5 lg:flex flex-col h-full border border-neutral-100 rounded-3xl bg-neutral-25 shadow-lg py-6 px-6">
           <div className="flex w-full gap-4">
             <div className="w-2/5 h-28 bg-cover bg-center rounded-xl overflow-hidden bg-primary-50">
-            <img src="https://informa.co.id/files/uploads/inspirationarticle/thumb_image/2020/Apr/20/5e9d566c1a263/kamar-tidur-nyaman0-770x770.jpg" className="h-full w-full aspect-video object-cover object-center rounded-xl" />
+            {isLoading ? (<Skeleton className="w-full h-full rounded-xl"/>) :(<img src={roomImg} className="h-full w-full aspect-video object-cover object-center rounded-xl" />)}
             </div>
             <div className="flex flex-col justify-center gap-2">
-              <h1 className="text-neutral-800 text-lg font-semibold">{data?.data.classroom?.name}</h1>
+              {isLoading ? (<><Skeleton className="w-32 h-6 rounded-xl"/><Skeleton className="w-24 h-4 rounded-xl"/><Skeleton className="w-32 h-5 rounded-xl"/></>) : (<><h1 className="text-neutral-800 text-lg font-semibold">{data?.data.classroom?.name}</h1>
               <p className="text-neutral-600 text-base">{data?.data.classroom?.size}</p>
-              <p className="text-neutral-600 text-base">lantai {data?.data.room?.floor} nomor {data?.data.room?.number_room}</p>
+              <p className="text-neutral-600 text-base">lantai {data?.data.room?.floor} nomor {data?.data.room?.number_room}</p></>)}
             </div>
           </div>
           <div className="divider" />
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <h1 className="text-neutral-800 font-semibold">Tanggal mulai kos</h1>
-              <p className="text-neutral-700 font-medium">{data?.data.start_date}</p>
+              {isLoading ? (<Skeleton className="w-28 h-5 rounded-xl"/>) : (<p className="text-neutral-700 font-medium">{data?.data.start_date}</p>)}
             </div>
             <div className="flex justify-between">
               <h1 className="text-neutral-800 font-semibold">Jangka pembayaran</h1>
-              <p className="text-neutral-700 font-medium">{data?.data.payment_term}</p>
+              {isLoading ? (<Skeleton className="w-16 h-5 rounded-xl"/>) :(<p className="text-neutral-700 font-medium">{data?.data.payment_term}</p>)}
             </div>
             <h1 className="text-neutral-800 text-lg font-semibold mt-4 mb-2">Rincian pembayaran pertama</h1>
             <div className="flex justify-between">
               <h1 className="text-neutral-700 font-medium">Biaya sewa kos</h1>
-              <p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.total_price)}</p>
+              {isLoading ? (<Skeleton className="w-40 h-6 rounded-xl"/>) :(<p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.total_price)}</p>)}
             </div>
             <div className="flex justify-between">
               <h1 className="text-neutral-700 font-medium">Deposit</h1>
-              <p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.classroom?.deposit)}</p>
+              {isLoading ? (<Skeleton className="w-32 h-6 rounded-xl"/>) :(<p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(data?.data.classroom?.deposit)}</p>)}
             </div>
             {tambahanPenyewa === 2 ? (<div className="flex justify-between">
               <h1 className="text-neutral-700 font-medium">Tambahan penghuni</h1>
-              <p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(300000)}</p>
+              {isLoading ? (<Skeleton className="w-28 h-6 rounded-xl"/>) :(<p className="text-neutral-800 text-lg font-semibold">{rupiahFormatter(300000)}</p>)}
             </div>): null}
           </div>
           <div className="divider" />
             <div className="flex justify-between">
               <h1 className="text-neutral-700 text-lg font-medium">Total pembayaran</h1>
-              <p className="text-neutral-800 text-xl font-semibold">{rupiahFormatter(totalPayment())}</p>
+              {isLoading ? (<Skeleton className="w-44 h-7 rounded-xl"/>) :(<p className="text-neutral-800 text-xl font-semibold">{rupiahFormatter(totalPayment())}</p>)}
             </div>
         </div>
       </div>
-          <ButtonPrimary className="text-lg font-medium w-full lg:w-[58%] ">Ajukan Sewa</ButtonPrimary>
+          <ButtonPrimary className="text-lg font-medium w-full lg:w-[58%]" type='button' onClick={() => formik.handleSubmit()}>Ajukan Sewa</ButtonPrimary>
       </div>
       <div ref={contactRef}/>
     </LandingPageLayout>
