@@ -10,7 +10,7 @@ import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import { useLogout } from "../../../features/auth/useLogout";
 import PropTypes from "prop-types";
-import { useGetProfilePic } from "../../../features/landingPage/userPage/useGetProfilePic";
+import { useGetProfilePic } from "../../../services/landingPage/userPage/useGetProfilePic";
 import { useIdOccupantStore } from "../../../lib/idClassRoom";
 
 const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) => {

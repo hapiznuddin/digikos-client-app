@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 import { useRef, useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { useFormik } from "formik";
-import { usePostProfilePic } from "../../../../../features/landingPage/userPage/usePostProfilePic";
 import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
-import { useGetProfilePic } from "../../../../../features/landingPage/userPage/useGetProfilePic";
-import { useUpdateProfilePic } from "../../../../../features/landingPage/userPage/useUpdateProfilePic";
+import { usePostProfilePic } from "../../../../../services/landingPage/userPage/usePostProfilePic";
+import { useUpdateProfilePic } from "../../../../../services/landingPage/userPage/useUpdateProfilePic";
+import { useGetProfilePic } from "../../../../../services/landingPage/userPage/useGetProfilePic";
 
 const PictureProfile = () => {
   const token = Cookies.get("token");

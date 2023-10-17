@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
 import { useIdOccupantStore } from "../../../../lib/idClassRoom";
-import { useUploadKTP } from "../../../../features/landingPage/rentPage/useUploadKTP";
-import { useGetKTP } from "../../../../features/landingPage/rentPage/useGetKTP";
-import { useUploadKK } from "../../../../features/landingPage/rentPage/useUploadKK";
-import { useGetKK } from "../../../../features/landingPage/rentPage/useGetKK";
+import { useUploadKTP } from "../../../../services/landingPage/rentPage/useUploadKTP";
+import { useGetKTP } from "../../../../services/landingPage/rentPage/useGetKTP";
+import { useUploadKK } from "../../../../services/landingPage/rentPage/useUploadKK";
+import { useGetKK } from "../../../../services/landingPage/rentPage/useGetKK";
 import { Skeleton } from "@chakra-ui/react";
 
 const RequirementDocument = () => {

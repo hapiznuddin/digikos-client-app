@@ -1,6 +1,6 @@
 import { BiEdit } from "react-icons/bi"
 import { Link } from "react-router-dom"
-import { useGetProfile } from "../../../../features/landingPage/userPage/useGetProfile"
+import { useGetProfile } from "../../../../services/landingPage/userPage/useGetProfile"
 import Cookies from "js-cookie"
 import { useIdOccupantStore } from "../../../../lib/idClassRoom"
 import { useEffect } from "react"

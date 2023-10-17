@@ -1,9 +1,9 @@
-import { useRoomLandingpage } from "../../../../features/landingPage/useRoomLandingpage";
 import { AiFillStar } from "react-icons/ai";
 import ButtonPrimary from "../../../Elements/Button";
 import "aos/dist/aos.css";
 import { SkeletonLandingPage } from "../../../Elements/Skeleton/SkeletonLandingPage";
 import { Link } from "react-router-dom";
+import { useRoomLandingpage } from "../../../../services/useRoomLandingpage";
 
 const RoomSection = () => {
   const rupiahFormatter = (amount) => {

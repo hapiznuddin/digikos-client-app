@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import { Link } from "react-router-dom";
-import { useImageRoomPage } from "../../../../features/landingPage/roomPage/useImageRoomPage";
 import { forwardRef, useState } from "react";
 import { Skeleton } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -10,6 +9,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { useImageRoomPage } from "../../../../services/landingPage/roomPage/useImageRoomPage";
 // import "./imageSection.css";
 
 const ImageRoomSection = forwardRef((props, ref) => {

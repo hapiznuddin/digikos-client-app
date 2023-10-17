@@ -3,7 +3,6 @@ import { forwardRef, useRef } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { Skeleton } from "@chakra-ui/react";
 import LandingPageLayout from "../../../Layouts/LandingPageLayout";
-import { useDetailRoomPage } from "../../../../features/landingPage/roomPage/useDetailRoomPage";
 import ImageRoomSection from "./ImageRoomSection";
 import { PiCubeLight } from "react-icons/pi";
 import FacilityRoomSection from "./FacilityRoomSection";
@@ -11,6 +10,7 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import InputPengajuan from "./InputPengajuan";
 import { useNavigate } from "react-router-dom";
+import { useDetailRoomPage } from "../../../../services/landingPage/roomPage/useDetailRoomPage";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;

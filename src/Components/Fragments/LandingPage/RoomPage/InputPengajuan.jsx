@@ -11,8 +11,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { useRentApply } from "../../../../features/landingPage/roomPage/useRentApply";
 import { Skeleton } from "@chakra-ui/react";
+import { useRentApply } from "../../../../services/landingPage/roomPage/useRentApply";
 
 const InputPengajuan = ({ hargaKamar }) => {
   InputPengajuan.propTypes = {

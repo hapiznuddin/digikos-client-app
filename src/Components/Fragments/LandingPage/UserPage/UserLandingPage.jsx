@@ -48,16 +48,18 @@ const UserLayoutPage = ({ children }) => {
             </button>
           </Link>
           <div className="divider -my-8" />
+          <Link to={"/user/riwayatpengajuansewa"} className="w-full">
           <button
             className={`btn btn-ghost w-full normal-case justify-start rounded-full text-base md:text-sm font-normal lg:text-lg lg:font-medium hover:bg-primary-50 ${
-              location.pathname === "/"
-                ? "bg-primary-50 text-primary-500 hover:bg-primary-300 hover:text-primary-600 active:text-neutral-25 active:bg-primary-400"
-                : ""
+              location.pathname === "/user/riwayatpengajuansewa"
+              ? "bg-primary-50 text-primary-500 hover:bg-primary-300 hover:text-primary-600 active:text-neutral-25 active:bg-primary-400"
+              : ""
             }`}
-          >
+            >
             <CgNotes className="text-2xl lg:text-2xl" />
             Riwayat Pengajuan Sewa
           </button>
+            </Link>
         </div>
         <div className="w-full h-full flex flex-col gap-12 rounded-2xl border-2 border-neutral-200">
           {children}

@@ -8,12 +8,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { usePostProfile } from "../../../../../features/landingPage/userPage/usePostProfile";
-import { useGetProfile } from "../../../../../features/landingPage/userPage/useGetProfile";
 import PictureProfile from "./PictureProfile";
 import { useEffect, useState } from "react";
-import { useUpdateProfile } from "../../../../../features/landingPage/userPage/useUpdateProfile";
 import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
+import { useGetProfile } from "../../../../../services/landingPage/userPage/useGetProfile";
+import { usePostProfile } from "../../../../../services/landingPage/userPage/usePostProfile";
+import { useUpdateProfile } from "../../../../../services/landingPage/userPage/useUpdateProfile";
 
 const ProfileLandingPage = () => {
   const token = Cookies.get("token");

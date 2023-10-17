@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 
-const ButtonPrimary = ({ children, onClick, className, type }) => {
+const ButtonPrimary = ({ children, onClick, className, type, disabled }) => {
   ButtonPrimary.propTypes = {
     children: PropTypes.node,
     onClick: PropTypes.func,
     className: PropTypes.string,
     type: PropTypes.string,
+    disabled: PropTypes.string,
   };
   return (
     <button
@@ -16,6 +17,7 @@ const ButtonPrimary = ({ children, onClick, className, type }) => {
       )}
       onClick={onClick}
       type={type}
+      disabled={disabled}
     >
       {children}
     </button>

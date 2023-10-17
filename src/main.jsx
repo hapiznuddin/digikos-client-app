@@ -11,6 +11,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import DetailRoomPage from "./pages/landingPage/detailRoomPage.jsx";
 import RentalApplicationPage from "./pages/landingPage/rentalApplicationPage.jsx";
 import ProfilePage from "./pages/landingPage/userPage/profilePage.jsx";
+import RentHistoryPage from "./pages/landingPage/userPage/rentHistoryPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/user/profil",
     element: <ProfilePage />,
+  },
+  {
+    path: "/user/riwayatpengajuansewa",
+    element: <RentHistoryPage />,
   },
 ]);
 

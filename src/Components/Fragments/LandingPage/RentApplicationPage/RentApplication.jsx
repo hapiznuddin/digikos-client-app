@@ -20,7 +20,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import RequirementDocument from "./RequirementDocument";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useGetRent1 } from "../../../../features/landingPage/rentPage/useGetRent1";
+import { useGetRent1 } from "../../../../services/landingPage/rentPage/useGetRent1";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../lib/axios";

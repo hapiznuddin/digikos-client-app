@@ -5,7 +5,7 @@ import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { MdOutlineDesk } from "react-icons/md";
 import { TbAirConditioning } from "react-icons/tb";
-import { useFacilityPage } from "../../../../features/landingPage/roomPage/useFacilityPage";
+import { useFacilityPage } from "../../../../services/landingPage/roomPage/useFacilityPage";
 
 const FacilityRoomSection = forwardRef((props, ref) => {
 const id = ref.current
