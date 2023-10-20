@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import { useRef, useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { useFormik } from "formik";
-import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
 import { usePostProfilePic } from "../../../../../services/landingPage/userPage/usePostProfilePic";
 import { useUpdateProfilePic } from "../../../../../services/landingPage/userPage/useUpdateProfilePic";
 import { useGetProfilePic } from "../../../../../services/landingPage/userPage/useGetProfilePic";
@@ -14,7 +13,6 @@ const PictureProfile = () => {
   const [picture, setPicture] = useState(null);
   const [status, setStatus] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const id = useIdOccupantStore((state) => state.id);
 
   const { mutate } = usePostProfilePic({
     token,
@@ -58,12 +56,11 @@ const PictureProfile = () => {
 
   const { data, isLoading, refetch } = useGetProfilePic({
     token,
-    id,
     onSuccess: (data) => {
       setStatus(data.status);
     },
-    onError: () => {
-      refetch();
+    onError: (data) => {
+      console.log(data);
     },
   });
 

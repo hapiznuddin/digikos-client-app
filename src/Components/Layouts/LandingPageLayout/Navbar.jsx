@@ -8,10 +8,9 @@ import { RxDashboard } from "react-icons/rx";
 import { FiLogOut } from "react-icons/fi";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import Cookies from "js-cookie";
-import { useLogout } from "../../../features/auth/useLogout";
 import PropTypes from "prop-types";
 import { useGetProfilePic } from "../../../services/landingPage/userPage/useGetProfilePic";
-import { useIdOccupantStore } from "../../../lib/idClassRoom";
+import { useLogout } from "../../../services/auth/useLogout";
 
 const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) => {
   Navbar.propTypes = {
@@ -28,16 +27,13 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [img, setImg] = useState(false);
-  const id = useIdOccupantStore((state) => state.id);
 
-  const {data, refetch} = useGetProfilePic({
-    id,
+  const {data} = useGetProfilePic({
     token,
     onSuccess: () => {
     },
     onError: (data) => {
       console.log(data);
-      refetch();
     }
   })
 

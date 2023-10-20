@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import {} from "axios";
 import Swal from "sweetalert2";
-import { useRegisteruser } from "../../../features/auth/useRegisterUser";
+import { useRegisteruser } from "../../../services/auth/useRegisterUser";
 
 const RegisterPage = () => {
   const navigate = useNavigate();

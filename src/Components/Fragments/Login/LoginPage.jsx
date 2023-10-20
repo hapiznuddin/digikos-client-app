@@ -4,9 +4,9 @@ import InputField from "../../Elements/Input";
 import "./Login.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useLoginUser } from "../../../features/auth/useLoginuser";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { useLoginUser } from "../../../services/auth/useLoginuser";
 
 const LoginPage = () => {
   const navigate = useNavigate();

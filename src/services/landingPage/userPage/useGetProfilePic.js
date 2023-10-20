@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { axiosInstance } from "../../../lib/axios"
 
-export const useGetProfilePic = ({id, token, onSuccess, onError}) => {
+export const useGetProfilePic = ({ token, onSuccess, onError}) => {
   return useQuery({
     queryKey: ["profilePic"],
     queryFn: async () => {
@@ -10,7 +10,7 @@ export const useGetProfilePic = ({id, token, onSuccess, onError}) => {
         accept: "application/json",
         Authorization: `Bearer ${token}`,
       }
-      const profilePic = await axiosInstance.get(`/occupant/profile-pic?id=${id}`, {headers: headers})
+      const profilePic = await axiosInstance.get(`/occupant/profile-pic`, {headers: headers})
       return profilePic
     },
     onSuccess,

@@ -13,8 +13,6 @@ const View360 = () => {
           borderRadius: "16px",
           maxWidth: "100%",
         }}
-        allowfullscreen=""
-        frameborder="0"
         src="https://virtualtoureasy.com/tour/viewer/index.php?v=ZYCLWbq0d8fy7hrHA2TI"
         allowcontrols="true"
         allowsceneselector="true"
