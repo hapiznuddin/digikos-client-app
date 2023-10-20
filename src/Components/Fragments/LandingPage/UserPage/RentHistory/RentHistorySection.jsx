@@ -54,6 +54,24 @@ const RentHistorySection = () => {
     }
   })
 
+  const {mutate: webhookMidtrans} = useMutation({
+    mutationFn: async (body) => {
+      const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization : `Bearer ${token}`,
+      }
+      const webhookPayment = await axiosInstance.post("/webhook-payment", body, {headers: headers})
+      return webhookPayment
+    },
+    onSuccess: (data) => {
+      console.log(data)
+    },
+    onError: (data) => {
+      console.log(data)
+    }
+  })
+
   useEffect(() => {
     if (midtransToken) {
       window.snap.pay(midtransToken, {
@@ -61,6 +79,9 @@ const RentHistorySection = () => {
           console.log(result);
           Cookies.set("pembayaranMidtrans", JSON.stringify(result));
           setMidtransToken('');
+          webhookMidtrans(
+            result
+          )
           Swal.fire({
             title: "Berhasil",
             text: "Pembayaran Berhasil",
@@ -87,7 +108,7 @@ const RentHistorySection = () => {
         }
       })
     }
-  }, [ midtransToken, navigate ]);
+  }, [ midtransToken, navigate, webhookMidtrans ]);
 
   useEffect(() => {
     const midtransUrl = `${import.meta.env.VITE_MIDTRANS_SNAP}`;

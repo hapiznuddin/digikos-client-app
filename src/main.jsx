@@ -55,7 +55,7 @@ const router = createBrowserRouter([
     element: <RentHistoryPage />,
   },
   {
-    path: "/webhook/midtrans",
+    path: "/user/webhook/midtrans",
     element: <WebhookMidtransPage/>,
   }
 ]);
