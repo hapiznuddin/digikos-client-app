@@ -87,12 +87,13 @@ const RentHistorySection = () => {
             text: "Pembayaran Berhasil",
             icon: "success",
             timer: 1500,
+          }).then(() => {
+            window.location.reload();
           })
         },
         onPending: (result) => {
           Cookies.set("pembayaranMidtrans", JSON.stringify(result));
           setMidtransToken('');
-          navigate("/user/riwayatPengajuanSewa");
         },
         onError: (error) => {
           Swal.fire({

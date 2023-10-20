@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import App, { Profile } from "./App.jsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/login/index.jsx";
@@ -10,7 +10,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import DetailRoomPage from "./pages/landingPage/detailRoomPage.jsx";
 import RentalApplicationPage from "./pages/landingPage/rentalApplicationPage.jsx";
-import ProfilePage from "./pages/landingPage/userPage/profilePage.jsx";
+// import ProfilePage from "./pages/landingPage/userPage/profilePage.jsx";
 import RentHistoryPage from "./pages/landingPage/userPage/rentHistoryPage.jsx";
 import WebhookMidtransPage from "./pages/landingPage/webhookMidtransPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/user/profil",
-    element: <ProfilePage />,
+    element: <Profile />,
   },
   {
     path: "/user/riwayatPengajuanSewa",

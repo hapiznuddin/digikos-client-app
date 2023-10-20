@@ -1,4 +1,5 @@
 import HomePage from "./pages/landingPage/homePage"
+import ProfilePage from "./pages/landingPage/userPage/profilePage"
 
 
 function App() {
@@ -9,3 +10,10 @@ function App() {
 }
 
 export default App
+
+export const Profile = () => {
+  return (
+    <ProfilePage/>
+  )
+}
+
