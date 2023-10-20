@@ -7,7 +7,7 @@ const ButtonPrimary = ({ children, onClick, className, type, disabled }) => {
     onClick: PropTypes.func,
     className: PropTypes.string,
     type: PropTypes.string,
-    disabled: PropTypes.string,
+    disabled: PropTypes.bool,
   };
   return (
     <button
