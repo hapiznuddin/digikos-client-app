@@ -1,6 +1,6 @@
 import { RiMenu3Fill } from "react-icons/ri";
 import ButtonPrimary from "../../Elements/Button";
-import {Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
@@ -11,8 +11,14 @@ import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useGetProfilePic } from "../../../services/landingPage/userPage/useGetProfilePic";
 import { useLogout } from "../../../services/auth/useLogout";
+import { useGetRentHistory } from "../../../services/landingPage/userPage/useGetRentHistory";
 
-const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) => {
+const Navbar = ({
+  onClickHome,
+  onClickFacility,
+  onClickRoom,
+  onClickContact,
+}) => {
   Navbar.propTypes = {
     onClickHome: PropTypes.func,
     onClickFacility: PropTypes.func,
@@ -22,20 +28,20 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
 
   const token = Cookies.get("token");
   const role = Cookies.get("role");
-  const name = Cookies.get("name"); 
+  const name = Cookies.get("name");
   const navigate = useNavigate();
   const [isSticky, setIsSticky] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [img, setImg] = useState(false);
+  // const [status, setStatus] = useState(null);
 
-  const {data} = useGetProfilePic({
+  const { data } = useGetProfilePic({
     token,
-    onSuccess: () => {
-    },
+    onSuccess: () => {},
     onError: (data) => {
       console.log(data);
-    }
-  })
+    },
+  });
 
   const imgProfilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;
   useEffect(() => {
@@ -46,7 +52,7 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
     }
   }, [data]);
 
-  const {mutate, isLoading, isSuccess} = useLogout({
+  const { mutate, isLoading, isSuccess } = useLogout({
     token,
     onSuccess: (data) => {
       console.log(data?.data.message);
@@ -62,23 +68,23 @@ const Navbar = ({ onClickHome, onClickFacility, onClickRoom, onClickContact }) =
       setIsLogin(false);
       navigate("/");
       console.log(data);
-    }
+    },
   });
-const logout = () => {
-  mutate();
-}
+  const logout = () => {
+    mutate();
+  };
 
-    useEffect(() => {
-      if (isSuccess) {
-        setIsLogin(false);
-      }
-    }, [ isSuccess ]);
+  useEffect(() => {
+    if (isSuccess) {
+      setIsLogin(false);
+    }
+  }, [isSuccess]);
 
-    useEffect(() => {
-        if (role === "User") {
-          setIsLogin(true);
-        }
-    }, [ role ]);
+  useEffect(() => {
+    if (role === "User") {
+      setIsLogin(true);
+    }
+  }, [role]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,6 +105,13 @@ const logout = () => {
     isSticky ? "bg-neutral-25 shadow-sm" : ""
   } top-0 navbar flex justify-between py-4 px-4 mx-auto md:px-10 lg:px-24 md:mt-6 z-20`;
 
+  const { data: statusData } = useGetRentHistory({
+    token,
+    onError: (data) => {
+      console.log(data);
+    },
+  });
+
   return (
     <motion.div
       className={navbarClasses}
@@ -108,28 +121,43 @@ const logout = () => {
     >
       <div className="w-fit">
         <Link to={"/"}>
-        <img src="/digikos.png" className="w-24 aspect-auto md:w-48 lg:w-[200px]" />
+          <img
+            src="/digikos.png"
+            className="w-24 aspect-auto md:w-48 lg:w-[200px]"
+          />
         </Link>
       </div>
       <div className="hidden md:flex justify-center items-center w-full">
         <ul className="menu menu-horizontal text-base lg:text-xl text-neutral-800 font-medium">
           <li>
-            <a onClick={onClickHome} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a
+              onClick={onClickHome}
+              className="rounded-full hover:bg-primary-50 hover:text-primary-500"
+            >
               Beranda
             </a>
           </li>
           <li>
-            <a onClick={onClickFacility} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a
+              onClick={onClickFacility}
+              className="rounded-full hover:bg-primary-50 hover:text-primary-500"
+            >
               Fasilitas
             </a>
           </li>
           <li>
-            <a onClick={onClickRoom} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a
+              onClick={onClickRoom}
+              className="rounded-full hover:bg-primary-50 hover:text-primary-500"
+            >
               Kamar
             </a>
           </li>
           <li>
-            <a onClick={onClickContact} className="rounded-full hover:bg-primary-50 hover:text-primary-500">
+            <a
+              onClick={onClickContact}
+              className="rounded-full hover:bg-primary-50 hover:text-primary-500"
+            >
               Kontak
             </a>
           </li>
@@ -153,7 +181,13 @@ const logout = () => {
                   >
                     <div className="avatar">
                       <div className="w-9 rounded-full">
-                          <img src={img ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"} />
+                        <img
+                          src={
+                            img
+                              ? imgProfilePic
+                              : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                          }
+                        />
                       </div>
                     </div>
                     <p className="text-base font-medium">{name}</p>
@@ -170,13 +204,21 @@ const logout = () => {
                     </Link>
                   </li>
                   <li className="text-base font-medium">
-                    <a>
-                      <RxDashboard size={24} />
-                      <p>Dashboard</p>
-                    </a>
+                    {statusData?.data[0].status_id === 4 ? (
+                      <Link to={"/user/dashboard"}>
+                        <RxDashboard size={24} />
+                        <p>Dashboard</p>
+                      </Link>
+                    ) : (
+                      <a>
+                        <RxDashboard size={24} />
+                        <p>Dashboard</p>
+                      </a>
+                    )}
                   </li>
                   <div className="divider w-full my-1 px-2" />
-                  <button className="btn flex gap-2 justify-center items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base"
+                  <button
+                    className="btn flex gap-2 justify-center items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base"
                     onClick={logout}
                   >
                     <FiLogOut size={24} />
@@ -211,22 +253,34 @@ const logout = () => {
             className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-60 mt-4"
           >
             <li>
-              <a onClick={onClickHome} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a
+                onClick={onClickHome}
+                className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500"
+              >
                 Beranda
               </a>
             </li>
             <li>
-              <a onClick={onClickFacility} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a
+                onClick={onClickFacility}
+                className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500"
+              >
                 Fasilitas
               </a>
             </li>
             <li>
-              <a onClick={onClickRoom} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a
+                onClick={onClickRoom}
+                className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500"
+              >
                 Kamar
               </a>
             </li>
             <li>
-              <a onClick={onClickContact} className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500">
+              <a
+                onClick={onClickContact}
+                className="rounded-full text-base font-medium hover:bg-primary-50 hover:text-primary-500"
+              >
                 Kontak
               </a>
             </li>
@@ -246,7 +300,13 @@ const logout = () => {
                           <div className=" m-1 rounded-full flex gap-2 justify-start items-center text-base font-medium normal-case w-full">
                             <div className="avatar">
                               <div className="w-8 rounded-full">
-                                  <img src={img ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}/>
+                                <img
+                                  src={
+                                    img
+                                      ? imgProfilePic
+                                      : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                                  }
+                                />
                               </div>
                             </div>
                             <p className="text-base font-medium">Nama User</p>
@@ -254,16 +314,23 @@ const logout = () => {
                         </summary>
                         <ul>
                           <li className="text-base">
-                            <a>
+                            <Link to={"/user/profil"}>
                               <AiOutlineUser size={24} />
                               <p>Profil</p>
-                            </a>
+                            </Link>
                           </li>
                           <li className="text-base">
-                            <a>
-                              <RxDashboard size={24} />
-                              <p>Dashboard</p>
-                            </a>
+                            {status === 4 ? (
+                              <Link to={"/user/dashboard"}>
+                                <RxDashboard size={24} />
+                                <p>Dashboard</p>
+                              </Link>
+                            ) : (
+                              <a>
+                                <RxDashboard size={24} />
+                                <p>Dashboard</p>
+                              </a>
+                            )}
                           </li>
                           <div className="divider w-full my-1 px-2" />
                           <button className="btn flex gap-2 justify-center w-full items-center rounded-full normal-case hover:bg-primary-100 hover:text-primary-500 text-base">

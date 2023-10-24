@@ -12,6 +12,7 @@ import DetailRoomPage from "./pages/landingPage/detailRoomPage.jsx";
 import RentalApplicationPage from "./pages/landingPage/rentalApplicationPage.jsx";
 import ProfilePage from "./pages/landingPage/userPage/profilePage.jsx";
 import RentHistoryPage from "./pages/landingPage/userPage/rentHistoryPage.jsx";
+import DashboardUserPage from "./pages/dashboard/user/dashboardUserPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     path: "/user/riwayatPengajuanSewa",
     element: <RentHistoryPage />,
   },
+  {
+    path: "/user/dashboard",
+    element: <DashboardUserPage />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

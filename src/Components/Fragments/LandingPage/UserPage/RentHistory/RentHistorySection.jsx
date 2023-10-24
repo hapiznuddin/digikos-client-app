@@ -17,7 +17,7 @@ const RentHistorySection = () => {
   const [midtransToken, setMidtransToken] = useState('');
   const navigate = useNavigate();
 
-  const { data } = useGetRentHistory({
+  const { data, isLoading } = useGetRentHistory({
     token,
     // onSuccess: (data) => {
     //   console.log(data);
@@ -27,7 +27,21 @@ const RentHistorySection = () => {
     },
   });
 
-  // Fungsi untuk mengubah format tanggal
+// Fungsi untuk mengubah format tanggal
+function formatDate(inputDate) {
+  const months = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ];
+
+  const dateParts = inputDate.split('-');
+  if (dateParts.length === 3) {
+    const [year, month, day] = dateParts;
+    const monthName = months[parseInt(month, 10) - 1];
+    return `${day} ${monthName} ${year}`;
+  }
+  return inputDate; // Kembalikan format asli jika tidak valid
+}
 
   const rupiahFormatter = (value) => {
     return new Intl.NumberFormat("id-ID", {
@@ -126,19 +140,27 @@ const RentHistorySection = () => {
       document.body.removeChild(scriptTag);
     };
   }, [])
+
   return (
     <UserLayoutPage>
-      <div className="w-full  mx-auto flex flex-col gap-8 py-8 px-4">
+      <div className="w-full mx-auto flex flex-col gap-8 py-8 px-4">
         <h1 className="text-neutral-800 text-lg  lg:text-xl font-semibold">
           Riwayat Pengajuan Sewa
         </h1>
-
-        {data?.data.map((rent, index) => {
-          const imgRoom = `${import.meta.env.VITE_DIGIKOS_URL}${rent.room_image?.path}`
-          return (
+        {isLoading ? (
+          <div className="flex justify-center">
+          <span className="loading loading-spinner loading-lg bg-primary-400" />
+          </div>
+        ):(
+          data?.data.length > 0 ? (
+          data?.data.map((rent, index) => {
+            const imgRoom = `${import.meta.env.VITE_DIGIKOS_URL}${rent.room_image?.path}`
+            const dateString = rent.start_date;
+            const formattedDate = formatDate(dateString);
+            return (
             <div
-              key={index}
-              className="flex flex-col gap-8 border rounded-xl shadow-md p-4 md:p-6"
+            key={index}
+            className="flex flex-col gap-8 border rounded-xl shadow-md p-4 md:p-6"
             >
               <div className="flex flex-col">
                 <div className="badge bg-warning-200 text-warning-700">{rent.status}</div>
@@ -148,7 +170,7 @@ const RentHistorySection = () => {
                     <img
                   src={imgRoom}
                   className="h-full w-full aspect-video object-cover object-center rounded-xl"
-                />
+                  />
                   </div>
                   <div className="flex flex-col gap-2">
                     <h1 className="text-neutral-800 text-base md:text-lg font-semibold">
@@ -161,7 +183,7 @@ const RentHistorySection = () => {
                     <p className="text-neutral-600 text-sm md:text-base">
                       Tanggal masuk{" "}
                       <span className="text-neutral-800 font-medium">
-                        {rent.start_date}
+                        {formattedDate}
                       </span>
                     </p>
                     <p className="text-neutral-600 text-sm md:text-base">
@@ -272,7 +294,14 @@ const RentHistorySection = () => {
           occupant_id: rent.occupant_id})} >Bayar Sekarang</ButtonPrimary>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="flex flex-col justify-center items-center gap-4 py-4">
+          <img src="/bg-nodata.webp" className="w-32 md:w-48" />
+          <p className='text-lg font-medium'>Data pengajuan sewa belum ada</p>
+        </div>
+      )
+        )}
       </div>
     </UserLayoutPage>
   );
