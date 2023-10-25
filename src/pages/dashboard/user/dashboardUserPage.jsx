@@ -1,8 +1,8 @@
 import { HelmetProvider } from "react-helmet-async"
-import { HomeProfile } from "../../../Components/Fragments/Dashboard/User/HomeProfile"
 import HeadMetaData from "../../../Components/HeadMetaData"
 import { useEffect } from "react"
 import Cookies from "js-cookie"
+import { HomeProfile } from "../../../Components/Fragments/Dashboard/User/Profile/HomeProfile"
 
 const DashboardUserPage = () => {
   const token = Cookies.get("token");

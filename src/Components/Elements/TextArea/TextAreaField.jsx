@@ -18,7 +18,7 @@ const TextAreaField = ({ name, label, classNameLabel, onChange, value, onChangeC
   return (
     <div className="flex flex-col">
     <Label htmlFor={name} className={classNameLabel}>{label}</Label>
-    <textarea className="textarea textarea-bordered rounded-full w-full min-w-xs bg-neutral-25 text-neutral-800 md:text-lg 
+    <textarea className="textarea textarea-bordered rounded-3xl w-full min-w-xs bg-neutral-25 text-neutral-800 md:text-lg 
             border border-neutral-300 shadow-inner focus:outline-primary-500 hover:border-primary-400"
         onChange={onChange}
         onChangeCapture={onChangeCapture}
