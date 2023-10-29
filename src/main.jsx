@@ -13,6 +13,8 @@ import RentalApplicationPage from "./pages/landingPage/rentalApplicationPage.jsx
 import ProfilePage from "./pages/landingPage/userPage/profilePage.jsx";
 import RentHistoryPage from "./pages/landingPage/userPage/rentHistoryPage.jsx";
 import DashboardUserPage from "./pages/dashboard/user/dashboardUserPage.jsx";
+import HomeDashboardPage from "./pages/dashboard/admin/homeDashboardPage.jsx";
+import PengajuanSewaPage from "./pages/dashboard/admin/pengajuanSewa/pengajuanSewaPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
+  // * Route Landing Page
   {
     path: "/detailRoom/:id",
     element: <DetailRoomPage />,
@@ -54,6 +57,18 @@ const router = createBrowserRouter([
     path: "/user/riwayatPengajuanSewa",
     element: <RentHistoryPage />,
   },
+
+  // * Route Dashboard Admin
+  {
+    path: "/admin/dashboard",
+    element: <HomeDashboardPage />,
+  },
+  {
+    path: "/admin/dashboard/pengajuansewa",
+    element: <PengajuanSewaPage />,
+  },
+
+  // * Route Dashboard User
   {
     path: "/user/dashboard",
     element: <DashboardUserPage />,

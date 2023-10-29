@@ -45,7 +45,9 @@ const LoginPage = () => {
       Cookies.set("role", data.role, { expires: 7 });
         if (data.role === "User") {
           navigate("/");
-        } 
+        } else if (data.role === "Admin" || data.role === "Owner") {
+          navigate("/admin/dashboard");
+        }
     },
     onError: (data) => {
       console.log(data);

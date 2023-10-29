@@ -4,8 +4,10 @@ import HeadMetaData from "../../Components/HeadMetaData";
 import { useEffect, useState } from "react";
 import ButtonPrimary from "../../Components/Elements/Button";
 import { HiChevronDoubleUp } from "react-icons/hi";
+import Cookies from "js-cookie";
 
 const HomePage = () => {
+  const role = Cookies.get("role");
   const [onTop, setOnTop] = useState(false);
   useEffect(() => {
     // Fungsi untuk memeriksa posisi scroll
@@ -23,6 +25,12 @@ const HomePage = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (role === "Admin" || role === "Owner") {
+      window.location.href = "/admin/dashboard";
+    }
+  }, [ role ]);
 
   const scrollToTop = () => {
     window.scrollTo(0, 0, { behavior: 'smooth' });

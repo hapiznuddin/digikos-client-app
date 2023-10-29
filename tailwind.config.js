@@ -84,7 +84,7 @@ export default {
       "purple": "#9556CC",
       "tosca": "#07BEB8",
       "cyan": "#36BFFA",
-      "red": "#F04438",
+      "orange": "#FDB022",
     },
   },
   // eslint-disable-next-line no-undef

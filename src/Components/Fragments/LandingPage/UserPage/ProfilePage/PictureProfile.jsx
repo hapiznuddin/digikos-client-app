@@ -6,13 +6,19 @@ import { useFormik } from "formik";
 import { usePostProfilePic } from "../../../../../services/landingPage/userPage/usePostProfilePic";
 import { useUpdateProfilePic } from "../../../../../services/landingPage/userPage/useUpdateProfilePic";
 import { useGetProfilePic } from "../../../../../services/landingPage/userPage/useGetProfilePic";
+import { twMerge } from "tailwind-merge";
+import PropTypes from "prop-types";
 
-const PictureProfile = () => {
+const PictureProfile = ({classNameImg}) => {
+  PictureProfile.propTypes = {
+    classNameImg: PropTypes.string,
+  };
   const token = Cookies.get("token");
   const img = useRef();
   const [picture, setPicture] = useState(null);
   const [status, setStatus] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [imgProfil, setImgProfil] = useState(false);
 
   const { mutate } = usePostProfilePic({
     token,
@@ -58,31 +64,38 @@ const PictureProfile = () => {
     token,
     onSuccess: (data) => {
       setStatus(data.status);
+      setImgProfil(false);
     },
     onError: (data) => {
       console.log(data);
+      setImgProfil(true);
     },
   });
 
   const profilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;
   return (
-    <div className="flex flex-col bg-neutral-200 w-24 h-24 lg:w-32 lg:h-32 rounded-full relative mt-4">
+    <div className={twMerge(`flex flex-col bg-neutral-200 w-24 h-24 lg:w-32 lg:h-32 rounded-full relative mt-4`, classNameImg)}>
       {isLoading ? (
         <img
           src={"https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}
           className="w-full h-full rounded-full"
         />
       ) : (
+        imgProfil ? (
+          <img
+            src={"https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}
+            className="w-full h-full rounded-full"
+          />
+        ) : (
         <img
           src={
             picture
               ? picture
               : profilePic
-              ? profilePic
-              : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
           }
           className="w-full h-full rounded-full"
         />
+        )
       )}
       <div
         className="absolute bottom-1 right-0 bg-neutral-25 shadow w-9 h-9 rounded-full flex justify-center items-center z-10 cursor-pointer"
