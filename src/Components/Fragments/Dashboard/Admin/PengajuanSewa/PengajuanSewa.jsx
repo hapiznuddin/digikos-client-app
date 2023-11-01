@@ -1,25 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
-import { axiosInstance } from "../../../../../lib/axios";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import { useGetPengajuanSewa } from "../../../../../services/dashboard/admin/pengajuanSewa/useGetPengajuanSewa";
 
 const PengajuanSewa = () => {
   const token = Cookies.get("token");
-  const { data, isLoading } = useQuery({
-    queryKey: ["tablePengajuanSewa"],
-    queryFn: async () => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const res = await axiosInstance.get(`/rent`, { headers: headers });
-      return res;
-    },
-    onSuccess: (data) => {
-      console.log(data?.data);
-    },
+  const { data, isLoading } = useGetPengajuanSewa({
+    token,
     onError: (error) => {
       console.log(error);
     },
@@ -36,17 +23,17 @@ const PengajuanSewa = () => {
       <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
         <table className="table table-zebra">
           {/* head */}
-          <thead className="bg-primary-50 text-base text-neutral-600">
+          <thead className="bg-primary-50 text-base text-neutral-800">
             <tr>
-              <th>No</th>
-              <th>Name</th>
-              <th>Tipe Kamar</th>
-              <th>Nomor Kamar</th>
-              <th>Lantai</th>
-              <th>Harga Kamar</th>
-              <th>Deposit</th>
-              <th>Status</th>
-              <th></th>
+              <th className="font-medium">No</th>
+              <th className="font-medium">Nama</th>
+              <th className="font-medium">Tipe Kamar</th>
+              <th className="font-medium">Nomor Kamar</th>
+              <th className="font-medium">Lantai</th>
+              <th className="font-medium">Harga Kamar</th>
+              <th className="font-medium">Deposit</th>
+              <th className="font-medium">Status</th>
+              <th className="font-medium"></th>
             </tr>
           </thead>
           <tbody>
@@ -57,15 +44,15 @@ const PengajuanSewa = () => {
               </tr>) : (data?.data.map((rent, index) => {
               return (
                 <tr key={index} >
-                  <th>{index + 1}</th>
+                  <th className="font-medium">{index + 1}</th>
                   <td>{rent.name}</td>
                   <td>{rent.classroom?.name}</td>
                   <td>{rent.room?.number_room}</td>
                   <td>{rent.room?.floor}</td>
                   <td>{rupiahFormater(rent.price)}</td>
                   <td>{rupiahFormater(rent.classroom?.deposit)}</td>
-                  <td><div className="badge bg-secondary-100 text-secondary-800">{rent.status}</div></td>
-                  <td className="font-medium hover:text-primary-500 cursor-pointer"><Link>Detail
+                  <td>{rent.status_id === 5 ? (<div className="badge h-full py-1 px-3 bg-success-200 text-success-800">{rent.status}</div>) :(<div className="badge h-full bg-secondary-100 text-secondary-800 py-1 px-3">{rent.status}</div>)}</td>
+                  <td className="font-semibold text-base hover:text-primary-500 cursor-pointer"><Link to={`/admin/dashboard/pengajuansewa/detail/${rent.id}`}>Detail
                   </Link></td>
                 </tr>
               );

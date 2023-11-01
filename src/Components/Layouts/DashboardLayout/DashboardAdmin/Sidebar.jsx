@@ -12,7 +12,10 @@ import { LuFileOutput } from "react-icons/lu";
 import { BsClipboardData } from "react-icons/bs";
 import { MdOutlineManageAccounts } from "react-icons/md";
 
-const SideBar = forwardRef(({ showNav }, ref) => {
+const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
+  SideBar.propTypes = {
+    pengajuanSewaId: PropTypes.number
+  }
   const role = Cookies.get("role");
   const navigate = useNavigate();
   const location = useLocation();
@@ -72,7 +75,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
               <Link to="/admin/dashboard/pengajuansewa">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/pengajuansewa" 
+                    location.pathname == "/admin/dashboard/pengajuansewa" || location.pathname == `/admin/dashboard/pengajuansewa/detail/${pengajuanSewaId}` 
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                   }`}
