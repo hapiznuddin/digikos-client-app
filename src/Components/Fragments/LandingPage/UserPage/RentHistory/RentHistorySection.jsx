@@ -163,7 +163,7 @@ function formatDate(inputDate) {
             className="flex flex-col gap-8 border rounded-xl shadow-md p-4 md:p-6"
             >
               <div className="flex flex-col">
-                <div className="badge bg-warning-200 text-warning-700">{rent.status}</div>
+                {rent.status_id === 5 ? (<div className="badge bg-success-200 text-success-700 px-2 py-1 h-full">{rent.status}</div>) : (<div className="badge bg-warning-200 text-warning-700 px-2 py-1 h-full">{rent.status}</div>)}
                 <div className="divider" />
                 <div className="flex flex-col md:flex-row w-full gap-4 ">
                   <div className="w-full h-32 md:w-60 lg:w-60 md:h-32 bg-cover bg-center rounded-xl overflow-hidden">
@@ -288,7 +288,7 @@ function formatDate(inputDate) {
                 )}
               </div>
               <div className="divider -my-4" />
-              <ButtonPrimary className="text-sm md:text-lg font-medium" disabled={`${rent.status_id === 2 ? 'disabled': ''}`} onClick={() => mutate({price: rent.total_payment,
+              <ButtonPrimary className="text-sm md:text-lg font-medium" disabled={`${rent.status_id === 2 || rent.status_id === 4 ? 'disabled': ''}`} onClick={() => mutate({price: rent.total_payment,
           room_id: rent.room_id,
           rent_id: rent.id,
           occupant_id: rent.occupant_id})} >Bayar Sekarang</ButtonPrimary>

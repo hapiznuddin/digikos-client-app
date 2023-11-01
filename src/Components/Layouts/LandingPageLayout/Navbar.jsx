@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { useGetProfilePic } from "../../../services/landingPage/userPage/useGetProfilePic";
 import { useLogout } from "../../../services/auth/useLogout";
 import { useGetRentHistory } from "../../../services/landingPage/userPage/useGetRentHistory";
+import Swal from "sweetalert2";
 
 const Navbar = ({
   onClickHome,
@@ -204,16 +205,21 @@ const Navbar = ({
                     </Link>
                   </li>
                   <li className="text-base font-medium">
-                    {statusData?.data[0].status_id === 4 ? (
+                    {statusData?.data[0].status_id === 5 ? (
                       <Link to={"/user/dashboard"}>
                         <RxDashboard size={24} />
                         <p>Dashboard</p>
                       </Link>
                     ) : (
-                      <a>
+                      <button onClick={() => Swal.fire({
+                        title: 'Gagal',
+                        text: "Silahkan Selesaikan Pembayaran dan Check In Dahulu Untuk Buka Dashboard",
+                        icon: 'error',
+                        showConfirmButton: true
+                      })}>
                         <RxDashboard size={24} />
                         <p>Dashboard</p>
-                      </a>
+                      </button>
                     )}
                   </li>
                   <div className="divider w-full my-1 px-2" />
@@ -309,7 +315,7 @@ const Navbar = ({
                                 />
                               </div>
                             </div>
-                            <p className="text-base font-medium">Nama User</p>
+                            <p className="text-base font-medium">{name}</p>
                           </div>
                         </summary>
                         <ul>
@@ -320,16 +326,21 @@ const Navbar = ({
                             </Link>
                           </li>
                           <li className="text-base">
-                            {status === 4 ? (
+                            {statusData?.data[0].status_id === 5 ? (
                               <Link to={"/user/dashboard"}>
                                 <RxDashboard size={24} />
                                 <p>Dashboard</p>
                               </Link>
                             ) : (
-                              <a>
+                              <button onClick={() => Swal.fire({
+                                title: 'Gagal',
+                                text: "Silahkan Selesaikan Pembayaran dan Check In Dahulu Untuk Buka Dashboard",
+                                icon: 'error',
+                                showConfirmButton: true
+                              })}>
                                 <RxDashboard size={24} />
                                 <p>Dashboard</p>
-                              </a>
+                              </button>
                             )}
                           </li>
                           <div className="divider w-full my-1 px-2" />
