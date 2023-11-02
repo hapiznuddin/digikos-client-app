@@ -13,6 +13,7 @@ import { BsClipboardData } from "react-icons/bs";
 import { MdOutlineManageAccounts } from "react-icons/md";
 
 const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
+  const token = Cookies.get("token");
   SideBar.propTypes = {
     pengajuanSewaId: PropTypes.number
   }
@@ -25,15 +26,14 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
   };
 
   const { mutate } = useLogout({
-    onSuccess: (data) => {
-      console.log(data?.data.message);
+    token,
+    onSuccess: () => {
       Cookies.remove("token");
       Cookies.remove("role");
       Cookies.remove("name");
       navigate("/");
-    },
+    }
   });
-
   const logout = () => {
     mutate();
   };
@@ -174,7 +174,7 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
               <Link to="/admin/dashboard/dataPenghuni">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/dataPenghuni"
+                    location.pathname == "/admin/dashboard/dataPenghuni" || location.pathname == `/admin/dashboard/dataPenghuni/detail/${pengajuanSewaId}` 
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                   }`}

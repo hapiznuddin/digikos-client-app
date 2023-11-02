@@ -11,6 +11,7 @@ import { TbMail, TbTable } from "react-icons/tb";
 
 
 const SideBar = forwardRef(({showNav}, ref) => {
+  const token = Cookies.get("token");
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -19,6 +20,7 @@ const SideBar = forwardRef(({showNav}, ref) => {
   };
   
   const {mutate} = useLogout({
+    token,
     onSuccess: (data) => {
       console.log(data?.data.message);
       Cookies.remove("token");

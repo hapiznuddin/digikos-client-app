@@ -41,7 +41,9 @@ const PengajuanSewa = () => {
               <td colSpan={9}>
               <span className="loading loading-spinner loading-lg text-primary-500"/>
               </td>
-              </tr>) : (data?.data.map((rent, index) => {
+              </tr>) : (
+                data?.data.length > 0 ? (
+                data?.data.map((rent, index) => {
               return (
                 <tr key={index} >
                   <th className="font-medium">{index + 1}</th>
@@ -56,7 +58,11 @@ const PengajuanSewa = () => {
                   </Link></td>
                 </tr>
               );
-            }))}
+            })) : (
+              <tr className="text-center font-medium">
+                <td colSpan={9}>Tidak Ada Pengajuan Sewa</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

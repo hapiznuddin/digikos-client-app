@@ -17,6 +17,7 @@ import HomeDashboardPage from "./pages/dashboard/admin/homeDashboardPage.jsx";
 import PengajuanSewaPage from "./pages/dashboard/admin/pengajuanSewa/pengajuanSewaPage.jsx";
 import DetailPengajuanSewaPage from "./pages/dashboard/admin/pengajuanSewa/detailPengajuanSewaPage.jsx";
 import DataPenghuniPage from "./pages/dashboard/admin/dataPenghuni/dataPenghuniPage.jsx";
+import DetailPenghuniPage from "./pages/dashboard/admin/dataPenghuni/detailPenghuniPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
+
   // * Route Landing Page
   {
     path: "/detailRoom/:id",
@@ -76,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard/dataPenghuni",
     element: <DataPenghuniPage />,
+  },
+  {
+    path: "/admin/dashboard/dataPenghuni/detail/:id",
+    element: <DetailPenghuniPage />,
   },
 
   // * Route Dashboard User

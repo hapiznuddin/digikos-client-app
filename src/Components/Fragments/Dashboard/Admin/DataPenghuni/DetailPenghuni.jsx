@@ -1,30 +1,29 @@
 /* eslint-disable react/display-name */
-import { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react"
 import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
-import ButtonPrimary from "../../../../Elements/Button";
-import Cookies from "js-cookie";
-import { useApproveCheckIn, useApprovePengajuanSewa, useGetDetailPengajuanSewa } from "../../../../../services/dashboard/admin/pengajuanSewa/useDetailPengajuanSewa";
-import { Skeleton } from "@chakra-ui/react";
-import { useGetKTP } from "../../../../../services/landingPage/rentPage/useGetKTP";
 import { BsFileEarmarkX } from "react-icons/bs";
+import { Skeleton } from "@chakra-ui/react";
+import { useGetDetailPengajuanSewa } from "../../../../../services/dashboard/admin/pengajuanSewa/useDetailPengajuanSewa";
+import Cookies from "js-cookie";
+import { useGetKTP } from "../../../../../services/landingPage/rentPage/useGetKTP";
 import { useGetKK } from "../../../../../services/landingPage/rentPage/useGetKK";
-import Swal from "sweetalert2";
+import TableHistoryPayment from "./TableHistoryPayment";
 
-const DetailPengajuanSewa = forwardRef((props, ref) => {
+const DetailPenghuni = forwardRef((props, ref) => {
   const token = Cookies.get("token");
   const idRef = ref.current;
   const idRefNumber = parseInt(idRef);
   const [id, setId] = useState(null);
-  const [rentId, setRentId] = useState(null);
+  // const [rentId, setRentId] = useState(null);
   const [ktpPicture, setKtpPicture] = useState(false);
   const [kkPicture, setKkPicture] = useState(false);
 
-  const { data, isLoading, refetch: refetchDetail } = useGetDetailPengajuanSewa({
+  const { data, isLoading } = useGetDetailPengajuanSewa({
     token,
     idRef,
     onSuccess: (data) => {
       setId(data?.data.occupant_id);
-      setRentId(data?.data.id);
+      // setRentId(data?.data.id);
     },
     onError: (data) => {
       console.log(data);
@@ -74,57 +73,20 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
     return date.toLocaleDateString('id-ID', options);
 }
 
-  const rupiahFormater = (value) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(value);
-  };
-
-  const { mutate: approveAdmin } = useApprovePengajuanSewa({
-    token,
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Pengajuan Sewa Berhasil Disetujui",
-        timer: 1500,
-      })
-      refetchDetail();
-    },
-    onError: (data) => {
-      console.log(data);
-    },
-  });
-
-  const { mutate: approveCheckIn } = useApproveCheckIn({
-    token,
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Check in Berhasil Dikonfirmasi",
-        timer: 1500,
-      })
-      refetchDetail();
-    },
-    onError: (data) => {
-      console.log(data);
-    },
-  });
-
   return (
-    <AdminLayout pengajuanSewaId={idRefNumber}>
-      <div className="flex flex-col w-full h-full p-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
-        <div className="flex flex-col lg:flex-row gap-8">
+    <AdminLayout pengajuanSewaId={idRefNumber} title="Detail Penghuni">
+      <div className="flex flex-col w-full h-full p-8 gap-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
+      <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex flex-col gap-4 w-full lg:w-2/3 ">
-            <h1 className="text-neutral-800 mb-4 text-lg md:text-xl font-semibold">
-              Data Penyewa
+            <h1 className="text-neutral-800 mb-2 text-lg md:text-xl font-semibold">
+              Data Penghuni
             </h1>
             <div className="flex w-full font-medium text-sm md:text-base">
               {isLoading ? (
                 <Skeleton height="25px" w={"300px"} />
               ) : (
                 <>
-                  <p className="w-1/3 lg:w-40">Nama Penyewa</p>
+                  <p className="w-1/3 lg:w-40">Nama</p>
                   <p className="w-2/3">: {data?.data?.occupant.name}</p>
                 </>
               )}
@@ -174,6 +136,16 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
                 <Skeleton height="25px" w={"300px"} />
               ) : (
                 <>
+                  <p className="w-1/3 lg:w-40">Kamar</p>
+                  <p className="w-2/3">: Lantai {data?.data?.room?.floor} No {data?.data?.room?.number_room}</p>
+                </>
+              )}
+            </div>
+            <div className="flex w-full font-medium text-sm md:text-base">
+              {isLoading ? (
+                <Skeleton height="25px" w={"300px"} />
+              ) : (
+                <>
                   <p className="w-1/3 lg:w-40">Jumlah Penyewa</p>
                   <p className="w-2/3">
                     :
@@ -201,7 +173,7 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
                 <Skeleton height="25px" w={"300px"} />
               ) : (
                 <>
-                  <p className="w-1/3 lg:w-40">Tanggal Sewa</p>
+                  <p className="w-1/3 lg:w-40">Tanggal Masuk</p>
                   <p className="w-2/3">
                     : {formatDate(data?.data?.start_date)}
                   </p>
@@ -210,8 +182,8 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
             </div>
           </div>
           <div className="flex flex-col gap-8 w-full h-full lg:w-2/3 ">
-            <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
-              Dokumen Penyewa
+            <h1 className="text-neutral-800 text-lg md:text-xl  font-semibold">
+              Dokumen Penghuni
             </h1>
             <div className="flex flex-col md:flex-row w-full gap-4 p-8 rounded-2xl border border-neutral-200">
               <div className="w-full md:w-1/2 h-full bg-neutral-300 rounded-xl">
@@ -258,71 +230,10 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full mt-12 gap-8">
-          <h1 className="text-neutral-800 text-lg md:text-xl  font-semibold">
-            Data Kamar
-          </h1>
-          <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
-            <table className="table table-zebra">
-              {/* head */}
-              <thead className="bg-primary-50 text-base text-neutral-800">
-                <tr>
-                  <th className="font-medium">Nama Kamar</th>
-                  <th className="font-medium">Nomor Kamar</th>
-                  <th className="font-medium">Lantai</th>
-                  <th className="font-medium">Ukuran</th>
-                  <th className="font-medium">Harga Kamar</th>
-                  <th className="font-medium">Deposit</th>
-                  <th className="font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr className="text-center">
-                    <td colSpan={9}>
-                      <span className="loading loading-spinner loading-lg text-primary-500" />
-                    </td>
-                  </tr>
-                ) : (
-                  <tr>
-                    <td>{data?.data?.classroom?.name}</td>
-                    <td>{data?.data?.room?.number_room}</td>
-                    <td>{data?.data?.room?.floor}</td>
-                    <td>{data?.data?.classroom?.size}</td>
-                    <td>{rupiahFormater(data?.data?.total_price)}</td>
-                    <td>{rupiahFormater(data?.data?.classroom?.deposit)}</td>
-                    <td>
-                      {data?.data.status_id === 5 ? (<div className="badge h-full py-1 px-3 bg-success-200 text-success-800">
-                        {data?.data?.status}
-                      </div>) : (<div className="badge h-full py-1 px-3 bg-secondary-100 text-secondary-800">
-                        {data?.data?.status}
-                      </div>)}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-          <div className="flex flex-col md:flex-row w-full md:gap-2 gap-4 mt-8">
-            {data?.data.status_id === 2 || data?.data.status_id === 3 ? (<ButtonPrimary className="w-full md:w-1/2 lg:w-52 text-lg font-medium bg-primary-100 text-primary-500 hover:bg-primary-200 hover:text-primary-600 active:text-neutral-25 active:bg-primary-300">
-              Tolak
-            </ButtonPrimary>): null}
-
-            {data?.data.status_id === 4 ? (<ButtonPrimary className="font-medium w-full md:w-1/2 text-lg lg:w-52"
-            onClick={() => approveCheckIn({rent_id: rentId})}
-            >
-              Check-In
-            </ButtonPrimary>) : (
-            data?.data.status_id === 4 || data?.data.status_id === 2 || data?.data.status_id === 3 ? (<ButtonPrimary className="font-medium w-full md:w-1/2 text-lg lg:w-52"
-            onClick={() => approveAdmin({rent_id: rentId})}
-            >
-              Setujui
-            </ButtonPrimary>): null)}
-          </div>
-        </div>
+        <TableHistoryPayment idOccupant={id}/>
       </div>
     </AdminLayout>
-  );
-});
+  )
+})
 
-export default DetailPengajuanSewa;
+export default DetailPenghuni
