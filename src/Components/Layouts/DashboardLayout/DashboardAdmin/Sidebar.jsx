@@ -135,10 +135,10 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
               Pusat Data
             </h1>
             <button>
-              <Link to="/admin/">
+              <Link to="/admin/dashboard/dataTipeKamar">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-2 flex items-center transition-colors ${
-                    location.pathname == "/admin/"
+                    location.pathname == "/admin/dashboard/dataTipeKamar"
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600 "
                   }`}
