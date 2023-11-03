@@ -119,7 +119,7 @@ const PictureProfile = ({classNameImg}) => {
       />
       {uploadProgress > 0 ? (
         <div
-          className="radial-progress text-primary-500 w-full h-full  absolute"
+          className="radial-progress text-primary-500 w-full h-full absolute"
           style={{ "--value": uploadProgress }}
         >
           {uploadProgress}%

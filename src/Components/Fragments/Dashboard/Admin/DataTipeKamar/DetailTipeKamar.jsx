@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Link } from "react-router-dom"
 import ButtonPrimary from "../../../../Elements/Button"
+import EditGambarKamar from "./EditGambarKamar"
 
 const DetailTipeKamar = forwardRef((props, ref) => {
   const token = Cookies.get("token")
@@ -180,12 +181,22 @@ const DetailTipeKamar = forwardRef((props, ref) => {
                     style={{ borderRadius: "16px" }}
                   />
                 ) : (
-                  <Link onClick={() => document.getElementById("my_modal_3").showModal()}>
+                  data?.data.images[2]?.path === undefined ? (
+                    <div className="w-full h-full rounded-xl bg-neutral-300">
+                      <Link onClick={() => document.getElementById("my_modal_3").showModal()}>
+                        <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-1 md:px-3 rounded-full text-xs text-center md:text-base shadow-md font-medium">
+                        Lihat Gambar
+                        </div>
+                      </Link>
+                    </div>
+                  ) : (
+                    <Link onClick={() => document.getElementById("my_modal_3").showModal()}>
                     <img src={imgRoom3} className="w-full h-full rounded-xl object-cover object-center" />
                     <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-1 md:px-3 rounded-full text-xs text-center md:text-base shadow-md font-medium">
                     Lihat Gambar
                     </div>
                   </Link>
+                    )
                 )}
               </div>
               </div>
@@ -256,12 +267,13 @@ const DetailTipeKamar = forwardRef((props, ref) => {
       </dialog>
 
       <dialog id="my_modal_4" className="modal mx-auto">
-        <div className="modal-box h-[70%] md:h-full md:max-w-screen-xl">
+        <div className="modal-box h-[70%] md:h-full md:max-w-screen-xl py-12 px-8 -z-10">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               <AiOutlineClose size={24} />
             </button>
           </form>
+          <EditGambarKamar id={id}/>
           </div>
       </dialog>
       </div>
