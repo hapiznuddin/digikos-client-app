@@ -2,15 +2,25 @@ import Cookies from "js-cookie";
 import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout"
 import { Link } from "react-router-dom";
 import { useGetDataPenghuni } from "../../../../../services/dashboard/admin/dataPenghuni/useGetDataPenghuni";
+import { useIdOccupantStore } from "../../../../../lib/idClassRoom";
+import { useEffect } from "react";
 
 const DataPenghuni = () => {
   const token = Cookies.get("token");
+  const setId = useIdOccupantStore((state) => state.setId);
+
   const { data, isLoading } = useGetDataPenghuni({
     token,
     onError: (error) => {
       console.log(error);
     },
   });
+
+  useEffect(() => {
+    data?.data.map((data) => {
+      setId(data.occupant_id);
+    })
+  }, [data, setId]);
 
   function formatDate(inputDate) {
     const months = [

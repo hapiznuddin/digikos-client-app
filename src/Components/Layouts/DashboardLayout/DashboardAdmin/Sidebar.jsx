@@ -12,10 +12,10 @@ import { LuFileOutput } from "react-icons/lu";
 import { BsClipboardData } from "react-icons/bs";
 import { MdOutlineManageAccounts } from "react-icons/md";
 
-const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
+const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
   const token = Cookies.get("token");
   SideBar.propTypes = {
-    pengajuanSewaId: PropTypes.number
+    routeParams: PropTypes.number
   }
   const role = Cookies.get("role");
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
               <Link to="/admin/dashboard/pengajuansewa">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/pengajuansewa" || location.pathname == `/admin/dashboard/pengajuansewa/detail/${pengajuanSewaId}` 
+                    location.pathname == "/admin/dashboard/pengajuansewa" || location.pathname == `/admin/dashboard/pengajuansewa/detail/${routeParams}` 
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                   }`}
@@ -134,11 +134,12 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
             <h1 className="text-neutral-800 text-lg font-medium px-4 mb-2">
               Pusat Data
             </h1>
+            
             <button>
               <Link to="/admin/dashboard/dataTipeKamar">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-2 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/dataTipeKamar"
+                    location.pathname == "/admin/dashboard/dataTipeKamar" || location.pathname == `/admin/dashboard/dataTipeKamar/detail/${routeParams}`
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600 "
                   }`}
@@ -174,7 +175,7 @@ const SideBar = forwardRef(({ showNav, pengajuanSewaId }, ref) => {
               <Link to="/admin/dashboard/dataPenghuni">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/dataPenghuni" || location.pathname == `/admin/dashboard/dataPenghuni/detail/${pengajuanSewaId}` 
+                    location.pathname == "/admin/dashboard/dataPenghuni" || location.pathname == `/admin/dashboard/dataPenghuni/detail/${routeParams}` 
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                   }`}

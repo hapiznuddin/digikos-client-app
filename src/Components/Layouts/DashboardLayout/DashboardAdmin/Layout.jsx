@@ -5,12 +5,12 @@ import SideBar from "./Sidebar";
 import TopBar from "./TopBar";
 
 
-export default function AdminLayout({ children, classNameBG, title, pengajuanSewaId }) {
+export default function AdminLayout({ children, classNameBG, title, routeParams }) {
   AdminLayout.propTypes = {
     title: PropTypes.string,
     classNameBG : PropTypes.string,
     children: PropTypes.node,
-    pengajuanSewaId: PropTypes.number
+    routeParams: PropTypes.number
   };
 
   const [showNav, setShowNav] = useState(true);
@@ -51,7 +51,7 @@ export default function AdminLayout({ children, classNameBG, title, pengajuanSew
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
       >
-        <SideBar showNav={showNav} pengajuanSewaId={pengajuanSewaId}/>
+        <SideBar showNav={showNav} routeParams={routeParams}/>
       </Transition>
       <main
         className={`pt-16 transition-all duration-[400ms] ${

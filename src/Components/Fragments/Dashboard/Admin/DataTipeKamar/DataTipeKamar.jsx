@@ -89,7 +89,7 @@ const DataTipeKamar = () => {
                       <td>{rupiahFormatter(room.room_price)}</td>
                       <td>{rupiahFormatter(room.room_deposite)}</td>
                       <td className="font-semibold text-base hover:text-primary-500 cursor-pointer">
-                        <Link to={`/admin/dashboard/detail/${room.id}`}>
+                        <Link to={`/admin/dashboard/dataTipeKamar/detail/${room.id}`}>
                           Detail
                         </Link>
                       </td>

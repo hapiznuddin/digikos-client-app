@@ -112,7 +112,7 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
   });
 
   return (
-    <AdminLayout pengajuanSewaId={idRefNumber}>
+    <AdminLayout routeParams={idRefNumber}>
       <div className="flex flex-col w-full h-full p-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex flex-col gap-4 w-full lg:w-2/3 ">
