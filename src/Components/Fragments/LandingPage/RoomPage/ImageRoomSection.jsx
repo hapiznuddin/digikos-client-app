@@ -87,13 +87,14 @@ const ImageRoomSection = forwardRef((props, ref) => {
                 src={imageurl2}
                 className=" h-full rounded-2xl bg-cover bg-center"
               />): <div className="h-full w-full bg-neutral-300 rounded-2xl"/>}
-              <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-2 rounded-full text-lg shadow-md font-medium">
+              <div className="absolute bottom-4 right-4 bg-neutral-25 py-1 px-2 rounded-full text-xs text-center md:text-base shadow-md font-medium">
               Lihat Gambar
             </div>
             </Link>
           </div>
         </div>
       )}
+
       {/* //* popup dialog galeri */}
       <dialog id="my_modal_3" className="modal mx-auto">
         <div className="modal-box h-[70%] md:h-full md:max-w-screen-xl">
