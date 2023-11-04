@@ -19,7 +19,8 @@ const InputField = forwardRef((props, ref) => {
     disabled,
     minLength,
     classNameLabel,
-    classNameInput
+    classNameInput,
+    inputMode
   } = props;
 
   InputField.propTypes = {
@@ -36,7 +37,8 @@ const InputField = forwardRef((props, ref) => {
     disabled: PropTypes.bool,
     minLength: PropTypes.number,
     classNameLabel: PropTypes.string,
-    classNameInput: PropTypes.string
+    classNameInput: PropTypes.string,
+    inputMode: PropTypes.string
   };
 
   return (
@@ -56,6 +58,7 @@ const InputField = forwardRef((props, ref) => {
         ref={ref}
         minLength={minLength}
         className={classNameInput}
+        inputMode={inputMode}
       />
     </div>
   );

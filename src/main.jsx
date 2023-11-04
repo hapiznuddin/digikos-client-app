@@ -20,6 +20,7 @@ import DataPenghuniPage from "./pages/dashboard/admin/dataPenghuni/dataPenghuniP
 import DetailPenghuniPage from "./pages/dashboard/admin/dataPenghuni/detailPenghuniPage.jsx";
 import DataTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/dataTipeKamarPage.jsx";
 import DetailTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/detailTipeKamarPage.jsx";
+import TambahTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/tambahTipeKamarPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard/dataTipeKamar",
     element: <DataTipeKamarPage />,
+  },
+  {
+    path: "/admin/dashboard/dataTipeKamar/tambahKamar",
+    element: <TambahTipeKamarPage />,
   },
   {
     path: "/admin/dashboard/dataTipeKamar/detail/:id",

@@ -1,11 +1,12 @@
 import Cookies from "js-cookie";
 import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../../Elements/Button";
 import { useGetDataTipeKamar } from "../../../../../services/dashboard/admin/dataTipeKamar/useGetDataTipeKamar";
 
 const DataTipeKamar = () => {
   const token = Cookies.get("token");
+  const navigate = useNavigate();
   const { data, isLoading } = useGetDataTipeKamar({
     token,
     onError: (error) => {
@@ -27,7 +28,7 @@ const DataTipeKamar = () => {
           <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
             Tipe Kamar
           </h1>
-          <ButtonPrimary className="text-sm md:text-base font-medium w-60">
+          <ButtonPrimary className="text-sm md:text-base font-medium w-60" type='button' onClick={() => navigate("/admin/dashboard/dataTipeKamar/tambahKamar") } >
             Tambah Tipe Kamar
           </ButtonPrimary>
         </div>

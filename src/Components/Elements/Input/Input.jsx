@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 
 const Input = forwardRef((props, ref) => {
-  const {type, placeholder, onChange, value, name, required, readOnly, defaultValue, minLength, disabled, onChangeCapture, className} = props;
+  const {type, placeholder, onChange, value, name, required, readOnly, defaultValue, minLength, disabled, onChangeCapture, className, inputMode} = props;
   Input.propTypes = {
     type: PropTypes.string,
     placeholder: PropTypes.string,
@@ -19,6 +19,7 @@ const Input = forwardRef((props, ref) => {
     disabled: PropTypes.bool,
     onChangeCapture: PropTypes.func,
     className: PropTypes.string,
+    inputMode: PropTypes.string
   };
   return (
       <input
@@ -34,6 +35,7 @@ const Input = forwardRef((props, ref) => {
         defaultValue={defaultValue}
         minLength={minLength}
         ref={ref}
+        inputMode={inputMode}
         className={twMerge(`input input-ghost w-full min-w-xs bg-neutral-25 text-neutral-800 rounded-full md:text-lg 
             border border-neutral-300 shadow-inner focus:outline-primary-500 hover:border-primary-400`, className)}
       />

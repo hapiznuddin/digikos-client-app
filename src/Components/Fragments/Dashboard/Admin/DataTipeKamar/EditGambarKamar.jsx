@@ -8,6 +8,8 @@ import ButtonPrimary from "../../../../Elements/Button";
 import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import { useAddImageRoom, useDeleteImageRoom, useUpdateImageRoom } from "../../../../../services/dashboard/admin/dataTipeKamar/useImageRoom";
+import { BiCheckCircle} from "react-icons/bi";
+import {MdOutlineCancel} from "react-icons/md"
 
 const EditGambarKamar = ({ id }) => {
   EditGambarKamar.PropsTypes = {
@@ -30,7 +32,7 @@ const EditGambarKamar = ({ id }) => {
   });
 
   // * Tambah Gambar
-  const { mutate: addImage, isLoading: isLoadingAdd } = useAddImageRoom({
+  const { mutate: addImage, isLoading: isLoadingAdd, isSuccess: isSuccessAdd, isError: isErrorAdd } = useAddImageRoom({
     token,
     onSuccess: () => {
       refetch();
@@ -55,7 +57,7 @@ const EditGambarKamar = ({ id }) => {
   });
 
   // * Edit Gambar
-  const { mutate: editImage, isLoading: isLoadingEdit } = useUpdateImageRoom({
+  const { mutate: editImage, isLoading: isLoadingEdit, isSuccess: isSuccessEdit, isError: isErrorEdit } = useUpdateImageRoom({
     token,
     onSuccess: () => {
       refetch();
@@ -82,7 +84,7 @@ const EditGambarKamar = ({ id }) => {
   });
 
   // * Delete Gambar
-  const { mutate: deleteImage, isLoading: isLoadingDelete } = useDeleteImageRoom({
+  const { mutate: deleteImage, isLoading: isLoadingDelete, isSuccess: isSuccessDelete, isError: isErrorDelete } = useDeleteImageRoom({
     token,
     onSuccess: (data) => {
       refetch();
@@ -197,6 +199,35 @@ const EditGambarKamar = ({ id }) => {
             )}
           </tbody>
         </table>
+
+        <div className="toast toast-end">
+          {isSuccessAdd ? (<div className="alert alert-success gap-2">
+            <BiCheckCircle size={24} />
+            <span>Gambar Berhasil Ditambahkan.</span>
+          </div>): null}
+          {isErrorAdd ? (<div className="alert alert-error">
+            <MdOutlineCancel size={24} />
+            <span>Gambar Gagal Ditambahkan.</span>
+          </div>): null}
+
+          {isSuccessEdit ? (<div className="alert alert-success gap-2">
+            <BiCheckCircle size={24} />
+            <span>Gambar Berhasil Diedit.</span>
+          </div>): null}
+          {isErrorEdit ? (<div className="alert alert-error">
+            <MdOutlineCancel size={24} />
+            <span>Gambar Gagal Diedit.</span>
+          </div>): null}
+
+          {isSuccessDelete ? (<div className="alert alert-success gap-2">
+            <BiCheckCircle size={24} />
+            <span>Gambar Berhasil Dihapus.</span>
+          </div>): null}
+          {isErrorDelete ? (<div className="alert alert-error">
+            <MdOutlineCancel size={24} />
+            <span>Gambar Gagal Dihapus.</span>
+          </div>): null}
+        </div>
 
         <input
         type="file"
