@@ -178,7 +178,7 @@ const DetailTipeKamar = forwardRef((props, ref) => {
                 className="btn btn-sm md:btn-md w-1/2 h-full font-medium text-xs md:text-sm"
                 onClick={() =>
                   navigate(
-                    `/admin/dashboard/dataTipeKamar/tambahKamar/edit/${idParams}`
+                    `/admin/dashboard/dataTipeKamar/detail/edit/${idParams}`
                   )
                 }
               >

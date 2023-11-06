@@ -139,7 +139,7 @@ const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
               <Link to="/admin/dashboard/dataTipeKamar">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-2 flex items-center transition-colors ${
-                    location.pathname == "/admin/dashboard/dataTipeKamar" || location.pathname == `/admin/dashboard/dataTipeKamar/tambahKamar` || location.pathname == `/admin/dashboard/dataTipeKamar/detail/${routeParams}`
+                    location.pathname == "/admin/dashboard/dataTipeKamar" || location.pathname == `/admin/dashboard/dataTipeKamar/tambahKamar` || location.pathname == `/admin/dashboard/dataTipeKamar/detail/${routeParams}` || location.pathname == `/admin/dashboard/dataTipeKamar/detail/edit/${routeParams}`
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600 "
                   }`}
@@ -154,10 +154,10 @@ const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
               </Link>
             </button>
             <button>
-              <Link to="/dashboard/">
+              <Link to="/admin/dashboard/dataKamar">
                 <div
                   className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                    location.pathname == "/dashboard/"
+                    location.pathname == "/admin/dashboard/dataKamar"
                       ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                       : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                   }`}

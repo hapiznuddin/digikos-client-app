@@ -13,7 +13,7 @@ import { useGetDetailTipeKamar } from "../../../../../services/dashboard/admin/d
 const EditTipeKamar = forwardRef((props, ref) => {
   const id = ref.current
   const token = Cookies.get("token");
-
+  const idParams = parseInt(id);
   const {data, refetch} = useGetDetailTipeKamar({
     token,
     id,
@@ -113,8 +113,9 @@ const EditTipeKamar = forwardRef((props, ref) => {
     },
   });
 
+
   return (
-    <AdminLayout title="Edit Tipe Kamar">
+    <AdminLayout title="Edit Tipe Kamar" routeParams={idParams}>
       <div className="flex flex-col items-center w-full h-full p-8 gap-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
         <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
           Edit Tipe Kamar
