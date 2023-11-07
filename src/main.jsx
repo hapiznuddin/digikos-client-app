@@ -23,6 +23,7 @@ import DetailTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/detailTip
 import TambahTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/tambahTipeKamarPage.jsx";
 import EditTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/editTipeKamarPage.jsx";
 import DataKamarPage from "./pages/dashboard/admin/dataKamar/dataKamarPage.jsx";
+import DetailKamarPage from "./pages/dashboard/admin/dataKamar/detailKamarPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard/dataKamar",
     element: <DataKamarPage />,
+  },
+  {
+    path: "/admin/dashboard/dataKamar/detail/:id",
+    element: <DetailKamarPage />,
   },
 
   // * Route Dashboard User

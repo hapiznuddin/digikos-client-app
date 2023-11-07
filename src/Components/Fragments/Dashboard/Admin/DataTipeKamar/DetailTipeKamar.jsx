@@ -170,7 +170,19 @@ const DetailTipeKamar = forwardRef((props, ref) => {
             </div>
             <div className="flex gap-4 my-8">
               <ButtonPrimary className="btn btn-sm md:btn-md w-1/2 h-full font-medium text-xs md:text-sm bg-error-600 hover:bg-error-700 active:bg-error-800"
-                onClick={() => mutate({id:idParams})}
+              onClick={() => Swal.fire({
+                text: "Apakah Anda Yakin Ingin Menghapus Tipe Kamar?",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Hapus",
+                cancelButtonText: "Batal"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  mutate({id:idParams})
+                }
+              })}
+                // onClick={() => mutate({id:idParams})}
               >
                 Hapus Data Kamar
               </ButtonPrimary>

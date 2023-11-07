@@ -16,7 +16,6 @@ const TableHistoryPayment = ({ idOccupant }) => {
       refetch();
       console.log(data);
     },
-    
   })
 
   function formatDate(inputDate) {

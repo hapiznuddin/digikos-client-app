@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useGetDataKamar } from "../../../../../services/dashboard/admin/dataKamar/useGetDataKamar";
+import TambahKamar from "./TambahKamar";
 
 const DataKamar = () => {
   const token = Cookies.get("token");
@@ -20,7 +21,7 @@ const DataKamar = () => {
   const [totalItems, setTotalItems] = useState(0);
 
   // * Fetch Data Kamar
-  const { data, isLoading } = useGetDataKamar({
+  const { data, isLoading, refetch } = useGetDataKamar({
     token,
     selectRoom,
     floor,
@@ -105,7 +106,7 @@ const DataKamar = () => {
           )}
         </td>
         <td className="font-semibold text-base hover:text-primary-500 cursor-pointer">
-          <Link to={`/admin/dashboard//detail/${room.id}`}>Detail</Link>
+          <Link to={`/admin/dashboard/dataKamar/detail/${room.id}`}>Detail</Link>
         </td>
       </tr>
     ));
@@ -115,7 +116,10 @@ const DataKamar = () => {
     <AdminLayout title="Data Kamar">
       <div className="flex flex-col gap-8 bg-neutral-25 px-4 py-8 rounded-xl shadow border border-neutral-100">
         <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-between">
-          <ButtonPrimary className="text-sm md:text-base font-medium md:w-60">
+          <ButtonPrimary
+            className="text-sm md:text-base font-medium md:w-60"
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+          >
             Tambah Kamar
           </ButtonPrimary>
 
@@ -246,6 +250,10 @@ const DataKamar = () => {
           onPageChange={handlePageChange} // Anda perlu menambah 1 ke selected karena ReactPaginate menghitung halaman dari 0
         />
       </div>
+
+      <dialog id="my_modal_1" className="modal">
+        <TambahKamar refetch={refetch()}/>
+      </dialog>
     </AdminLayout>
   );
 };

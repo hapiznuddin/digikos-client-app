@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import DetailTipeKamar from "../../../../Components/Fragments/Dashboard/Admin/DataTipeKamar/DetailTipeKamar";
+import Detailkamar from "../../../../Components/Fragments/Dashboard/Admin/DataKamar/Detailkamar";
 
-const DetailTipeKamarPage = () => {
+const DetailKamarPage = () => {
   const {id} = useParams();
   const idRef = useRef(id);
   const token = Cookies.get("token");
@@ -16,12 +16,12 @@ const DetailTipeKamarPage = () => {
   }, [token]);
   return (
     <HelmetProvider>
-        <HeadMetaData title="Detail Tipe Kamar"/>
+        <HeadMetaData title="Detail Kamar"/>
       <div>
-        <DetailTipeKamar ref={idRef}/>
+        <Detailkamar ref={idRef}/>
       </div>
     </HelmetProvider>
   )
 }
 
-export default DetailTipeKamarPage
+export default DetailKamarPage

@@ -40,11 +40,11 @@ const RoomSection = () => {
                 data-aos-easing="ease-out-quad"
                 data-aos-delay="200"
               >
-                <figure className="overflow-hidden w-full">
+                <figure className="overflow-hidden w-full lg:min-h-[270px]">
                   <img
                     src={imageRoom}
                     alt="Foto Kamar"
-                    className="bg-cover bg-center"
+                    className="bg-cover bg-center md:h-72 md:w-full"
                   />
                 </figure>
                 <div className="flex flex-col w-full py-5 px-8 gap-4 ">
