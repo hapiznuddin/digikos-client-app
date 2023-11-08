@@ -1,9 +1,12 @@
+/* eslint-disable react/display-name */
+import { forwardRef } from "react"
 import UserLayout from "../../../../Layouts/DashboardLayout/DashboardUser/Layout";
-import ChangePasswordSection from "./ChangePasswordSection";
 import FormProfileSection from "./FormProfileSection";
 import RatingRoomSection from "./RatingRoomSection";
+import ChangePasswordSection from "./ChangePasswordSection";
 
-export const HomeProfile = () => {
+const HomeDashboardUser = forwardRef((props, ref) => {
+  const id = ref;
   return (
     <UserLayout title={"Dashboard User"}>
       <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -21,4 +24,6 @@ export const HomeProfile = () => {
       </div>
     </UserLayout>
   );
-};
+})
+
+export default HomeDashboardUser

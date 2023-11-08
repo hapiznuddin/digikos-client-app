@@ -116,7 +116,7 @@ const router = createBrowserRouter([
 
   // * Route Dashboard User
   {
-    path: "/user/dashboard",
+    path: "/user/dashboard/:id",
     element: <DashboardUserPage />,
   }
 ]);

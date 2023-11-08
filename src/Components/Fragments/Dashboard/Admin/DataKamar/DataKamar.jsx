@@ -8,11 +8,14 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useGetDataKamar } from "../../../../../services/dashboard/admin/dataKamar/useGetDataKamar";
 import TambahKamar from "./TambahKamar";
+import Input from "../../../../Elements/Input/Input";
 
 const DataKamar = () => {
   const token = Cookies.get("token");
   const queryClient = useQueryClient();
   const [selectRoom, setSelectRoom] = useState("");
+  const [selectStatus, setSelectStatus] = useState("");
+  const [search, setSearch] = useState("");
   const [floor, setFloor] = useState(1);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -26,6 +29,8 @@ const DataKamar = () => {
     selectRoom,
     floor,
     currentPage,
+    selectStatus,
+    search,
     onSuccess: (data) => {
       setItemsPerPage(data?.data?.per_page);
       setTotalItems(data?.data?.total);
@@ -36,11 +41,21 @@ const DataKamar = () => {
     },
   });
 
+
   // * Handle Change Select
-  const handleSelectChange = (e) => {
+  const handleSelectRoomChange = (e) => {
     setSelectRoom(e.target.value);
     queryClient.invalidateQueries(["dataKamar", e.target.value]);
   };
+  const handleSelectStatusChange = (e) => {
+    setSelectStatus(e.target.value);
+    queryClient.invalidateQueries(["dataKamar", e.target.value]);
+  };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    refetch()
+  }
 
   // * Handle Change Floor
   const handleFloorChange = (selectedFloor) => {
@@ -115,26 +130,44 @@ const DataKamar = () => {
   return (
     <AdminLayout title="Data Kamar">
       <div className="flex flex-col gap-8 bg-neutral-25 px-4 py-8 rounded-xl shadow border border-neutral-100">
-        <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-between">
+        <div className="flex flex-col gap-6 lg:flex-row md:gap-4 justify-between">
           <ButtonPrimary
             className="text-sm md:text-base font-medium md:w-60"
             onClick={() => document.getElementById("my_modal_1").showModal()}
           >
             Tambah Kamar
           </ButtonPrimary>
+          <div className="flex gap-4 w-full lg:w-2/3">
 
           {/* Select Room */}
           <select
-            className="select w-full md:w-48 border border-neutral-300 rounded-full hover:border-primary-500 focus:outline-primary-500"
-            onChange={handleSelectChange}
+            value={selectRoom}
+            className="select w-full  border border-neutral-300 rounded-full hover:border-primary-500 focus:outline-primary-500"
+            onChange={handleSelectRoomChange}
           >
-            <option disabled selected>
+            <option value="" selected>
               Filter Kamar
             </option>
             <option value="1">Kamar Standar</option>
             <option value="2">Kamar Deluxe</option>
             <option value="3">Kamar Premium</option>
           </select>
+
+          {/* Select Room */}
+          <select
+            value={selectStatus}
+            className="select w-full  border border-neutral-300 rounded-full hover:border-primary-500 focus:outline-primary-500"
+            onChange={handleSelectStatusChange}
+          >
+            <option value="" selected>
+              Filter Status
+            </option>
+            <option value="Terisi">Terisi</option>
+            <option value="Tidak Terisi">Tidak Terisi</option>
+          </select>
+
+          <Input className="w-full " placeholder="Cari sesuatu..." value={search} onChange={handleSearch}/>
+            </div>
         </div>
 
         {/* Tabs Floor */}
@@ -252,7 +285,7 @@ const DataKamar = () => {
       </div>
 
       <dialog id="my_modal_1" className="modal">
-        <TambahKamar refetch={refetch()}/>
+        <TambahKamar refetch={refetch}/>
       </dialog>
     </AdminLayout>
   );

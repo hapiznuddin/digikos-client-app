@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../lib/axios";
 
-export const useGetDataKamar = ({ token, onSuccess, onError, selectRoom, floor, currentPage, selectStatus, search }) => {
+export const useGetDataSelectClass = ({ token, onSuccess, onError, idSelectRoom }) => {
   return useQuery({
-    queryKey: ["dataKamar", selectRoom, floor, currentPage, selectStatus],
+    queryKey: ["detailSelectKamar", idSelectRoom],
     queryFn: async () => {
       const headers = {
-        Accept: "application/json",
         "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
       const res = await axiosInstance.get(
-        `/room?floor=${floor}&page=${currentPage}&id=${selectRoom}&status=${selectStatus}&search=${search}`,
+        `/room/detail-class?id=${idSelectRoom}`,
         { headers }
       );
       return res;

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import InputField from "../../../../Elements/Input";
 import SelectNamaKamar from "../../../../Elements/Select/SelectNamaKamar";
@@ -9,39 +10,62 @@ import {AiOutlineClose, AiOutlineCloseCircle} from "react-icons/ai";
 import ButtonPrimary from "../../../../Elements/Button";
 import { GoIssueClosed } from "react-icons/go";
 import SelectLantai from "../../../../Elements/Select/SelectLantai";
-import { useAddDatakamar } from "../../../../../services/dashboard/admin/dataKamar/useAddDatakamar";
 import { useGetDataSelectClass } from "../../../../../services/dashboard/admin/dataKamar/useGetDataSelectClass";
+import { useGetDetailKamar } from "../../../../../services/dashboard/admin/dataKamar/useGetDetailKamar";
+import { useMutation } from "@tanstack/react-query";
+import { axiosInstance } from "../../../../../lib/axios";
 
-const TambahKamar = ({ refetch }) => {
-  TambahKamar.propTypes = {
+const EditKamar = ({ id, refetch }) => {
+  EditKamar.propTypes = {
+    id: PropTypes.number,
     refetch: PropTypes.func
   };
   const token = Cookies.get("token");
   const [idSelectRoom, setIdSelectRoom] = useState("");
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectClass, setSelectClass] = useState(false);
 
-  const { data, refetch: refetchData } = useGetDataSelectClass({
+  const {data} = useGetDetailKamar({
     token,
-    idSelectRoom,
+    id,
     onSuccess: (data) => {
       formik.setValues({
-        class_room_id: data?.data.id,
-        number_room: "",
-        number_floor: "",
-        room_size: data?.data.room_size,
-        room_price: data?.data.room_price,
-      });
+        class_room_id: data?.data?.rooms[0].class_room?.id,
+        number_room: data?.data?.rooms[0].number_room,
+        number_floor: data?.data?.rooms[0].number_floor,
+        room_size: data?.data?.rooms[0].room_size,
+        room_price: data?.data?.rooms[0].room_price,
+      })
+    },
+    onError: (data) => {
+      console.log(data);
+    }
+  })
+
+  const { data: dataClass, refetch: refetchData } = useGetDataSelectClass({
+    token,
+    idSelectRoom,
+    onSuccess: () => {
+      setSelectClass(true);
     },
     onError: () => {
     },
   });
 
-  const { mutate } = useAddDatakamar({
-    token,
+  const { mutate } = useMutation({
+    mutationFn: async (body) => {
+      const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+      const res = await axiosInstance.put(`/room`, body, { headers });
+      return res;
+    },
     onSuccess: (data) => {
       console.log(data);
-      refetch
+      refetch;
       setIsSuccess(true);
     },
     onError: (data) => {
@@ -56,11 +80,11 @@ const TambahKamar = ({ refetch }) => {
 
   const formik = useFormik({
     initialValues: {
-      class_room_id: "",
-      number_room: "",
-      number_floor: "",
-      room_size: data?.data?.room_size,
-      room_price: data?.data?.room_price,
+      class_room_id: data?.data?.rooms[0].class_room?.id,
+      number_room: data?.data?.rooms[0].number_room,
+      number_floor: data?.data?.rooms[0].number_floor,
+      room_size: data?.data?.rooms[0].room_size,
+      room_price: data?.data?.rooms[0].room_price,
     },
     onSubmit: async () => {
       const {
@@ -71,6 +95,7 @@ const TambahKamar = ({ refetch }) => {
         room_price,
       } = formik.values;
       mutate({
+        id: id,
         class_room_id,
         number_room,
         number_floor,
@@ -93,9 +118,21 @@ const TambahKamar = ({ refetch }) => {
     }
   }, [idSelectRoom, refetchData]);
 
+  useEffect(() => {
+    if (selectClass === true) {
+      formik.setValues({
+        class_room_id: dataClass?.data.id,
+        number_room: data?.data?.rooms[0].number_room,
+        number_floor: data?.data?.rooms[0].number_floor,
+        room_size: dataClass?.data.room_size,
+        room_price: dataClass?.data.room_price,
+      });
+    }
+  }, [selectClass, dataClass, data]);
+
   const { class_room_id, number_room, number_floor, room_size, room_price } =
     formik.errors;
-    console.log(formik.values);
+  console.log(formik.values);
 
   return (
     <div className="modal-box w-11/12 max-w-xl">
@@ -123,15 +160,15 @@ const TambahKamar = ({ refetch }) => {
           </div>
         </div>): null}
         <h1 className="text-neutral-800 text-base lg:text-lg font-semibold">
-          Tambah Kamar
+          Edit Kamar
         </h1>
         <div className="flex flex-col gap-1">
           <SelectNamaKamar
             label="Nama Kamar"
             name="class_room_id"
             onChange={handleForm}
-            value={idSelectRoom}
             onChangeCapture={(e) => setIdSelectRoom(e.target.value)}
+            value={formik.values.class_room_id}
           />
           {class_room_id ? (
             <p className="text-error-500 text-xs">{class_room_id}</p>
@@ -144,6 +181,7 @@ const TambahKamar = ({ refetch }) => {
             type="text"
             placeholder="Masukkan nomor kamar"
             onChange={handleForm}
+            value={formik.values.number_room}
           />
           {number_room ? (
             <p className="text-error-500 text-xs">{number_room}</p>
@@ -153,8 +191,8 @@ const TambahKamar = ({ refetch }) => {
           <SelectLantai
             label="Lantai"
             name="number_floor"
-            value={formik.values.number_floor}
             onChange={handleForm}
+            value={formik.values.number_floor}
           />
           {number_floor ? (
             <p className="text-error-500 text-xs">{number_floor}</p>
@@ -203,4 +241,4 @@ const TambahKamar = ({ refetch }) => {
   );
 };
 
-export default TambahKamar;
+export default EditKamar;

@@ -13,6 +13,8 @@ import { useGetProfilePic } from "../../../services/landingPage/userPage/useGetP
 import { useLogout } from "../../../services/auth/useLogout";
 import { useGetRentHistory } from "../../../services/landingPage/userPage/useGetRentHistory";
 import Swal from "sweetalert2";
+import { axiosInstance } from "../../../lib/axios";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = ({
   onClickHome,
@@ -43,6 +45,25 @@ const Navbar = ({
       console.log(data);
     },
   });
+
+  const {data: userData} = useQuery({
+    queryKey: ["userData"],
+    queryFn:async() => {
+      const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+      const res = await axiosInstance.get(`/user`, { headers });
+      return res;
+    },
+    onSuccess: (data) => {
+      console.log(data?.data.id);
+    },
+    onError: (data) => {
+      console.log(data);
+    }
+  })
 
   const imgProfilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;
   useEffect(() => {
@@ -206,7 +227,7 @@ const Navbar = ({
                   </li>
                   <li className="text-base font-medium">
                     {statusData?.data[0]?.status_id === 5  ? (
-                      <Link to={"/user/dashboard"}>
+                      <Link to={`/user/dashboard/${userData?.data.user_id}`}>
                         <RxDashboard size={24} />
                         <p>Dashboard</p>
                       </Link>

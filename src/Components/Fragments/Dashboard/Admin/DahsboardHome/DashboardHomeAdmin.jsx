@@ -5,7 +5,7 @@ import { MdAddHome } from "react-icons/md"
 import { TbHome } from "react-icons/tb"
 import PictureProfile from "../../../LandingPage/UserPage/ProfilePage/PictureProfile"
 import Cookies from "js-cookie"
-import ChangePasswordSection from "../../User/Profile/ChangePasswordSection"
+import ChangePasswordSection from "../../User/UserHome/ChangePasswordSection"
 
 const DashboardHomeAdmin = () => {
   const role = Cookies.get("role");

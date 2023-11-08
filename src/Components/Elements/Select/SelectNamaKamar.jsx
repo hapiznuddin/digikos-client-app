@@ -47,7 +47,7 @@ const SelectNamaKamar = ({ name, label, classNameLabel, onChange, value, onChang
         {label}
       </Label>
       <SelectField value={value} onChange={onChange} name={name} onChangeCapture={onChangeCapture}>
-            <option disabled selected>
+            <option value="" disabled selected>
               Pilih Nama kamar
             </option>
             {data?.data.map((room) => (

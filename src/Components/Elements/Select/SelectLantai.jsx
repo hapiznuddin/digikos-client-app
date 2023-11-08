@@ -16,7 +16,7 @@ const SelectLantai = ({ name, label, classNameLabel, onChange, value, onChangeCa
     <div className="flex flex-col">
     <Label htmlFor={name} className={classNameLabel}>{label}</Label>
     <SelectField value={value} onChange={onChange} name={name} onChangeCapture={onChangeCapture}>
-      <option value='' disabled selected>
+      <option value="" disabled selected>
         Pilih lantai
       </option>
       <option value='1'>1</option>

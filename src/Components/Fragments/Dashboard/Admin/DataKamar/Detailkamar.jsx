@@ -4,27 +4,21 @@ import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layo
 import Cookies from "js-cookie";
 import ButtonPrimary from "../../../../Elements/Button";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../../lib/axios";
 import { Skeleton } from "@chakra-ui/react";
 import TableRiwayatPenghuni from "./TableRiwayatPenghuni";
+import EditKamar from "./EditKamar";
+import { useGetDetailKamar } from "../../../../../services/dashboard/admin/dataKamar/useGetDetailKamar";
 
 const Detailkamar = forwardRef((props, ref) => {
   const token = Cookies.get("token");
   const id = ref.current;
   const idParams = parseInt(id);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["detailKamar", id],
-    queryFn: async () => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const res = await axiosInstance.get(`/room/detail?id=${id}`, { headers });
-      return res;
-    },
+  const { data, isLoading, refetch } = useGetDetailKamar({
+    token,
+    id,
     onSuccess: () => {
     },
     onError: (data) => {
@@ -67,6 +61,36 @@ const Detailkamar = forwardRef((props, ref) => {
     }).format(value);
   };
 
+  const {mutate} = useMutation({
+    mutationFn: async (body) => {
+      const config = {
+        headers: {
+          
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: body
+      };
+      const res = await axiosInstance.delete(`/room`, config);
+      return res;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      Swal.fire({
+        title: "Berhasil",
+        text: "Kamar Berhasil Dihapus",
+        icon: "success",
+        timer: 1500,
+      }).then(() => {
+        window.location.href = "/admin/dashboard/dataKamar";
+      });
+    },
+    onError: (data) => {
+      console.log(data);
+    }
+  })
+
   return (
     <AdminLayout title="Detail Kamar" routeParams={idParams}>
       <div className="flex flex-col w-full h-full p-8 gap-4 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
@@ -76,13 +100,13 @@ const Detailkamar = forwardRef((props, ref) => {
           </h1>
           {isLoading ? (
             <Skeleton height="25px" w={"100px"} />
-          ) : data?.data?.rooms[0].status_room === "Terisi" ? (
+          ) : data?.data?.rooms[0]?.status_room === "Terisi" ? (
             <div className="badge bg-success-100 -my-1 h-full py-1 px-2 text-success-700">
-              {data?.data?.rooms[0].status_room}
+              {data?.data?.rooms[0]?.status_room}
             </div>
           ) : (
             <div className="badge bg-secondary-100 -my-1 h-full py-1 px-2 text-secondary-700">
-              {data?.data?.rooms[0].status_room}
+              {data?.data?.rooms[0]?.status_room}
             </div>
           )}
           <div className="flex w-full font-medium text-sm md:text-base">
@@ -163,7 +187,7 @@ const Detailkamar = forwardRef((props, ref) => {
                   cancelButtonText: "Batal",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    alert("Data Kamar Berhasil Dihapus");
+                    mutate({id:idParams})
                   }
                 })
               }
@@ -173,16 +197,15 @@ const Detailkamar = forwardRef((props, ref) => {
             </ButtonPrimary>
             <ButtonPrimary
               className="btn btn-sm md:btn-md w-1/2 h-full font-medium text-xs md:text-sm"
-              // onClick={() =>
-              //   navigate(
-              //     `/admin/dashboard/dataTipeKamar/detail/edit/${idParams}`
-              //   )
-              // }
+              onClick={() => document.getElementById("my_modal_1").showModal()}
             >
               Edit Data Kamar
             </ButtonPrimary>
           </div>
         </div>
+        <dialog id="my_modal_1" className="modal">
+        <EditKamar id={idParams} refetch={refetch()}/>
+      </dialog>
         <TableRiwayatPenghuni roomId={idParams} />
       </div>
     </AdminLayout>

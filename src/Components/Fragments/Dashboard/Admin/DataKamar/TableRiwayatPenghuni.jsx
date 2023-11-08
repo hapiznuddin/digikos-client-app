@@ -2,12 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
 import { axiosInstance } from '../../../../../lib/axios'
+import { useState } from 'react'
 
 const TableRiwayatPenghuni = ({roomId}) => {
   TableRiwayatPenghuni.propTypes = {
     roomId: PropTypes.number
   }
   const token = Cookies.get('token')
+  const [dataNotFound, setDataNotFound] = useState(false)
 
   const { data, isLoading } = useQuery({
     queryKey: ['riwayatPenyewa', roomId],
@@ -24,7 +26,9 @@ const TableRiwayatPenghuni = ({roomId}) => {
       console.log(data?.data)
     },
     onError: (data) => {
-      console.log(data)
+      if (data.response.status === 404) {
+        setDataNotFound(true)
+      }
     }
   })
 
@@ -56,23 +60,28 @@ const TableRiwayatPenghuni = ({roomId}) => {
               <span className="loading loading-spinner loading-lg text-primary-500"/>
               </td>
               </tr>) : (
-                data?.data.length === 0 ?  (
+                dataNotFound ? (
                   <tr className="text-center font-medium">
-                    <td colSpan={9}>Tidak Ada Data Penghuni</td>
+                    <td colSpan={9}>Tidak Ada Riwayat Penghuni</td>
                   </tr>
                 ) : (
-                data?.data.map((rent, index) => {
-              return (
-                <tr key={index} >
-                  <th className="font-medium">{index + 1}</th>
-                  <td>{rent.occupant?.name}</td>
-                  <td>{rent.occupant?.phone}</td>
-                  <td className="max-w-[200px]">{rent.occupant?.address}</td>
-                  <td>{formatDate(rent.start_date)}</td>
-                  <td>{rent.end_date === undefined ? null : formatDate(rent.end_date)}</td>
-                </tr>
-              );
-            })) )}
+                  data?.data.length === 0 ?  (
+                    <tr className="text-center font-medium">
+                      <td colSpan={9}>Tidak Ada Riwayat Penghuni</td>
+                    </tr>
+                  ) : (
+                  data?.data.map((rent, index) => {
+                return (
+                  <tr key={index} >
+                    <th className="font-medium">{index + 1}</th>
+                    <td>{rent.occupant?.name}</td>
+                    <td>{rent.occupant?.phone}</td>
+                    <td className="max-w-[200px]">{rent.occupant?.address}</td>
+                    <td>{formatDate(rent.start_date)}</td>
+                    <td>{rent.end_date === undefined ? null : formatDate(rent.end_date)}</td>
+                  </tr>
+                );
+              }))) )}
           </tbody>
         </table>
       </div>
