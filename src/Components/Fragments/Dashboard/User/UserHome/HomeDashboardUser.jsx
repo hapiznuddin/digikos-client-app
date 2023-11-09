@@ -6,7 +6,7 @@ import RatingRoomSection from "./RatingRoomSection";
 import ChangePasswordSection from "./ChangePasswordSection";
 
 const HomeDashboardUser = forwardRef((props, ref) => {
-  const id = ref;
+  const id = ref.current;
   return (
     <UserLayout title={"Dashboard User"}>
       <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -15,7 +15,7 @@ const HomeDashboardUser = forwardRef((props, ref) => {
         </div>
         <div className="flex flex-col w-full lg:w-1/2 gap-8">
           <div className="flex flex-col w-full items-center gap-8 px-4 md:px-8 py-12 rounded-3xl bg-neutral-25 shadow-lg border border-neutral-100">
-            <RatingRoomSection/>
+            <RatingRoomSection id={id}/>
           </div>
           <div className="flex flex-col w-full h-full items-center gap-8 px-4 md:px-8 py-12 rounded-3xl bg-neutral-25 shadow-lg border border-neutral-100">
           <ChangePasswordSection/>

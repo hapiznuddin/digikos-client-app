@@ -7,10 +7,11 @@ import ImageRoomSection from "./ImageRoomSection";
 import { PiCubeLight } from "react-icons/pi";
 import FacilityRoomSection from "./FacilityRoomSection";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
-import { IoPersonCircleOutline } from "react-icons/io5";
 import InputPengajuan from "./InputPengajuan";
 import { useNavigate } from "react-router-dom";
 import { useDetailRoomPage } from "../../../../services/landingPage/roomPage/useDetailRoomPage";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "../../../../lib/axios";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;
@@ -18,7 +19,7 @@ const DetailRoom = forwardRef((props, ref) => {
   const contactRef = useRef();
   const scrollToRef = (ref) => {
     if (ref && ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
+      ref.current.scrollIntoView({ behavior: "smooth" });
     }
   };
   const rupiahFormatter = (amount) => {
@@ -35,22 +36,112 @@ const DetailRoom = forwardRef((props, ref) => {
     },
   });
 
+  const { data: totalReview, isLoading: loadingTotalReview } = useQuery({
+    queryKey: ["totalReview"],
+    queryFn: async () => {
+      const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      };
+      const res = await axiosInstance.get(
+        `/statistic-by-classroom?id_class_room=${id}`,
+        { headers }
+      );
+      return res;
+    },
+    onError: (data) => {
+      console.log(data);
+    },
+  });
+
+  const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["getReviews"],
+      queryFn: async ({ pageParam = 1 }) => {
+        const headers = {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        };
+        const res = await axiosInstance.get(
+          `/testimonial?id_class_room=${id}&page=${pageParam}`,
+          { headers }
+        );
+
+        return res.data;
+      },
+      getNextPageParam: (lastPage) => {
+        if (lastPage && lastPage.links.next) {
+          const nextPage = lastPage.links.next.match(/page=(\d+)/);
+          return nextPage ? parseInt(nextPage[1], 10) : false;
+        }
+        return false;
+      },
+      onError: (data) => {
+        console.log(data);
+      },
+    });
+
+  const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(date).toLocaleDateString("id-ID", options);
+  };
+
   return (
-    <LandingPageLayout classNameFooter={"mt-32 md:mt-40"} onClickHome={() => {navigate("/")}} onClickFacility={() => {navigate("/")}} onClickRoom={() => {navigate("/")}} onClickContact={() => {scrollToRef(contactRef)}}>
+    <LandingPageLayout
+      classNameFooter={"mt-32 md:mt-40"}
+      onClickHome={() => {
+        navigate("/");
+      }}
+      onClickFacility={() => {
+        navigate("/");
+      }}
+      onClickRoom={() => {
+        navigate("/");
+      }}
+      onClickContact={() => {
+        scrollToRef(contactRef);
+      }}
+    >
       <div className=" flex flex-col gap-2 mt-8 lg:mt-20 w-full px-8 md:max-w-screen-md lg:max-w-screen-xl mx-auto ">
         <div className="flex justify-between items-center">
           {loadingRoom ? (
-            <Skeleton w={"200px"} h={"30px"}/>
+            <Skeleton w={"200px"} h={"30px"} />
           ) : (
             <h1 className="text-neutral-800 text-xl md:text-2xl lg:text-3xl font-semibold">
               {room?.data.room_name}
             </h1>
           )}
-          <div className="flex gap-1 items-center justify-center">
-            <p className="text-neutral-800 md:text-2xl font-semibold">4.5</p>
-            <AiFillStar className="text-secondary-500 text-2xl lg:text-3xl" />
-            <p className="text-neutral-800 md:text-xl font-semibold">(12)</p>
-          </div>
+          {loadingTotalReview ? (
+            <Skeleton w={"150px"} h={"40px"} />
+          ) : (
+            <div className="flex gap-1 items-center justify-center">
+              {totalReview?.data === undefined ||
+              totalReview?.data === null ||
+              Object.keys(totalReview?.data).length === 0 ? (
+                <p className="text-neutral-800 text-xl md:text-2xl lg:text-3xl font-semibold">
+                  0
+                </p>
+              ) : (
+                <p className="text-neutral-800 md:text-2xl font-semibold">
+                  {totalReview?.data.average_rating}
+                </p>
+              )}
+              <AiFillStar className="text-secondary-500 text-2xl lg:text-3xl" />
+              {totalReview?.data === undefined ||
+              totalReview?.data === null ||
+              Object.keys(totalReview?.data).length === 0 ? (
+                <p className="text-neutral-800 md:text-xl font-semibold">(0)</p>
+              ) : (
+                <p className="text-neutral-800 md:text-xl font-semibold">
+                  ({totalReview?.data.total_testimonies})
+                </p>
+              )}
+            </div>
+          )}
         </div>
         <ImageRoomSection ref={ref} />
         <div className="flex mt-12 gap-8 w-full">
@@ -117,88 +208,124 @@ const DetailRoom = forwardRef((props, ref) => {
               </div>
             </div>
             <div className="divider " />
-            <div className="flex flex-col gap-10 mb-32">
-              <div className="flex gap-4 items-center justify-start">
-                <div className="flex gap-1 items-center justify-start">
-                  <AiFillStar className="text-secondary-500 text-3xl md:text-4xl" />
-                  <p className="text-neutral-800 text-2xl md:text-3xl lg:text-4xl font-semibold">
-                    4.5
-                  </p>
-                </div>
-                <p className="text-neutral-800 text-xl  lg:text-3xl font-semibold">
-                  (12 review)
-                </p>
-              </div>
-              <div className="flex flex-col gap-8">
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="avatar">
-                      <div className="w-16 rounded-full bg-neutral-200">
-                        <IoPersonCircleOutline
-                          size={64}
-                          className="text-neutral-600"
-                        />
-                        {/* <img src="" className="bg-primary-100" /> */}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <h1 className="text-neutral-800 text-xl font-semibold">
-                        Reviewer
-                      </h1>
-                      <p className="text-neutral-600 text-sm">Lantai 1 no 10</p>
-                      <p className="text-neutral-600 text-xs">6/10/2023</p>
-                    </div>
-                  </div>
+            <div className="flex flex-col gap-8 mb-32">
+              {loadingTotalReview ? (
+                <Skeleton w={"250px"} h={"45px"} />
+              ) : (
+                <div className="flex gap-4 items-center justify-start">
                   <div className="flex gap-1 items-center justify-start">
-                    <AiFillStar className="text-secondary-500 text-2xl " />
-                    <p className="text-secondary-500 text-2xl font-semibold">
-                      4.5
+                    <AiFillStar className="text-secondary-500 text-3xl md:text-4xl" />
+                    {totalReview?.data === undefined ||
+                    totalReview?.data === null ||
+                    Object.keys(totalReview?.data).length === 0 ? (
+                      <p className="text-neutral-800 text-2xl md:text-3xl lg:text-4xl font-semibold">
+                        0
+                      </p>
+                    ) : (
+                      <p className="text-neutral-800 text-2xl md:text-3xl lg:text-4xl font-semibold">
+                        {totalReview?.data.average_rating}
+                      </p>
+                    )}
+                  </div>
+                  {totalReview?.data === undefined ||
+                  totalReview?.data === null ||
+                  Object.keys(totalReview?.data).length === 0 ? (
+                    <p className="text-neutral-800 text-xl  lg:text-3xl font-semibold">
+                      (0 review)
                     </p>
-                  </div>
-                </div>
-                <div className="flex text-sm md:text-base text-neutral-600">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, velit. At nisi rem consequuntur vel consectetur sunt rerum omnis cupiditate ea vitae ab facere</p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-8">
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="avatar">
-                      <div className="w-16 rounded-full bg-neutral-200">
-                        <IoPersonCircleOutline
-                          size={64}
-                          className="text-neutral-600"
-                        />
-                        {/* <img src="" className="bg-primary-100" /> */}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <h1 className="text-neutral-800 text-xl font-semibold">
-                        Reviewer
-                      </h1>
-                      <p className="text-neutral-600 text-sm">Lantai 1 no 10</p>
-                      <p className="text-neutral-600 text-xs">6/10/2023</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-1 items-center justify-start">
-                    <AiFillStar className="text-secondary-500 text-2xl " />
-                    <p className="text-secondary-500 text-2xl font-semibold">
-                      4.5
+                  ) : (
+                    <p className="text-neutral-800 text-xl  lg:text-3xl font-semibold">
+                      ({totalReview?.data.total_testimonies} review)
                     </p>
-                  </div>
+                  )}
                 </div>
-                <div className="flex text-sm md:text-base text-neutral-600">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, velit. At nisi rem consequuntur vel consectetur sunt rerum omnis cupiditate ea vitae ab facere</p>
+              )}
+
+              {/* //* Code Testimoni Review */}
+              {data?.pages?.map((page) => (
+                <div
+                  key={page.meta.current_page}
+                  className="flex flex-col gap-8"
+                >
+                  {page.data.length === 0 ? (
+                    <p className="text-neutral-800 text-center">
+                      Belum Ada Review
+                    </p>
+                  ) : (
+                    page.data.map((review) => {
+                      const image = `${import.meta.env.VITE_DIGIKOS_URL}${
+                        review.profile_pic
+                      }`;
+                      return (
+                        <div key={review.id} className="flex flex-col gap-4">
+                          <div className="flex justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="avatar">
+                                <div className="w-16 rounded-full bg-neutral-200">
+                                  <img
+                                    src={
+                                      review.profile_pic === undefined
+                                        ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                                        : image
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-0.5">
+                                <h1 className="text-neutral-800 text-xl font-semibold">
+                                  {review.name}
+                                </h1>
+                                <p className="text-neutral-600 text-sm">
+                                  Lantai {review.floor} no {review.number_room}
+                                </p>
+                                <p className="text-neutral-600 text-xs">
+                                  {formatDate(review.created_at)}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex gap-1 items-center justify-start">
+                              <AiFillStar className="text-secondary-500 text-2xl " />
+                              <p className="text-secondary-500 text-2xl font-semibold">
+                                {review.rating}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex text-sm md:text-base text-neutral-600">
+                            <p>{review.review}</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
-              </div>
+              ))}
+              <button
+                className="btn btn-ghost normal-case font-medium text-base"
+                onClick={() => fetchNextPage()}
+                disabled={!hasNextPage || isFetchingNextPage}
+              >
+                {isFetchingNextPage ? (
+                  <>
+                    <span className="loading loading-spinner bg-primary-400"></span>
+                    <p> Loading...</p>
+                  </>
+                ) : hasNextPage ? (
+                  "Lihat lebih banyak"
+                ) : (
+                  "Tidak ada review lagi"
+                )}
+              </button>
             </div>
           </div>
 
           {/* //* Form Booking */}
-          <InputPengajuan hargaKamar={room?.data.room_price} idKamar={room?.data.id}/>
+          <InputPengajuan
+            hargaKamar={room?.data.room_price}
+            idKamar={room?.data.id}
+          />
         </div>
       </div>
-      <div ref={contactRef}/>
+      <div ref={contactRef} />
     </LandingPageLayout>
   );
 });
