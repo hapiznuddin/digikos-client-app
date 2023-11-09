@@ -10,8 +10,9 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import InputPengajuan from "./InputPengajuan";
 import { useNavigate } from "react-router-dom";
 import { useDetailRoomPage } from "../../../../services/landingPage/roomPage/useDetailRoomPage";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../lib/axios";
+import { useGetTotalTestimoni } from "../../../../services/landingPage/roomPage/useGetTestimoni";
 
 const DetailRoom = forwardRef((props, ref) => {
   const id = ref.current;
@@ -36,19 +37,8 @@ const DetailRoom = forwardRef((props, ref) => {
     },
   });
 
-  const { data: totalReview, isLoading: loadingTotalReview } = useQuery({
-    queryKey: ["totalReview"],
-    queryFn: async () => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      };
-      const res = await axiosInstance.get(
-        `/statistic-by-classroom?id_class_room=${id}`,
-        { headers }
-      );
-      return res;
-    },
+  const { data: totalReview, isLoading: loadingTotalReview } = useGetTotalTestimoni({
+    id,
     onError: (data) => {
       console.log(data);
     },

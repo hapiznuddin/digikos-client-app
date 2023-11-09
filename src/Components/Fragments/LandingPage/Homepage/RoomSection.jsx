@@ -29,8 +29,7 @@ const RoomSection = () => {
           ))
         : data?.data.map((room) => {
             const imageRoom = `${import.meta.env.VITE_DIGIKOS_URL}${
-              room.first_image_room?.path
-            }`;
+              room.image_room}`;
             return (
               <div
                 key={room.id}
@@ -66,7 +65,7 @@ const RoomSection = () => {
                       </div>
                       <div className="flex gap-1">
                         <p className="text-neutral-800 md:text-lg font-semibold">
-                          4.5
+                          {room.avg_rating}
                         </p>
                         <AiFillStar size={24} className="text-secondary-500" />
                       </div>
