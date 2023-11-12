@@ -95,7 +95,6 @@ const TambahKamar = ({ refetch }) => {
 
   const { class_room_id, number_room, number_floor, room_size, room_price } =
     formik.errors;
-    console.log(formik.values);
 
   return (
     <div className="modal-box w-11/12 max-w-xl">
