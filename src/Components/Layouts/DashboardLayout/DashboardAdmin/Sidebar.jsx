@@ -111,10 +111,10 @@ const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
             {/* // * Laporan ada di role Owner */}
             {role == "Owner" ? (
               <button>
-                <Link to="/dashboard/">
+                <Link to="/admin/dashboard/laporan">
                   <div
                     className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                      location.pathname == "/dashboard/"
+                      location.pathname == "/admin/dashboard/laporan"
                         ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                         : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                     }`}

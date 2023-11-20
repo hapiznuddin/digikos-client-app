@@ -25,6 +25,7 @@ import EditTipeKamarPage from "./pages/dashboard/admin/dataTipeKamar/editTipeKam
 import DataKamarPage from "./pages/dashboard/admin/dataKamar/dataKamarPage.jsx";
 import DetailKamarPage from "./pages/dashboard/admin/dataKamar/detailKamarPage.jsx";
 import PengeluaranPage from "./pages/dashboard/admin/pengeluaran/pengeluaranPage.jsx";
+import LaporanPage from "./pages/dashboard/admin/laporan/laporanPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
     path: "/user/riwayatPengajuanSewa",
     element: <RentHistoryPage />,
   },
+
 
   // * Route Dashboard Admin
   {
@@ -118,6 +120,12 @@ const router = createBrowserRouter([
     path: "/admin/dashboard/pengeluaran",
     element: <PengeluaranPage/>,
   },
+  {
+    path: "/admin/dashboard/laporan",
+    element: <LaporanPage/>,
+  },
+
+
 
   // * Route Dashboard User
   {
