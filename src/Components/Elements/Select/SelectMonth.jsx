@@ -13,7 +13,7 @@ const SelectMonth = ({
     label: PropTypes.string,
     classNameLabel: PropTypes.string,
     onChange: PropTypes.func,
-    value: PropTypes.string,
+    value: PropTypes.any,
     onChangeCapture: PropTypes.func,
     defaultValue: PropTypes.string,
   };
@@ -25,7 +25,7 @@ const SelectMonth = ({
         onChangeCapture={onChangeCapture}
         defaultValue={defaultValue}
       >
-        <option value="" disabled selected>
+        <option value={""} disabled selected>
           Pilih Bulan
         </option>
         <option value={1} >Januari</option>

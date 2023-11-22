@@ -12,7 +12,7 @@ const SelectField = ({
   SelectField.propTypes = {
     children: PropTypes.node,
     onChange: PropTypes.func,
-    value: PropTypes.string,
+    value: PropTypes.any,
     name: PropTypes.string,
     onChangeCapture: PropTypes.func,
     defaultValue: PropTypes.string,
