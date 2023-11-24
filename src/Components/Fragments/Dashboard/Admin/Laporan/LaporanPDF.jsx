@@ -1,26 +1,42 @@
-import { BiPrinter } from "react-icons/bi";
-import ButtonPrimary from "../../../../Elements/Button";
-import Input from "../../../../Elements/Input/Input";
-import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
-import SelectMonth from "../../../../Elements/Select/SelectMonth";
+/* eslint-disable react/display-name */
+import { forwardRef } from "react";
+import { useGetReport } from "../../../../../services/dashboard/admin/laporan/useGetReport";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useGetReport } from "../../../../../services/dashboard/admin/laporan/useGetReport";
+import { useEffect } from "react";
+import ButtonPrimary from "../../../../Elements/Button";
+import { BiPrinter } from "react-icons/bi";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 
 
-const Laporan = () => {
+export const LaporanPDF = forwardRef((props, ref) => {
   const token = Cookies.get("token");
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; // Ambil bulan saat ini (mulai dari 0)
-  const currentYear = currentDate.getFullYear(); // Ambil tahun saat ini
+  const monthYear = ref.current;
 
-  const [monthly, setMonthly] = useState(currentMonth);
-  const [yearly, setYerarly] = useState(currentYear);
+  const [monthly, setMonthly] = useState(null);
+  const [yearly, setYearly] = useState(null);
+
+  useEffect(() => {
+    if (monthYear && (monthYear.length === 5 || monthYear.length === 6)) {
+      let month, year;
+      if (monthYear.length === 5) {
+        month = monthYear.substring(0, 1);
+        setMonthly(month);
+        year = monthYear.substring(1);
+        setYearly(year);
+      } else if (monthYear.length === 6) {
+        month = monthYear.substring(0, 2);
+        setMonthly(month);
+        year = monthYear.substring(2);
+        setYearly(year);
+      }
+    } 
+  }, [monthYear]);
+
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [expenseType, setExpenseType] = useState([]);
-  const navigate = useNavigate();
 
   const { isLoading } = useGetReport({
     token,
@@ -63,9 +79,34 @@ const Laporan = () => {
     }).format(value);
   };
 
-  const renderTable = () => {
-    return (
-      <table className="table table-zebra">
+  const dateFormater = (date) => {
+    return new Intl.DateTimeFormat("id-ID", {
+      month: "long",
+    }).format(new Date(date));
+  };
+
+  const componentPdf = useRef()
+  const generatePdf = useReactToPrint({
+    content: () => componentPdf.current,
+    documentTitle: `Laporan Keuangan ${dateFormater(monthly)} ${yearly}`,
+  })
+
+  return (
+    <div className="flex max-w-[210mm] mx-auto relative">
+      <ButtonPrimary className="btn w-1/4 font-medium md:text-base absolute right-4 top-12 md:right-16 md:top-12"
+        onClick={generatePdf}
+      >
+        <BiPrinter size={20} />
+        Print
+      </ButtonPrimary>
+      <div className="flex flex-col w-11/12 mx-auto p-12 gap-8" ref={componentPdf}>
+        <img src="/digikos.png" alt="" className="w-48" />
+        <h1 className="text-neutral-800 text-lg font-medium">
+          Laporan Keuangan{" "}
+          {monthly === null ? null : `Bulan ${dateFormater(monthly)}`} Tahun {yearly}
+        </h1>
+        <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
+          <table className="table table-zebra">
             {/* head */}
             <thead className="bg-primary-50 text-base text-neutral-800">
               <tr className="font-medium">
@@ -138,45 +179,8 @@ const Laporan = () => {
               )}
             </tbody>
           </table>
-    )
-  }
-
-  return (
-    <AdminLayout title="Laporan">
-      <div className="flex flex-col gap-8 bg-neutral-25 px-4 py-8 rounded-xl shadow border border-neutral-100">
-        <div className="flex flex-col gap-4 lg:flex-row w-full justify-between lg:items-center">
-          <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
-            Laporan Keuangan
-          </h1>
-          <div className="flex gap-4 w-full lg:max-w-2xl">
-            <SelectMonth
-              onChange={(e) => setMonthly(e.target.value)}
-              value={monthly}
-            />
-            <Input
-              type="number"
-              placeholder="Masukan tahun"
-              className="w-4/5"
-              onChange={(e) => setYerarly(e.target.value)}
-              defultValue={yearly}
-            />
-            <ButtonPrimary className="btn w-1/3 font-medium text-lg"
-              onClick={() => {
-                navigate(`/admin/dashboard/laporan/print/${monthly}${yearly}`)
-              }}
-            >
-              <BiPrinter size={24} />
-              Print
-            </ButtonPrimary>
-          </div>
-        </div>
-        <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
-          {renderTable()}
         </div>
       </div>
-    </AdminLayout>
+    </div>
   );
-
-};
-
-export default Laporan;
+});

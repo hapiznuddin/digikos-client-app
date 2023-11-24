@@ -26,6 +26,7 @@ import DataKamarPage from "./pages/dashboard/admin/dataKamar/dataKamarPage.jsx";
 import DetailKamarPage from "./pages/dashboard/admin/dataKamar/detailKamarPage.jsx";
 import PengeluaranPage from "./pages/dashboard/admin/pengeluaran/pengeluaranPage.jsx";
 import LaporanPage from "./pages/dashboard/admin/laporan/laporanPage.jsx";
+import LaporanPDFPage from "./pages/dashboard/admin/laporan/laporanPDFPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard/laporan",
     element: <LaporanPage/>,
+  },
+  {
+    path: "/admin/dashboard/laporan/print/:id",
+    element: <LaporanPDFPage/>,
   },
 
 
