@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import DetailPengajuanSewa from "../../../../Components/Fragments/Dashboard/Admin/PengajuanSewa/DetailPengajuanSewa";
 import Cookies from "js-cookie";
+import DetailPengajuanSewa from "../../../../Components/Templates/Dashboard/Admin/PengajuanSewa/DetailPengajuanSewa";
 
 const DetailPengajuanSewaPage = () => {
   const {id} = useParams();

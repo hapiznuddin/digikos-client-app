@@ -2,7 +2,7 @@ import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../../Components/HeadMetaData";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import Laporan from "../../../../Components/Fragments/Dashboard/Admin/Laporan/Laporan";
+import Laporan from "../../../../Components/Templates/Dashboard/Admin/Laporan/Laporan";
 
 const LaporanPage = () => {
   const token = Cookies.get("token");

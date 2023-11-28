@@ -1,6 +1,6 @@
 import { HelmetProvider } from "react-helmet-async";
-import LoginPage from "../../Components/Fragments/Login/LoginPage";
 import HeadMetaData from "../../Components/HeadMetaData";
+import LoginPage from "../../Components/Templates/Login/LoginPage";
 
 const Login = () => {
   return (

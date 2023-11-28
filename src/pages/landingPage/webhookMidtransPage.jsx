@@ -1,6 +1,6 @@
 import { HelmetProvider } from "react-helmet-async"
 import HeadMetaData from "../../Components/HeadMetaData"
-import WebhookMidtrans from "../../Components/Fragments/LandingPage/WebhookMidtrans"
+import WebhookMidtrans from "../../Components/Templates/LandingPage/WebhookMidtrans"
 
 const WebhookMidtransPage = () => {
   return (

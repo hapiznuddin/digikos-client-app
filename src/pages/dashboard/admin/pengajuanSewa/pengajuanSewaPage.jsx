@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import PengajuanSewa from "../../../../Components/Fragments/Dashboard/Admin/PengajuanSewa/PengajuanSewa";
+import PengajuanSewa from "../../../../Components/Templates/Dashboard/Admin/PengajuanSewa/PengajuanSewa";
 
 const PengajuanSewaPage = () => {
   const token = Cookies.get("token");

@@ -1,10 +1,10 @@
 import {HelmetProvider } from "react-helmet-async";
-import HomePageLanding from "../../Components/Fragments/LandingPage/Homepage/HomePageLanding";
 import HeadMetaData from "../../Components/HeadMetaData";
 import { useEffect, useState } from "react";
 import ButtonPrimary from "../../Components/Elements/Button";
 import { HiChevronDoubleUp } from "react-icons/hi";
 import Cookies from "js-cookie";
+import HomePageLanding from "../../Components/Templates/LandingPage/Homepage/HomePageLanding";
 
 const HomePage = () => {
   const role = Cookies.get("role");

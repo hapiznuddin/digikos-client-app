@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import DataTipeKamar from "../../../../Components/Fragments/Dashboard/Admin/DataTipeKamar/DataTipeKamar";
+import DataTipeKamar from "../../../../Components/Templates/Dashboard/Admin/DataTipeKamar/DataTipeKamar";
 
 const DataTipeKamarPage = () => {
   const token = Cookies.get("token");

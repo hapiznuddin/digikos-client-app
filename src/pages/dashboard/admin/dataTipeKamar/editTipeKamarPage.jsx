@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../../Components/HeadMetaData";
 import { useParams } from "react-router-dom";
-import EditTipeKamar from "../../../../Components/Fragments/Dashboard/Admin/DataTipeKamar/EditTipeKamar";
+import EditTipeKamar from "../../../../Components/Templates/Dashboard/Admin/DataTipeKamar/EditTipeKamar";
 
 const EditTipeKamarPage = () => {
   const {id} = useParams();

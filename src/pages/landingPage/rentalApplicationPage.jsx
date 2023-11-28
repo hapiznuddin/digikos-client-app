@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import RentApplication from "../../Components/Fragments/LandingPage/RentApplicationPage/RentApplication";
 import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../Components/HeadMetaData";
+import RentApplication from "../../Components/Templates/LandingPage/RentApplicationPage/RentApplication";
 
 const RentalApplicationPage = () => {
   const { id } = useParams();

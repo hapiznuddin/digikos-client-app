@@ -1,6 +1,6 @@
 import { HelmetProvider } from "react-helmet-async";
-import RegisterPage from "../../Components/Fragments/Register/RegistPage";
 import HeadMetaData from "../../Components/HeadMetaData";
+import RegisterPage from "../../Components/Templates/Register/RegistPage";
 
 const Register = () => {
   return (

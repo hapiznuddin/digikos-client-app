@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import Detailkamar from "../../../../Components/Fragments/Dashboard/Admin/DataKamar/Detailkamar";
+import Detailkamar from "../../../../Components/Templates/Dashboard/Admin/DataKamar/Detailkamar";
 
 const DetailKamarPage = () => {
   const {id} = useParams();
