@@ -2,7 +2,7 @@ import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../Components/HeadMetaData";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import DashboardHomeAdmin from "../../../Components/Fragments/Dashboard/Admin/DahsboardHome/DashboardHomeAdmin";
+import DashboardHomeAdmin from "../../../Components/Templates/Dashboard/Admin/DahsboardHome/DashboardHomeAdmin";
 
 const HomeDashboardPage = () => {
   const token = Cookies.get("token");
