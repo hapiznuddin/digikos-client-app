@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
-import Cookies from "js-cookie";
-const token = Cookies.get("token");
-export const useGetUser = ({ onSuccess, onError }) => {
+
+export const useGetUser = ({ onSuccess, onError, token }) => {
   return useQuery({
     queryKey: ["navbarGetUser", token],
     queryFn: async () => {
