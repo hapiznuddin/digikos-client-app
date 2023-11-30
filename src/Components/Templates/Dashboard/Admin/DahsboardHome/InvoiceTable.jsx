@@ -1,28 +1,15 @@
 import Cookies from "js-cookie"
 import ButtonPrimary from "../../../../Elements/Button"
-import { useQuery } from "@tanstack/react-query"
-import { axiosInstance } from "../../../../../lib/axios"
+import { useGetInvoice } from "../../../../../services/dashboard/admin/invoice/useGetInvoice"
+import CreateInvoice from "./CreateInvoice"
 
 const InvoiceTable = () => {
   const token = Cookies.get("token")
 
-  const{ data: invoice, isLoading: isLoadingInvoice } = useQuery({
-    queryKey: ["getInvoiceTable"],
-    queryFn: async () => {
-      const headers = {
-        "content-type": "application/json",
-        accept: "application/json",
-        authorization: `Bearer ${token}`,
-      }; 
-      const res = await axiosInstance.get("/invoice/status", { headers });
-      return res.data;
-    },
-    onSuccess: (data) => {
-      console.log(data)
-    },
-    onError: (error) => {
-      console.log(error)
-    }
+
+
+  const{ data: invoice, isLoading: isLoadingInvoice, refetch } = useGetInvoice({
+    token,
   })
 
   const dateFormat = (date) => {
@@ -46,8 +33,13 @@ const InvoiceTable = () => {
     <div className="w-full mt-8 p-4 rounded-3xl shadow-lg border border-neutral-100 bg-neutral-25 overflow-auto ">
       <div className="flex flex-col md:flex-row justify-between mb-4 gap-2 md:items-center">
         <h1 className="text-neutral-800 text-base md:text-xl font-semibold">Tagihan</h1>
-        <ButtonPrimary className="btn-sm md:btn-md w-48 text-base font-normal">Buat Tagihan</ButtonPrimary>
+        <ButtonPrimary className="btn-sm md:btn-md w-48 text-base font-normal" onClick={() =>
+                  document.getElementById("my_modal_6").showModal()
+                }>Buat Tagihan</ButtonPrimary>
       </div>
+      <dialog id="my_modal_6" className="modal">
+        <CreateInvoice refetching={refetch}/>
+      </dialog>
     <div className="overflow-y-hidden h-full bg-neutral-25 rounded-xl shadow border border-neutral-100">
         <table className="table table-zebra">
           {/* head */}
