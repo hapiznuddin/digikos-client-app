@@ -43,11 +43,11 @@ const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
       ref={ref}
       className="fixed w-60 h-full bg-neutral-25 drop-shadow-md z-10"
     >
-      <div className="flex justify-center mt-6 mb-14">
+      <div className="flex justify-center mt-6 mb-8">
         <img src="/digikos.png" className="w-32" />
       </div>
 
-      <div className="flex flex-col h-[85%]  justify-between">
+      <div className="flex flex-col h-[800px] justify-between">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col">
             <h1 className="text-neutral-800 text-lg font-medium px-4 mb-2">
@@ -211,10 +211,10 @@ const SideBar = forwardRef(({ showNav, routeParams }, ref) => {
             {/* // * Laporan ada di role Owner */}
             {role == "Owner" ? (
               <button>
-                <Link to="/dashboard/">
+                <Link to="/admin/dashboard/manageAkun">
                   <div
                     className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-                      location.pathname == "/dashboard/"
+                      location.pathname == "/admin/dashboard/manageAkun"
                         ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                         : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
                     }`}

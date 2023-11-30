@@ -17,7 +17,7 @@ const LaporanPDFPage = () => {
   const idRef = useRef(id);
   return (
   <HelmetProvider>
-    <HeadMetaData title="Print laporan"/>
+    <HeadMetaData title="Print Laporan"/>
     <div>
       <LaporanPDF ref={idRef}/>
     </div>

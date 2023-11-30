@@ -37,11 +37,11 @@ const SideBar = forwardRef(({showNav}, ref) => {
 
   return (
     <div ref={ref} className="fixed w-60 h-full bg-neutral-25 drop-shadow-md z-10">
-      <div className="flex justify-center mt-6 mb-14">
+      <div className="flex justify-center mt-6 mb-8">
         <img src="/digikos.png" className="w-32" />
       </div>
 
-      <div className="flex flex-col h-[85%] justify-between">
+      <div className="flex flex-col h-[800px] justify-between">
         <div className="flex flex-col gap-1 h-full">
           <h1 className="text-neutral-800 text-lg font-medium px-4 mb-2">Main Menu</h1>
         <button>

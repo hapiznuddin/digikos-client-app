@@ -1,10 +1,10 @@
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import HeadMetaData from "../../../../Components/HeadMetaData";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-import Laporan from "../../../../Components/Templates/Dashboard/Admin/Laporan/Laporan";
+import ManageAkun from "../../../../Components/Templates/Dashboard/Admin/ManageAkun/ManageAkun";
 
-const LaporanPage = () => {
+const ManageAkunPage = () => {
   const token = Cookies.get("token");
   useEffect(() => {
     if (token === undefined) {
@@ -13,13 +13,13 @@ const LaporanPage = () => {
   }, [token]);
   return (
   <HelmetProvider>
-    <HeadMetaData title="Laporan"/>
+    <HeadMetaData title="Managemen Akun"/>
     <div>
-      <Laporan/>
+      <ManageAkun/>
     </div>
     </HelmetProvider>
   )
 
 }
 
-export default LaporanPage
+export default ManageAkunPage
