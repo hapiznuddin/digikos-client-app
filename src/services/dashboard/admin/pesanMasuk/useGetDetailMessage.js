@@ -1,19 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../lib/axios";
 
-export const useGetAllMessage = ({ token, onSuccess, onError, status, currentPage}) => {
+export const useGetDetailMessage = ({ id, token, onSuccess, onError}) => {
   return useQuery({
-    queryKey: ["getAllMessages", currentPage, status],
+    queryKey: ["getPesan", id],
     queryFn: async () => {
       const headers = {
+        Accept: "application/json",
         "Content-Type": "application/json",
-        accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const res = await axiosInstance.get(
-        `/admin/message?page=${currentPage}&filter=${status}`,
-        { headers }
-      );
+      const res = await axiosInstance.get(`/admin/message/detail?id=${id}`, {
+        headers,
+      });
       return res.data;
     },
     onSuccess,

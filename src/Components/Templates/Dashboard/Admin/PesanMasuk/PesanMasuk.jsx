@@ -4,6 +4,7 @@ import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useGetAllMessage } from "../../../../../services/dashboard/admin/pesanMasuk/useGetAllMessage";
+import DetailPesan from "./DetailPesan";
 
 const PesanMasuk = () => {
   const token = Cookies.get("token");
@@ -13,7 +14,7 @@ const PesanMasuk = () => {
   const [status, setStatus] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-  const { data, isLoading } = useGetAllMessage({
+  const { data, isLoading, refetch } = useGetAllMessage({
     token,
     status,
     currentPage,
@@ -31,6 +32,7 @@ const PesanMasuk = () => {
     setCurrentPage(event.selected + 1);
   };
 
+
   return (
     <AdminLayout title="Pesan Masuk">
       <div className="flex flex-col gap-8 bg-neutral-25 px-4 py-8 rounded-xl shadow border border-neutral-100">
@@ -39,12 +41,11 @@ const PesanMasuk = () => {
             Pesan Masuk
           </h1>
           <select
-            className="select w-full max-w-xs rounded-full border border-primary-500 focus:outline-primary-500"
+            className="select w-full max-w-xs rounded-full border border-primary-500 focus:outline-primary-500" 
+            value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="" selected>
-              Pilih Status
-            </option>
+            <option value="">Pilih Status</option>
             <option value="terkirim">Terkirim</option>
             <option value="diterima">Diterima</option>
             <option value="dikerjakan">Dikerjakan</option>
@@ -95,7 +96,7 @@ const PesanMasuk = () => {
                             message.status === "Diterima"
                               ? "bg-info-200 text-info-800"
                               : message.status === "Terkirim"
-                              ? "bg-primary-50 text-primary-800"
+                              ? "bg-primary-100 text-primary-800"
                               : message.status === "Dikerjakan"
                               ? "bg-secondary-200 text-secondary-800"
                               : "bg-success-200 text-success-800"
@@ -106,7 +107,7 @@ const PesanMasuk = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-sm btn-ghost text-primary-500 font-medium text-base text-center hover:bg-primary-50"
+                          className="btn btn-sm btn-ghost text-primary-500 rounded-full font-medium text-base text-center hover:bg-primary-100"
                           onClick={() =>
                             document.getElementById("my_modal_1").showModal()
                           }
@@ -117,22 +118,7 @@ const PesanMasuk = () => {
                           Detail
                         </button>
                         <dialog id="my_modal_1" className="modal">
-                          <div className="modal-box">
-                            <form method="dialog">
-                              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                                ✕
-                              </button>
-                            </form>
-                            <h3 className="font-bold text-lg">{selectedId}</h3>
-                            <p className="py-4">
-                              Press ESC key or click the button below to close
-                            </p>
-                            <div className="modal-action">
-                              <form method="dialog">
-                                <button className="btn">Close</button>
-                              </form>
-                            </div>
-                          </div>
+                          <DetailPesan id={selectedId} refetching={refetch}/>
                         </dialog>
                       </td>
                     </tr>

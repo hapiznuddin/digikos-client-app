@@ -57,7 +57,7 @@ const ChangePasswordModal = () => {
       <h1 className="text-neutral-800 text-xl lg:text-2xl font-semibold mb-4">
         Ubah Password
       </h1>
-      <form className="w-full">
+      <div className="w-full">
         <div className="flex flex-col gap-4 w-full">
           <div className="flex flex-col gap-1">
             <InputField
@@ -113,7 +113,7 @@ const ChangePasswordModal = () => {
             </form>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
