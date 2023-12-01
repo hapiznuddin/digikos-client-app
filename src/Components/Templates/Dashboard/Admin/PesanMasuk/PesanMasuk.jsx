@@ -1,97 +1,26 @@
 import Cookies from "js-cookie";
-import Input from "../../../../Elements/Input/Input";
 import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import ButtonPrimary from "../../../../Elements/Button";
-import { useGetAllAccount } from "../../../../../services/dashboard/admin/manageAkun/useGetAllAccount";
-import Swal from "sweetalert2";
-import { usePromoteAdmin } from "../../../../../services/dashboard/admin/manageAkun/usePromoteAdmin";
-import { useResetPassword } from "../../../../../services/dashboard/admin/manageAkun/useResetPassword";
-import { useDeleteAccount } from "../../../../../services/dashboard/admin/manageAkun/useDeleteAccount";
+import { useGetAllMessage } from "../../../../../services/dashboard/admin/pesanMasuk/useGetAllMessage";
 
-const ManageAkun = () => {
+const PesanMasuk = () => {
   const token = Cookies.get("token");
-  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
+  const [status, setStatus] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
-  const { data, isLoading, refetch } = useGetAllAccount({
+  const { data, isLoading } = useGetAllMessage({
     token,
-    search,
+    status,
     currentPage,
     onSuccess: (data) => {
-      setItemsPerPage(data?.per_page);
-      setTotalItems(data?.total);
-      setCurrentPage(data?.current_page);
-    },
-    onError: (data) => {
-      console.log(data);
-    },
-  });
-
-  const { mutate: promoteAdmin } = usePromoteAdmin({
-    token,
-    onSuccess: () => {
-      refetch();
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Akun berhasil menjadi admin",
-        timer: 2000,
-      });
-    },
-    onError: () => {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Akun gagal menjadi admin",
-        timer: 2000,
-      });
-    },
-  });
-
-  const { mutate: resetPassword } = useResetPassword({
-    token,
-    onSuccess: () => {
-      refetch();
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Password akun berhasil direset",
-        timer: 2000,
-      });
-    },
-    onError: () => {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Password akun gagal direset",
-        timer: 2000,
-      });
-    },
-  });
-
-  const { mutate: deleteAccount } = useDeleteAccount({
-    token,
-    onSuccess: () => {
-      refetch();
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Akun berhasil dihapus",
-        timer: 2000,
-      });
-    },
-    onError: () => {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Akun gagal dihapus",
-        timer: 2000,
-      });
+      setItemsPerPage(data?.pagination?.per_page);
+      setTotalItems(data?.pagination?.total);
+      setCurrentPage(data?.pagination?.current_page);
     },
   });
 
@@ -103,18 +32,24 @@ const ManageAkun = () => {
   };
 
   return (
-    <AdminLayout title="Manajemen Akun">
+    <AdminLayout title="Pesan Masuk">
       <div className="flex flex-col gap-8 bg-neutral-25 px-4 py-8 rounded-xl shadow border border-neutral-100">
         <div className="flex flex-col lg:flex-row w-full justify-between lg:items-center">
           <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
-            Manajemen Akun
+            Pesan Masuk
           </h1>
-          <Input
-            type="text"
-            placeholder="Cari Akun"
-            className="w-80"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <select
+            className="select w-full max-w-xs rounded-full border border-primary-500 focus:outline-primary-500"
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="" selected>
+              Pilih Status
+            </option>
+            <option value="terkirim">Terkirim</option>
+            <option value="diterima">Diterima</option>
+            <option value="dikerjakan">Dikerjakan</option>
+            <option value="selesai">Selesai</option>
+          </select>
         </div>
         <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
           <table className="table table-zebra">
@@ -122,10 +57,13 @@ const ManageAkun = () => {
             <thead className="bg-primary-50 text-base text-neutral-800">
               <tr className="font-medium">
                 <th>No</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th className="w-[450px] "></th>
+                <th>Nama</th>
+                <th>Nama Kamar</th>
+                <th>Kamar</th>
+                <th>Tanggal</th>
+                <th>Keluhan</th>
+                <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -140,44 +78,62 @@ const ManageAkun = () => {
                   <td colSpan={9}>Tidak Ada Tagihan</td>
                 </tr>
               ) : (
-                data?.data.map((akun, index) => {
+                data?.data.map((message, index) => {
                   return (
                     <tr key={index}>
                       <th className="font-medium">{index + 1}</th>
-                      <td>{akun.name}</td>
-                      <td>{akun.email}</td>
+                      <td>{message.name}</td>
+                      <td>{message.room_name}</td>
+                      <td>
+                        Lantai {message.floor} no {message.number}
+                      </td>
+                      <td>{message.created_at}</td>
+                      <td>{message.message}</td>
                       <td>
                         <div
                           className={`badge h-full py-1 px-3 ${
-                            akun.role_id === 1
+                            message.status === "Diterima"
                               ? "bg-info-200 text-info-800"
-                              : akun.role_id === 2
+                              : message.status === "Terkirim"
+                              ? "bg-primary-50 text-primary-800"
+                              : message.status === "Dikerjakan"
                               ? "bg-secondary-200 text-secondary-800"
                               : "bg-success-200 text-success-800"
                           }`}
                         >
-                          {akun.role?.name}
+                          {message.status}
                         </div>
                       </td>
-                      <td className="flex gap-2 w-full justify-center items-center">
-                        <ButtonPrimary
-                          className="btn-md lg:btn-sm w-1/3 text-sm font-normal"
-                          onClick={() => promoteAdmin(akun.id)}
+                      <td>
+                        <button
+                          className="btn btn-sm btn-ghost text-primary-500 font-medium text-base text-center hover:bg-primary-50"
+                          onClick={() =>
+                            document.getElementById("my_modal_1").showModal()
+                          }
+                          onClickCapture={() => {
+                            setSelectedId(message.id);
+                          }}
                         >
-                          Promote Admin
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                          className="btn-md lg:btn-sm w-1/3 text-sm font-normal bg-info-600 hover:bg-info-500 active:bg-info-700"
-                          onClick={() => resetPassword(akun.id)}
-                        >
-                          Reset Password
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                          className="btn-md lg:btn-sm w-1/3 text-sm font-normal bg-error-600 hover:bg-error-400 active:bg-error-700"
-                          onClick={() => deleteAccount(akun.id)}
-                        >
-                          Hapus Akun
-                        </ButtonPrimary>
+                          Detail
+                        </button>
+                        <dialog id="my_modal_1" className="modal">
+                          <div className="modal-box">
+                            <form method="dialog">
+                              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                                ✕
+                              </button>
+                            </form>
+                            <h3 className="font-bold text-lg">{selectedId}</h3>
+                            <p className="py-4">
+                              Press ESC key or click the button below to close
+                            </p>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                <button className="btn">Close</button>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
                       </td>
                     </tr>
                   );
@@ -206,4 +162,4 @@ const ManageAkun = () => {
   );
 };
 
-export default ManageAkun;
+export default PesanMasuk;

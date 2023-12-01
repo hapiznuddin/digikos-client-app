@@ -28,6 +28,7 @@ import PengeluaranPage from "./pages/dashboard/admin/pengeluaran/pengeluaranPage
 import LaporanPage from "./pages/dashboard/admin/laporan/laporanPage.jsx";
 import LaporanPDFPage from "./pages/dashboard/admin/laporan/laporanPDFPage.jsx";
 import ManageAkunPage from "./pages/dashboard/admin/manageAkun/manageAkunPage.jsx";
+import PesanMasukPage from "./pages/dashboard/admin/pesanMasuk/pesanMasukPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -133,6 +134,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard/manageAkun",
     element: <ManageAkunPage/>,
+  },
+  {
+    path: "/admin/dashboard/pesan",
+    element: <PesanMasukPage/>,
   },
 
 
