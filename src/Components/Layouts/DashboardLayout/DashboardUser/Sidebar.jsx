@@ -10,7 +10,10 @@ import { useLogout } from "../../../../services/auth/useLogout";
 import { TbMail, TbTable } from "react-icons/tb";
 
 
-const SideBar = forwardRef(({showNav}, ref) => {
+const SideBar = forwardRef(({showNav, idParams}, ref) => {
+  SideBar.propTypes = {
+    idParams: PropTypes.number,
+  }
   const token = Cookies.get("token");
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,7 +48,7 @@ const SideBar = forwardRef(({showNav}, ref) => {
         <div className="flex flex-col gap-1 h-full">
           <h1 className="text-neutral-800 text-lg font-medium px-4 mb-2">Main Menu</h1>
         <button>
-        <Link to="/user/dashboard">
+        <Link to={`/user/dashboard/${idParams}`}>
           <div
             className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-2 flex items-center transition-colors ${
               location.pathname == "/user/dashboard"
@@ -63,7 +66,7 @@ const SideBar = forwardRef(({showNav}, ref) => {
         </Link>
         </button>
         <button>
-        <Link to="/dashboard/">
+        <Link to={`/user/dashboard/penghuni/${idParams}`}>
           <div
             className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
               location.pathname == "/dashboard/"

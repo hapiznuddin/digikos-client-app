@@ -28,7 +28,13 @@ const DataTipeKamar = () => {
           <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
             Tipe Kamar
           </h1>
-          <ButtonPrimary className="text-sm md:text-base font-medium w-60" type='button' onClick={() => navigate("/admin/dashboard/dataTipeKamar/tambahKamar") } >
+          <ButtonPrimary
+            className="text-sm md:text-base font-medium w-60"
+            type="button"
+            onClick={() =>
+              navigate("/admin/dashboard/dataTipeKamar/tambahKamar")
+            }
+          >
             Tambah Tipe Kamar
           </ButtonPrimary>
         </div>
@@ -89,9 +95,13 @@ const DataTipeKamar = () => {
                       <td className="max-w-[180px]">{facilities.join(", ")}</td>
                       <td>{rupiahFormatter(room.room_price)}</td>
                       <td>{rupiahFormatter(room.room_deposite)}</td>
-                      <td className="font-semibold text-base hover:text-primary-500 cursor-pointer">
-                        <Link to={`/admin/dashboard/dataTipeKamar/detail/${room.id}`}>
-                          Detail
+                      <td>
+                        <Link
+                          to={`/admin/dashboard/dataTipeKamar/detail/${room.id}`}
+                        >
+                          <button className="btn btn-sm btn-ghost text-primary-500 rounded-full font-medium text-base text-center hover:bg-primary-100">
+                            Detail
+                          </button>
                         </Link>
                       </td>
                     </tr>

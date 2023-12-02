@@ -57,14 +57,14 @@ const PesanMasuk = () => {
             {/* head */}
             <thead className="bg-primary-50 text-base text-neutral-800">
               <tr className="font-medium">
-                <th>No</th>
-                <th>Nama</th>
-                <th>Nama Kamar</th>
-                <th>Kamar</th>
-                <th>Tanggal</th>
-                <th>Keluhan</th>
-                <th>Status</th>
-                <th></th>
+                <th className="font-medium" >No</th>
+                <th className="font-medium">Nama</th>
+                <th className="font-medium">Nama Kamar</th>
+                <th className="font-medium">Kamar</th>
+                <th className="font-medium">Tanggal</th>
+                <th className="font-medium">Keluhan</th>
+                <th className="font-medium">Status</th>
+                <th className="font-medium"></th>
               </tr>
             </thead>
             <tbody>

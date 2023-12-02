@@ -29,6 +29,7 @@ import LaporanPage from "./pages/dashboard/admin/laporan/laporanPage.jsx";
 import LaporanPDFPage from "./pages/dashboard/admin/laporan/laporanPDFPage.jsx";
 import ManageAkunPage from "./pages/dashboard/admin/manageAkun/manageAkunPage.jsx";
 import PesanMasukPage from "./pages/dashboard/admin/pesanMasuk/pesanMasukPage.jsx";
+import PenghuniPage from "./pages/dashboard/user/dataPenghuni/penghuniPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -141,11 +142,14 @@ const router = createBrowserRouter([
   },
 
 
-
   // * Route Dashboard User
   {
     path: "/user/dashboard/:id",
     element: <DashboardUserPage />,
+  },
+  {
+    path: "/user/dashboard/penghuni/:id",
+    element: <PenghuniPage />,
   }
 ]);
 

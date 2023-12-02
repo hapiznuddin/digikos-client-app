@@ -8,7 +8,7 @@ import ChangePasswordSection from "./ChangePasswordSection";
 const HomeDashboardUser = forwardRef((props, ref) => {
   const id = ref.current;
   return (
-    <UserLayout title={"Dashboard User"}>
+    <UserLayout title={"Dashboard User"} idParams={id}>
       <div className="flex flex-col lg:flex-row w-full gap-8">
         <div className="flex flex-col items-center w-full h-full lg:w-1/2 gap-4 px-4 md:px-8 py-12 rounded-3xl bg-neutral-25 shadow-lg border border-neutral-100">
           <FormProfileSection />

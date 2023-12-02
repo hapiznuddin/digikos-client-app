@@ -1,50 +1,51 @@
 /* eslint-disable react/display-name */
-import { forwardRef, useState } from "react";
-import AdminLayout from "../../../../Layouts/DashboardLayout/DashboardAdmin/Layout";
-import { BsFileEarmarkX } from "react-icons/bs";
-import { Skeleton } from "@chakra-ui/react";
-import { useGetDetailPengajuanSewa } from "../../../../../services/dashboard/admin/pengajuanSewa/useDetailPengajuanSewa";
+import { forwardRef, useState } from "react"
+import UserLayout from "../../../../Layouts/DashboardLayout/DashboardUser/Layout"
 import Cookies from "js-cookie";
 import { useGetKTP } from "../../../../../services/landingPage/rentPage/useGetKTP";
 import { useGetKK } from "../../../../../services/landingPage/rentPage/useGetKK";
-import TableHistoryPayment from "./TableHistoryPayment";
+import { BsFileEarmarkX } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "../../../../../lib/axios";
 
-const DetailPenghuni = forwardRef((props, ref) => {
+const Penghuni = forwardRef((props, ref) => {
   const token = Cookies.get("token");
   const idRef = ref.current;
-  const idRefNumber = parseInt(idRef);
-  const [id, setId] = useState('');
+  const [id] = useState('');
   // const [rentId, setRentId] = useState(null);
   const [ktpPicture, setKtpPicture] = useState(false);
   const [kkPicture, setKkPicture] = useState(false);
 
-  const { data, isLoading} = useGetDetailPengajuanSewa({
-    token,
-    idRef,
+  const { data: getOccupant, isLoading: isLoadingOccupant} = useQuery({
+    queryKey: ["getOccupant"],
+    queryFn: async () => {
+      const headers = {
+        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+      const res = await axiosInstance.get(`/occupant`, { headers})
+      return res.data
+    },
     onSuccess: (data) => {
       console.log(data);
-      setId(data?.data.occupant_id);
-      // setRentId(data?.data.id);
     },
     onError: (data) => {
       console.log(data);
-    },
-  });
-
+    }
+  })
 
   const {
     data: getKtp,
-    refetch: refetchKtp,
     isLoading: isLoadingKtp,
   } = useGetKTP({
     token,
     id,
+    userId: idRef,
     onSuccess: () => {
       setKtpPicture(true);
     },
     onError: () => {
-      refetchKtp();
-      refetchKK();
       setKkPicture(false);
       setKtpPicture(false);
     },
@@ -52,11 +53,11 @@ const DetailPenghuni = forwardRef((props, ref) => {
 
   const {
     data: getKK,
-    refetch: refetchKK,
     isLoading: isLoadingKK,
   } = useGetKK({
     token,
     id,
+    userId: idRef,
     onSuccess: () => {
       setKkPicture(true);
     },
@@ -72,111 +73,114 @@ const DetailPenghuni = forwardRef((props, ref) => {
   }
 
   return (
-    <AdminLayout routeParams={idRefNumber} title="Detail Penghuni">
+    <UserLayout title="Detail Penghuni" idParams={idRef}>
       <div className="flex flex-col w-full h-full p-8 gap-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex flex-col gap-4 w-full lg:w-2/3 ">
+            <div className="flex gap-8 items-center">
             <h1 className="text-neutral-800 mb-2 text-lg md:text-xl font-semibold">
               Data Penghuni
             </h1>
+            <p>status</p>
+            </div>
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+              {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Nama</p>
-                  <p className="w-2/3">: {data?.data?.occupant.name}</p>
+                  <p className="w-2/3">: {getOccupant.name}</p>
                 </>
               )}
             </div>
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+              {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Nomor Hp</p>
-                  <p className="w-2/3">: {data?.data?.occupant.phone}</p>
+                  <p className="w-2/3">: {getOccupant.phone}</p>
                 </>
               )}
             </div>
             <div className="flex w-full font-medium text-sm md:text-base ">
-              {isLoading ? (
-                <Skeleton height="25px" w={"400px"} />
+              {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40 ">Alamat</p>
-                  <p className="w-2/3">: {data?.data?.occupant.address}</p>
+                  <p className="w-2/3">: {getOccupant.address}</p>
                 </>
               )}
             </div>
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+            {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Jenis Kelamin</p>
-                  <p className="w-2/3">: {data?.data?.occupant.gender}</p>
+                  <p className="w-2/3">: {getOccupant.gender}</p>
                 </>
               )}
             </div>
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+            {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Pekerjaan</p>
-                  <p className="w-2/3">: {data?.data?.occupant.occupation}</p>
+                  <p className="w-2/3">: {getOccupant.occupation}</p>
                 </>
               )}
             </div>
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+            {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Kamar</p>
                   <p className="w-2/3">
-                    : Lantai {data?.data?.room?.floor} No{" "}
-                    {data?.data?.room?.number_room}
+                    : Lantai {} No 
+                    {getOccupant.room?.number_room}
                   </p>
                 </>
               )}
             </div>
-            <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+            {/* <div className="flex w-full font-medium text-sm md:text-base">
+              {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Jumlah Penyewa</p>
                   <p className="w-2/3">
                     :
-                    {data?.data?.additional_occupant === null
+                    {getOccupant.additional_occupant !== null
                       ? " 1 Orang"
                       : " 2 orang"}
                   </p>
                 </>
               )}
             </div>
-            {data?.data?.additional_occupant ? (
+            {getOccupant.additional_occupant ? (
               <div className="flex w-full font-medium text-sm md:text-base">
-                {isLoading ? (
-                  <Skeleton height="25px" w={"300px"} />
-                ) : (
+                {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
+              ) : (
                   <>
                     <p className="w-1/3 lg:w-40">Tambahan Penyewa</p>
-                    <p className="w-2/3">: {data?.data?.additional_occupant}</p>
+                    <p className="w-2/3">: {getOccupant.additional_occupant}</p>
                   </>
                 )}
               </div>
-            ) : null}
+            ) : null} */}
             <div className="flex w-full font-medium text-sm md:text-base">
-              {isLoading ? (
-                <Skeleton height="25px" w={"300px"} />
+            {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Tanggal Masuk</p>
                   <p className="w-2/3">
-                    : {formatDate(data?.data?.start_date)}
+                    : {formatDate(getOccupant.created_at)}
                   </p>
                 </>
               )}
@@ -189,10 +193,7 @@ const DetailPenghuni = forwardRef((props, ref) => {
             <div className="flex flex-col md:flex-row w-full gap-4 p-8 rounded-2xl border border-neutral-200">
               <div className="w-full md:w-1/2 h-full bg-neutral-200 rounded-xl">
                 {isLoadingKtp ? (
-                  <Skeleton
-                    className="w-full h-40"
-                    style={{ borderRadius: "16px" }}
-                  />
+                  <div className="skeleton w-full h-40"></div>
                 ) : ktpPicture ? (
                   <a href={imgKTP} target="_blank" rel="noreferrer">
                     <img
@@ -210,10 +211,7 @@ const DetailPenghuni = forwardRef((props, ref) => {
 
               <div className="w-full md:w-1/2 h-full bg-neutral-200 rounded-xl">
                 {isLoadingKK ? (
-                  <Skeleton
-                    className="w-full h-40"
-                    style={{ borderRadius: "16px" }}
-                  />
+                  <div className="skeleton w-full h-40"></div>
                 ) : kkPicture ? (
                   <a href={imgKK} target="_blank" rel="noreferrer">
                     <img
@@ -231,10 +229,9 @@ const DetailPenghuni = forwardRef((props, ref) => {
             </div>
           </div>
         </div>
-        <TableHistoryPayment idOccupant={id} />
       </div>
-    </AdminLayout>
+    </UserLayout>
   );
-});
+})
 
-export default DetailPenghuni;
+export default Penghuni

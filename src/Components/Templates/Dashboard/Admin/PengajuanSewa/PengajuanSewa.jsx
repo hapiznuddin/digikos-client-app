@@ -17,7 +17,7 @@ const PengajuanSewa = () => {
       style: "currency",
       currency: "IDR",
     }).format(value);
-  }
+  };
   return (
     <AdminLayout title="Pengajuan Sewa">
       <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
@@ -37,32 +37,53 @@ const PengajuanSewa = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading ? (<tr className="text-center">
-              <td colSpan={9}>
-              <span className="loading loading-spinner loading-lg text-primary-500"/>
-              </td>
-              </tr>) : (
-                data?.data.length > 0 ? (
-                data?.data.map((rent, index) => {
-              return (
-                <tr key={index} >
-                  <th className="font-medium">{index + 1}</th>
-                  <td>{rent.name}</td>
-                  <td>{rent.classroom?.name}</td>
-                  <td>{rent.room?.number_room}</td>
-                  <td>{rent.room?.floor}</td>
-                  <td>{rupiahFormater(rent.price)}</td>
-                  <td>{rupiahFormater(rent.classroom?.deposit)}</td>
-                  <td>{rent.status_id === 5 ? (<div className="badge h-full py-1 px-3 bg-success-200 text-success-800">{rent.status}</div>) :(<div className="badge h-full bg-secondary-100 text-secondary-800 py-1 px-3">{rent.status}</div>)}</td>
-                  <td className="font-semibold text-base hover:text-primary-500 cursor-pointer"><Link to={`/admin/dashboard/pengajuansewa/detail/${rent.id}`}>Detail
-                  </Link></td>
-                </tr>
-              );
-            })) : (
+            {isLoading ? (
+              <tr className="text-center">
+                <td colSpan={9}>
+                  <span className="loading loading-spinner loading-lg text-primary-500" />
+                </td>
+              </tr>
+            ) : data?.data.length > 0 ? (
+              data?.data.map((rent, index) => {
+                return (
+                  <tr key={index}>
+                    <th className="font-medium">{index + 1}</th>
+                    <td>{rent.name}</td>
+                    <td>{rent.classroom?.name}</td>
+                    <td>{rent.room?.number_room}</td>
+                    <td>{rent.room?.floor}</td>
+                    <td>{rupiahFormater(rent.price)}</td>
+                    <td>{rupiahFormater(rent.classroom?.deposit)}</td>
+                    <td>
+                      {rent.status_id === 5 ? (
+                        <div className="badge h-full py-1 px-3 bg-success-200 text-success-800">
+                          {rent.status}
+                        </div>
+                      ) : (
+                        <div className="badge h-full bg-secondary-100 text-secondary-800 py-1 px-3">
+                          {rent.status}
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <Link
+                        to={`/admin/dashboard/pengajuansewa/detail/${rent.id}`}
+                      >
+                        <button
+                          className="btn btn-sm btn-ghost text-primary-500 rounded-full font-medium text-base text-center hover:bg-primary-100"
+                        >
+                          Detail
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
               <tr className="text-center font-medium">
                 <td colSpan={9}>Tidak Ada Pengajuan Sewa</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

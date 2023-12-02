@@ -1,9 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useFormik } from "formik";
 import ButtonPrimary from "../../../../Elements/Button";
 import InputField from "../../../../Elements/Input";
-import { AiOutlineClose} from "react-icons/ai";
+import { AiOutlineClose, AiOutlineCloseCircle} from "react-icons/ai";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { GoIssueClosed } from "react-icons/go";
+import { useEditPassword } from "../../../../../services/auth/useEditPassword";
 
 const ChangePasswordModal = () => {
+  const token = Cookies.get("token");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const handleForm = (e) => {
     formik.setFieldValue(e.target.name, e.target.value);
   };
@@ -13,7 +22,11 @@ const ChangePasswordModal = () => {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: async () => {},
+    onSubmit: async () => {
+      mutate({
+        password: formik.values.password
+      })
+    },
     validate: (values) => {
       const errors = {};
 
@@ -26,29 +39,51 @@ const ChangePasswordModal = () => {
       if (values.password !== values.confirmPassword) {
         errors.confirmPassword = "Konfirmasi password tidak sesuai";
       }
-
       return errors;
     },
+    onReset: () => {
+      formik.setFieldValue("password", "");
+      formik.setFieldValue("confirmPassword", "");
+    }
   });
+
+  const {mutate, isLoading} = useEditPassword({
+    token,
+    onSuccess: () => {
+      setIsSuccess(true);
+    },
+    onError: () => {
+      setIsError(true);
+    }
+  })
+
+  useEffect(() => {
+    if(isSuccess){
+      formik.resetForm();
+    }
+    if(isError){
+      formik.resetForm();
+    }
+  }, [ isSuccess, isError ]);
 
   return (
     <div className="modal-box w-11/12 max-w-xl p-12 flex flex-col justify-center items-center">
-      {/* <div className="toast toast-center">
-        <div className="alert alert-success gap-2">
+      <div className="toast toast-center">
+        {isSuccess ? (<div className="alert alert-success gap-2">
           <GoIssueClosed size={20} />
-          <span>Kamar Berhasil Ditambahkan.</span>
+          <span>Password Berhasil Diubah</span>
           <button onClick={() => setIsSuccess(false)}>
             <AiOutlineClose size={20} />
           </button>
-        </div>
-        <div className="alert alert-error gap-2">
+        </div>):null}
+        {isError ? (<div className="alert alert-error gap-2">
           <AiOutlineCloseCircle size={20} />
-          <span>Nomor Kamar Tidak Boleh Sama.</span>
+          <span>Password Gagal Diubah</span>
           <button onClick={() => setIsError(false)}>
             <AiOutlineClose size={20} />
           </button>
-        </div>
-      </div> */}
+        </div>) : null}
+      </div>
       <form method="dialog">
         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
           <AiOutlineClose size={20} />
@@ -99,16 +134,15 @@ const ChangePasswordModal = () => {
               <ButtonPrimary
                 className="w-full text-lg font-medium"
                 type={"button"}
-                // onClick={() => {
-                //   formik.handleSubmit();
-                // }}
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
               >
-                {/* {profileIsLoading ? (
-                <span className="loading loading-infinity loading-md"></span>
+                {isLoading ? (
+                <span className="loading loading-spinner loading-md"></span>
                 ) : (
                   "Simpan"
-                )} */}
-                Simpan
+                )}
               </ButtonPrimary>
             </form>
           </div>

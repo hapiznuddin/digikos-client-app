@@ -121,10 +121,10 @@ const ManageAkun = () => {
             {/* head */}
             <thead className="bg-primary-50 text-base text-neutral-800">
               <tr className="font-medium">
-                <th>No</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th className="font-medium">No</th>
+                <th className="font-medium">Username</th>
+                <th className="font-medium">Email</th>
+                <th className="font-medium">Role</th>
                 <th className="w-[450px] "></th>
               </tr>
             </thead>

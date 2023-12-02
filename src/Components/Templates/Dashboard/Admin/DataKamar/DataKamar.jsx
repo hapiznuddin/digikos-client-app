@@ -121,8 +121,12 @@ const DataKamar = () => {
             </div>
           )}
         </td>
-        <td className="font-semibold text-base hover:text-primary-500 cursor-pointer">
-          <Link to={`/admin/dashboard/dataKamar/detail/${room.id}`}>Detail</Link>
+        <td>
+          <Link to={`/admin/dashboard/dataKamar/detail/${room.id}`}>
+          <button className="btn btn-sm btn-ghost text-primary-500 rounded-full font-medium text-base text-center hover:bg-primary-100">
+                            Detail
+                          </button>
+          </Link>
         </td>
       </tr>
     ));
@@ -172,11 +176,11 @@ const DataKamar = () => {
         </div>
 
         {/* Tabs Floor */}
-        <div className="tabs -mb-8">
+        <div role="tablist" className="tabs tabs-lifted -mb-8 max-w-fit">
           {[1, 2, 3, 4, 5].map((floorNumber) => (
             <a
               key={floorNumber}
-              className={`tab tab-lifted text-xs md:text-sm lg:text-base font-medium hover:text-primary-500 ${
+              className={`tab text-xs md:text-sm lg:text-base font-medium hover:text-primary-500 ${
                 floor === floorNumber ? "tab-active text-primary-500" : ""
               }`}
               onClick={() => handleFloorChange(floorNumber)}

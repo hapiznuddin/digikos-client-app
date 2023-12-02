@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 import SideBar from "./Sidebar";
 
 
-export default function UserLayout({ children, classNameBG, title }) {
+export default function UserLayout({ children, classNameBG, title, idParams }) {
   UserLayout.propTypes = {
     title: PropTypes.string,
     classNameBG : PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    idParams: PropTypes.string
   };
 
   const [showNav, setShowNav] = useState(true);
@@ -50,7 +51,7 @@ export default function UserLayout({ children, classNameBG, title }) {
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
       >
-        <SideBar showNav={showNav}/>
+        <SideBar showNav={showNav} idParams={idParams}/>
       </Transition>
       <main
         className={`pt-16 transition-all duration-[400ms] ${
