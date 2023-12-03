@@ -65,7 +65,7 @@ const EditKamar = ({ id, refetch }) => {
     },
     onSuccess: (data) => {
       console.log(data);
-      refetch;
+      refetch()
       setIsSuccess(true);
     },
     onError: (data) => {

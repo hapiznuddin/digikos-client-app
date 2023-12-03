@@ -204,7 +204,7 @@ const Detailkamar = forwardRef((props, ref) => {
           </div>
         </div>
         <dialog id="my_modal_1" className="modal">
-        <EditKamar id={idParams} refetch={refetch()}/>
+        <EditKamar id={idParams} refetch={refetch}/>
       </dialog>
         <TableRiwayatPenghuni roomId={idParams} />
       </div>

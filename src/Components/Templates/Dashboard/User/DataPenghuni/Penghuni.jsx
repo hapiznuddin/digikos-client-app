@@ -5,34 +5,21 @@ import Cookies from "js-cookie";
 import { useGetKTP } from "../../../../../services/landingPage/rentPage/useGetKTP";
 import { useGetKK } from "../../../../../services/landingPage/rentPage/useGetKK";
 import { BsFileEarmarkX } from "react-icons/bs";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../../../../../lib/axios";
+import { useGetOccupantByRent } from "../../../../../services/dashboard/user/penghuni/useGetOccupantByRent";
+import TableHistoryPayOccupant from "./TableHistoryPayoccupant";
+import { useRef } from "react";
 
 const Penghuni = forwardRef((props, ref) => {
   const token = Cookies.get("token");
   const idRef = ref.current;
+  const refId = useRef(idRef);
   const [id] = useState('');
-  // const [rentId, setRentId] = useState(null);
   const [ktpPicture, setKtpPicture] = useState(false);
   const [kkPicture, setKkPicture] = useState(false);
 
-  const { data: getOccupant, isLoading: isLoadingOccupant} = useQuery({
-    queryKey: ["getOccupant"],
-    queryFn: async () => {
-      const headers = {
-        "Content-Type": "application/json",
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      }
-      const res = await axiosInstance.get(`/occupant`, { headers})
-      return res.data
-    },
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (data) => {
-      console.log(data);
-    }
+  const { data: getOccupant, isLoading: isLoadingOccupant} = useGetOccupantByRent({
+    token,
+    idRef,
   })
 
   const {
@@ -77,11 +64,11 @@ const Penghuni = forwardRef((props, ref) => {
       <div className="flex flex-col w-full h-full p-8 gap-8 bg-neutral-25 rounded-2xl border border-neutral-100 shadow-lg">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex flex-col gap-4 w-full lg:w-2/3 ">
-            <div className="flex gap-8 items-center">
+            <div className="flex gap-4 items-center">
             <h1 className="text-neutral-800 mb-2 text-lg md:text-xl font-semibold">
               Data Penghuni
             </h1>
-            <p>status</p>
+            <div className="badge h-full px-3 bg-success-200 text-success-800">Sewa</div>
             </div>
             <div className="flex w-full font-medium text-sm md:text-base">
               {isLoadingOccupant ? (
@@ -89,7 +76,7 @@ const Penghuni = forwardRef((props, ref) => {
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Nama</p>
-                  <p className="w-2/3">: {getOccupant.name}</p>
+                  <p className="w-2/3">: {getOccupant.occupant?.name}</p>
                 </>
               )}
             </div>
@@ -99,7 +86,7 @@ const Penghuni = forwardRef((props, ref) => {
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Nomor Hp</p>
-                  <p className="w-2/3">: {getOccupant.phone}</p>
+                  <p className="w-2/3">: {getOccupant.occupant?.phone}</p>
                 </>
               )}
             </div>
@@ -109,7 +96,7 @@ const Penghuni = forwardRef((props, ref) => {
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40 ">Alamat</p>
-                  <p className="w-2/3">: {getOccupant.address}</p>
+                  <p className="w-2/3">: {getOccupant.occupant?.address}</p>
                 </>
               )}
             </div>
@@ -119,7 +106,7 @@ const Penghuni = forwardRef((props, ref) => {
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Jenis Kelamin</p>
-                  <p className="w-2/3">: {getOccupant.gender}</p>
+                  <p className="w-2/3">: {getOccupant.occupant?.gender}</p>
                 </>
               )}
             </div>
@@ -129,7 +116,7 @@ const Penghuni = forwardRef((props, ref) => {
               ) : (
                 <>
                   <p className="w-1/3 lg:w-40">Pekerjaan</p>
-                  <p className="w-2/3">: {getOccupant.occupation}</p>
+                  <p className="w-2/3">: {getOccupant.occupant?.occupation}</p>
                 </>
               )}
             </div>
@@ -140,13 +127,13 @@ const Penghuni = forwardRef((props, ref) => {
                 <>
                   <p className="w-1/3 lg:w-40">Kamar</p>
                   <p className="w-2/3">
-                    : Lantai {} No 
+                    : Lantai {getOccupant.room?.floor} No 
                     {getOccupant.room?.number_room}
                   </p>
                 </>
               )}
             </div>
-            {/* <div className="flex w-full font-medium text-sm md:text-base">
+            <div className="flex w-full font-medium text-sm md:text-base">
               {isLoadingOccupant ? (
                 <div className="skeleton h-4 w-96"></div>
               ) : (
@@ -154,14 +141,14 @@ const Penghuni = forwardRef((props, ref) => {
                   <p className="w-1/3 lg:w-40">Jumlah Penyewa</p>
                   <p className="w-2/3">
                     :
-                    {getOccupant.additional_occupant !== null
+                    {getOccupant.additional_occupant === null
                       ? " 1 Orang"
                       : " 2 orang"}
                   </p>
                 </>
               )}
             </div>
-            {getOccupant.additional_occupant ? (
+            {getOccupant?.additional_occupant ? (
               <div className="flex w-full font-medium text-sm md:text-base">
                 {isLoadingOccupant ? (
                 <div className="skeleton h-4 w-96"></div>
@@ -172,7 +159,7 @@ const Penghuni = forwardRef((props, ref) => {
                   </>
                 )}
               </div>
-            ) : null} */}
+            ) : null}
             <div className="flex w-full font-medium text-sm md:text-base">
             {isLoadingOccupant ? (
                 <div className="skeleton h-4 w-96"></div>
@@ -180,7 +167,7 @@ const Penghuni = forwardRef((props, ref) => {
                 <>
                   <p className="w-1/3 lg:w-40">Tanggal Masuk</p>
                   <p className="w-2/3">
-                    : {formatDate(getOccupant.created_at)}
+                    : {formatDate(getOccupant.start_date)}
                   </p>
                 </>
               )}
@@ -229,6 +216,7 @@ const Penghuni = forwardRef((props, ref) => {
             </div>
           </div>
         </div>
+        <TableHistoryPayOccupant ref={refId} />
       </div>
     </UserLayout>
   );

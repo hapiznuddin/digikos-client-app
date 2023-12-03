@@ -41,7 +41,7 @@ const TambahKamar = ({ refetch }) => {
     token,
     onSuccess: (data) => {
       console.log(data);
-      refetch
+      refetch()
       setIsSuccess(true);
     },
     onError: (data) => {

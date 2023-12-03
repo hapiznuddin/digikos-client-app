@@ -1,21 +1,19 @@
+/* eslint-disable react/display-name */
 import Cookies from "js-cookie";
-import PropTypes from "prop-types";
 import { useGetHistoryPayment } from "../../../../../services/dashboard/admin/dataPenghuni/useGetHistoryPayment";
+import { forwardRef } from "react";
+import ButtonPrimary from "../../../../Elements/Button";
 
-const TableHistoryPayment = ({ idOccupant }) => {
-  TableHistoryPayment.propTypes = {
-    idOccupant: PropTypes.number,
-  };
+const TableHistoryPayOccupant = forwardRef((props, ref) => {
+  const idRef = ref.current;
   const token = Cookies.get("token");
-  const { data, refetch, isLoading } = useGetHistoryPayment({
-    token,
-    idOccupant,
-    onSuccess: () => {},
-    onError: (data) => {
-      refetch();
-      console.log(data);
-    },
-  });
+
+  const { data: getHistory, isLoading: isLoadingHistory } =
+    useGetHistoryPayment({
+      token,
+      idOccupant: "",
+      userOccupant: idRef,
+    });
 
   function formatDate(inputDate) {
     const date = new Date(inputDate);
@@ -31,34 +29,37 @@ const TableHistoryPayment = ({ idOccupant }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mt-4">
+      <div className="flex flex-col md:flex-row gap-2 justify-between mditems-center">
       <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
         Riwayat Pembayaran
       </h1>
+      <ButtonPrimary className="w-40 md:w-48 font-medium text-sm md:text-base">Check Tagihan</ButtonPrimary>
+      </div>
       <div className="overflow-auto bg-neutral-25 max-h-[300px] rounded-xl shadow border border-neutral-100">
         <table className="table table-zebra">
           {/* head */}
           <thead className="bg-primary-50 text-base text-neutral-800">
             <tr>
               <th className="font-medium">No</th>
-              <th className="font-medium">Tanggal Bayar</th>
-              <th className="font-medium">Total Bayar</th>
+              <th className="font-medium">Tanggal Pembayaran</th>
+              <th className="font-medium">Total Tagihan</th>
               <th className="font-medium">Status</th>
             </tr>
           </thead>
           <tbody>
-            {isLoading ? (
+            {isLoadingHistory ? (
               <tr className="text-center">
                 <td colSpan={9}>
                   <span className="loading loading-spinner loading-lg text-primary-500" />
                 </td>
               </tr>
-            ) : data?.data.length === 0 ? (
+            ) : getHistory?.data.length === 0 ? (
               <tr className="text-center font-medium">
                 <td colSpan={9}>Tidak Ada Data Penghuni</td>
               </tr>
             ) : (
-              data?.data.map((rent, index) => {
+              getHistory?.data.map((rent, index) => {
                 return (
                   <tr key={index}>
                     <th className="font-medium">{index + 1}</th>
@@ -84,6 +85,6 @@ const TableHistoryPayment = ({ idOccupant }) => {
       </div>
     </div>
   );
-};
+});
 
-export default TableHistoryPayment;
+export default TableHistoryPayOccupant;
