@@ -51,7 +51,7 @@ const SideBar = forwardRef(({showNav, idParams}, ref) => {
         <Link to={`/user/dashboard/${idParams}`}>
           <div
             className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-2 flex items-center transition-colors ${
-              location.pathname == "/user/dashboard"
+              location.pathname == `/user/dashboard/${idParams}`
                 ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                 : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600 "
             }`}
@@ -69,7 +69,7 @@ const SideBar = forwardRef(({showNav, idParams}, ref) => {
         <Link to={`/user/dashboard/penghuni/${idParams}`}>
           <div
             className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-              location.pathname == "/dashboard/"
+              location.pathname == `/user/dashboard/penghuni/${idParams}`
               ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                 : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
             }`}
@@ -84,10 +84,10 @@ const SideBar = forwardRef(({showNav, idParams}, ref) => {
         </Link>
         </button>
         <button>
-        <Link to="/dashboard/">
+        <Link to={`/user/dashboard/pesan/${idParams}`}>
           <div
             className={`px-3 py-3 mx-3 text-base font-medium rounded-full cursor-pointer mb-3 flex items-center transition-colors ${
-              location.pathname == "/dashboard/"
+              location.pathname == `/user/dashboard/pesan/${idParams}`
               ? "bg-primary-500 text-neutral-25 shadow-md border-2 border-neutral-25"
                 : "text-neutral-800 hover:bg-primary-500 hover:text-neutral-25 active:bg-primary-600"
             }`}

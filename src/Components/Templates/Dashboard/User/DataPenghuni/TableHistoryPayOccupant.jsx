@@ -30,7 +30,7 @@ const TableHistoryPayOccupant = forwardRef((props, ref) => {
 
   return (
     <div className="flex flex-col gap-4 mt-4">
-      <div className="flex flex-col md:flex-row gap-2 justify-between mditems-center">
+      <div className="flex flex-col md:flex-row gap-2 justify-between md:items-center">
       <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
         Riwayat Pembayaran
       </h1>

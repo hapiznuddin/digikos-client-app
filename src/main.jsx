@@ -30,6 +30,7 @@ import LaporanPDFPage from "./pages/dashboard/admin/laporan/laporanPDFPage.jsx";
 import ManageAkunPage from "./pages/dashboard/admin/manageAkun/manageAkunPage.jsx";
 import PesanMasukPage from "./pages/dashboard/admin/pesanMasuk/pesanMasukPage.jsx";
 import PenghuniPage from "./pages/dashboard/user/dataPenghuni/penghuniPage.jsx";
+import KirimPesanPage from "./pages/dashboard/user/kirimPesan/kirimPesanPage.jsx";
 // import ErrorPage from "./pages/errorPage.jsx";
 
 const queryClient = new QueryClient({
@@ -150,7 +151,11 @@ const router = createBrowserRouter([
   {
     path: "/user/dashboard/penghuni/:id",
     element: <PenghuniPage />,
-  }
+  },
+  {
+    path: "/user/dashboard/pesan/:id",
+    element: <KirimPesanPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
