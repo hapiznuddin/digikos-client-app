@@ -1,18 +1,20 @@
 /* eslint-disable react/display-name */
-import { forwardRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import UserLayout from "../../../../Layouts/DashboardLayout/DashboardUser/Layout";
 import Cookies from "js-cookie";
 import ButtonPrimary from "../../../../Elements/Button";
 import { useGetDetailMessage } from "../../../../../services/dashboard/admin/pesanMasuk/useGetDetailMessage";
 import { AiOutlineClose } from "react-icons/ai";
 import useGetSendMessage from "../../../../../services/dashboard/user/kirimPesan/useGetSendMessage";
+import TulisPesan from "./TulisPesan";
 
 const KirimPesan = forwardRef((props, ref) => {
   const idRef = ref.current;
+  const refId = useRef(idRef);
   const token = Cookies.get("token");
   const [selectedId, setSelectedId] = useState(null);
 
-  const { data, isLoading } = useGetSendMessage({
+  const { data, isLoading, refetch } = useGetSendMessage({
     token,
     idRef
   });
@@ -31,9 +33,16 @@ const KirimPesan = forwardRef((props, ref) => {
           <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
             Kirim Pesan
           </h1>
-          <ButtonPrimary className="font-medium text-base w-48">
+          <ButtonPrimary className="font-medium text-base w-48"
+            onClick={() =>
+              document.getElementById("my_modal_2").showModal()
+            }
+          >
             Tulis Pesan
           </ButtonPrimary>
+          <dialog id="my_modal_2" className="modal">
+            <TulisPesan ref={refId} refetch={refetch}/>
+          </dialog>
         </div>
         <div className="overflow-x-auto bg-neutral-25 rounded-xl shadow border border-neutral-100">
           <table className="table table-zebra">
