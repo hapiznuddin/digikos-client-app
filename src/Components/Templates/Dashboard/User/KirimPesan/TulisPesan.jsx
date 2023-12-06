@@ -4,13 +4,12 @@ import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 import ButtonPrimary from "../../../../Elements/Button";
 import { forwardRef, useEffect, useState } from "react";
 import Input from "../../../../Elements/Input/Input";
-import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { axiosInstance } from "../../../../../lib/axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { GoIssueClosed } from "react-icons/go";
 import PropTypes from "prop-types";
+import { useWriteMessage } from "../../../../../services/dashboard/user/kirimPesan/useWriteMessage";
 
 const TulisPesan = forwardRef(({ refetch }, ref) => {
   TulisPesan.propTypes = {
@@ -49,16 +48,8 @@ const TulisPesan = forwardRef(({ refetch }, ref) => {
 
   const { message, description } = formik.errors;
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async (body) => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const res = await axiosInstance.post(`/user/message`, body, { headers });
-      return res.data;
-    },
+  const { mutate, isLoading } = useWriteMessage({
+    token,
     onSuccess: () => {
       refetch();
       setIsSuccess(true);

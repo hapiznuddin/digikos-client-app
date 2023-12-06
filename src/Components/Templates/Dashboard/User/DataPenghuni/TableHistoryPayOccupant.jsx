@@ -1,14 +1,16 @@
 /* eslint-disable react/display-name */
 import Cookies from "js-cookie";
 import { useGetHistoryPayment } from "../../../../../services/dashboard/admin/dataPenghuni/useGetHistoryPayment";
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 import ButtonPrimary from "../../../../Elements/Button";
+import PembayaranTagihan from "./PembayaranTagihan";
 
 const TableHistoryPayOccupant = forwardRef((props, ref) => {
   const idRef = ref.current;
+  const refId = useRef(idRef);
   const token = Cookies.get("token");
 
-  const { data: getHistory, isLoading: isLoadingHistory } =
+  const { data: getHistory, isLoading: isLoadingHistory, refetch } =
     useGetHistoryPayment({
       token,
       idOccupant: "",
@@ -31,11 +33,19 @@ const TableHistoryPayOccupant = forwardRef((props, ref) => {
   return (
     <div className="flex flex-col gap-4 mt-4">
       <div className="flex flex-col md:flex-row gap-2 justify-between md:items-center">
-      <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
-        Riwayat Pembayaran
-      </h1>
-      <ButtonPrimary className="w-40 md:w-48 font-medium text-sm md:text-base">Check Tagihan</ButtonPrimary>
+        <h1 className="text-neutral-800 text-lg md:text-xl font-semibold">
+          Riwayat Pembayaran
+        </h1>
+        <ButtonPrimary
+          className="w-40 md:w-48 font-medium text-sm md:text-base"
+          onClick={() => document.getElementById("my_modal_2").showModal()}
+        >
+          Check Tagihan
+        </ButtonPrimary>
       </div>
+        <dialog id="my_modal_2" className="modal">
+          <PembayaranTagihan ref={refId} refetch={refetch}/>
+        </dialog>
       <div className="overflow-auto bg-neutral-25 max-h-[300px] rounded-xl shadow border border-neutral-100">
         <table className="table table-zebra">
           {/* head */}

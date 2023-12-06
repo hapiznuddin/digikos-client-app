@@ -6,10 +6,10 @@ import Cookies from "js-cookie";
 import { useGetRentHistory } from "../../../../../services/landingPage/userPage/useGetRentHistory";
 import StepperComponent from "../../../../Elements/Stepper";
 import ButtonPrimary from "../../../../Elements/Button";
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "../../../../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useCreatePayment } from "../../../../../services/PaymentMidtrans/useCreatePayment";
+import { useCreateWebhook } from "../../../../../services/PaymentMidtrans/useCreateWebhook";
 
 const RentHistorySection = () => {
   const token = Cookies.get("token");
@@ -50,16 +50,8 @@ function formatDate(inputDate) {
     }).format(value);
   }
 
-  const {mutate} = useMutation({
-    mutationFn: async (body) => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization : `Bearer ${token}`,
-      }
-      const payment = await axiosInstance.post("/first-payment", body, {headers: headers})
-      return payment
-    },
+  const {mutate} = useCreatePayment({
+    token,
     onSuccess: (data) => {
       setMidtransToken(data?.data.token)
     },
@@ -68,16 +60,8 @@ function formatDate(inputDate) {
     }
   })
 
-  const {mutate: webhookMidtrans} = useMutation({
-    mutationFn: async (body) => {
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization : `Bearer ${token}`,
-      }
-      const webhookPayment = await axiosInstance.post("/webhook-payment", body, {headers: headers})
-      return webhookPayment
-    },
+  const {mutate: webhookMidtrans} = useCreateWebhook({
+    token,
     onSuccess: (data) => {
       console.log(data)
     },
