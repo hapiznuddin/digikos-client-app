@@ -6,8 +6,8 @@ import { useGetKTP } from "../../../../../services/landingPage/rentPage/useGetKT
 import { useGetKK } from "../../../../../services/landingPage/rentPage/useGetKK";
 import { BsFileEarmarkX } from "react-icons/bs";
 import { useGetOccupantByRent } from "../../../../../services/dashboard/user/penghuni/useGetOccupantByRent";
-import TableHistoryPayOccupant from "./TableHistoryPayoccupant";
 import { useRef } from "react";
+import TableHistoryPayOccupant from "./TableHistoryPayOccupant";
 
 const Penghuni = forwardRef((props, ref) => {
   const token = Cookies.get("token");
