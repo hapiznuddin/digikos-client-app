@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import ButtonPrimary from "../../../../Elements/Button";
 import { forwardRef, useEffect } from "react";
 import Cookies from "js-cookie";
-import { useGetCheckInvoice } from "../../../../../services/dashboard/user/penghuni/usegetCheckInvoice";
+import { useGetCheckInvoice } from "../../../../../services/dashboard/user/penghuni/useGetCheckInvoice";
 import PropTypes from "prop-types";
 import { useCreatePayment } from "../../../../../services/PaymentMidtrans/useCreatePayment";
 import { useCreateWebhook } from "../../../../../services/PaymentMidtrans/useCreateWebhook";
