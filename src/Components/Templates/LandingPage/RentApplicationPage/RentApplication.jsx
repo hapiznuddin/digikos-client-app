@@ -121,6 +121,12 @@ const RentApplication = forwardRef((props, ref) => {
       console.log(data)
     }
   })
+
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("id-ID", options);
+  }
   
   return (
     <LandingPageLayout classNameFooter={"mt-32 md:mt-40"} onClickHome={() => {navigate("/")}} onClickFacility={() => {navigate("/")}} onClickRoom={() => {navigate("/")}} onClickContact={() => {scrollToRef(contactRef)}}>
@@ -205,11 +211,11 @@ const RentApplication = forwardRef((props, ref) => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <h1 className="text-neutral-800 font-semibold">Tanggal mulai kos</h1>
-              {isLoading ? (<Skeleton className="w-28 h-5 rounded-xl"/>) : (<p className="text-neutral-700 font-medium">{data?.data.start_date}</p>)}
+              {isLoading ? (<Skeleton className="w-28 h-5 rounded-xl"/>) : (<p className="text-neutral-700 font-medium">{formatDate(data?.data.start_date)}</p>)}
             </div>
             <div className="flex justify-between">
               <h1 className="text-neutral-800 font-semibold">Jangka pembayaran</h1>
-              {isLoading ? (<Skeleton className="w-16 h-5 rounded-xl"/>) :(<p className="text-neutral-700 font-medium">{data?.data.payment_term}</p>)}
+              {isLoading ? (<Skeleton className="w-16 h-5 rounded-xl"/>) :(<p className="text-neutral-700 font-medium">{'per ' + data?.data.payment_term}</p>)}
             </div>
             <h1 className="text-neutral-800 text-lg font-semibold mt-4 mb-2">Rincian pembayaran pertama</h1>
             <div className="flex justify-between">

@@ -179,13 +179,13 @@ const PembayaranTagihan = forwardRef(({ refetch }, ref) => {
       </div>
       <div className="modal-action mt-8">
         <form method="dialog" className="w-full ">
-          <ButtonPrimary className="w-full text-lg font-medium bg-primary-100 text-primary-500 hover:bg-primary-200 hover:text-primary-600 active:text-neutral-25 active:bg-primary-300">
+          <ButtonPrimary className="w-full h-full text-sm md:text-lg font-medium bg-primary-100 text-primary-500 hover:bg-primary-200 hover:text-primary-600 active:text-neutral-25 active:bg-primary-300">
             Batal
           </ButtonPrimary>
         </form>
         <form method="dialog" className="flex w-full">
           <ButtonPrimary
-            className="w-full text-lg font-medium"
+            className="w-full h-full text-sm md:text-lg font-medium"
             type={"submit"}
             onClick={() => {
               payment({

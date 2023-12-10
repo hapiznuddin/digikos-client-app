@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
-import { IoImagesOutline } from "react-icons/io5";
+import { IoCheckmarkCircleOutline, IoImagesOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
 import { useIdOccupantStore } from "../../../../lib/idClassRoom";
 import { useUploadKTP } from "../../../../services/landingPage/rentPage/useUploadKTP";
@@ -42,7 +42,7 @@ const RequirementDocument = () => {
     },
   });
 
-  const { mutate: uploadKtpFile } = useUploadKTP({
+  const { mutate: uploadKtpFile, isSuccess: isSuccessKtp } = useUploadKTP({
     token,
     setUploadProgress,
     onSuccess: () => {
@@ -80,7 +80,7 @@ const RequirementDocument = () => {
     },
   });
 
-  const { mutate: uploadKKFile } = useUploadKK({
+  const { mutate: uploadKKFile, isSuccess: isSuccessKK } = useUploadKK({
     token,
     setUploadProgressKK,
     onSuccess: () => {
@@ -167,9 +167,16 @@ const RequirementDocument = () => {
             />
           </div>
           <p className="text-neutral-700 text-lg font-medium">Foto KTP</p>
-          {uploadProgress > 0 ? (
+          {isSuccessKtp ? (
+            <div className="absolute top-10">
+              <div className="flex flex-col items-center gap-1">
+              <IoCheckmarkCircleOutline size={48} className="text-neutral-25" />
+              <p className="text-neutral-25 text-sm">Upload Berhasil</p>
+              </div>
+            </div>
+          ): uploadProgress > 0 ? (
             <div
-              className="radial-progress text-primary-300 absolute top-10"
+              className="radial-progress text-primary-800 absolute top-10"
               style={{
                 "--value": uploadProgress,
                 "--size": "70px",
@@ -218,18 +225,25 @@ const RequirementDocument = () => {
           <p className="text-neutral-700 text-lg font-medium">
             Foto Kartu Keluarga (Opsional)
           </p>
-        {uploadProgress > 0 ? (
-          <div
-            className="radial-progress text-primary-300 absolute top-10"
-            style={{
-              "--value": uploadProgressKK,
-              "--size": "70px",
-              "--thickness": "5px",
-            }}
-          >
-            {uploadProgressKK}%
-          </div>
-        ) : null}
+          {isSuccessKK ? (
+            <div className="absolute top-10">
+              <div className="flex flex-col items-center gap-1">
+              <IoCheckmarkCircleOutline size={48} className="text-neutral-25" />
+              <p className="text-neutral-25 text-sm">Upload Berhasil</p>
+              </div>
+            </div>
+          ): uploadProgress > 0 ? (
+            <div
+              className="radial-progress text-primary-800 absolute top-10"
+              style={{
+                "--value": uploadProgressKK,
+                "--size": "70px",
+                "--thickness": "5px",
+              }}
+            >
+              {uploadProgressKK}%
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

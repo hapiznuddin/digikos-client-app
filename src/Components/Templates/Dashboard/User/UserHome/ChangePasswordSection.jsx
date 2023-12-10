@@ -88,7 +88,7 @@ const ChangePasswordSection = () => {
           Ubah Password
           </h1>
             <form className="w-full">
-          <div className="flex flex-col gap-4 w-full px-8">
+          <div className="flex flex-col gap-4 w-full">
             <div className="flex flex-col gap-1">
             <InputField
                 type="password"

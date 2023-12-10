@@ -254,7 +254,7 @@ const DetailRoom = forwardRef((props, ref) => {
                                 <div className="w-16 rounded-full bg-neutral-200">
                                   <img
                                     src={
-                                      review.profile_pic === undefined
+                                      review.profile_pic === null
                                         ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
                                         : image
                                     }

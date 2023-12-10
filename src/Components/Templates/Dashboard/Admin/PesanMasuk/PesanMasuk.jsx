@@ -76,7 +76,7 @@ const PesanMasuk = () => {
                 </tr>
               ) : data?.data.length === 0 ? (
                 <tr className="text-center font-medium">
-                  <td colSpan={9}>Tidak Ada Tagihan</td>
+                  <td colSpan={9}>Tidak Ada Pesan Masuk</td>
                 </tr>
               ) : (
                 data?.data.map((message, index) => {

@@ -11,6 +11,9 @@ import { useGetTestimoniRandom } from "../../../../services/landingPage/roomPage
 const TestimonialSection = () => {
 
   const {data} = useGetTestimoniRandom({
+    onSuccess: (data) => {
+      console.log(data);
+    },
     onError: (data) => {
       console.log(data);
     },
@@ -54,14 +57,14 @@ const TestimonialSection = () => {
           disableOnInteraction: false,
         }}
       >
-        {data?.data.map((testimoni, index) => {
+        {data?.data?.map((testimoni, index) => {
           const image = `${import.meta.env.VITE_DIGIKOS_URL}${testimoni.profile_pic}`
           return(
           <SwiperSlide key={index}>
             <div className="card mx-auto w-80 md:w-full lg:min-w-[400px] h-full bg-neutral-25 shadow-xl">
               <div className="avatar flex flex-col justify-center items-center gap-4 py-4">
                 <div className="w-16 rounded-full ">
-                  <img src={testimoni.profile_pic === undefined ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png" : image} />
+                  <img src={testimoni.profile_pic === null ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png" : image} />
                 </div>
                 <h1 className="text-lg font-semibold">{testimoni.name}</h1>
               </div>

@@ -39,7 +39,7 @@ const SideBar = forwardRef(({showNav, idParams}, ref) => {
 
 
   return (
-    <div ref={ref} className="fixed w-60 h-full bg-neutral-25 drop-shadow-md z-10">
+    <div ref={ref} className="fixed w-60 h-full bg-neutral-25 drop-shadow-md z-20">
       <div className="flex justify-center mt-6 mb-8">
         <img src="/digikos.png" className="w-32" />
       </div>

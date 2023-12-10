@@ -23,7 +23,7 @@ const RatingRoomSection = ({ id }) => {
       };
       const res = await axiosInstance.get(`/rentByUserId?user_id=${id}`, { headers });
       return res;
-    },
+    }
   })
 
   const {mutate} = useMutation({
@@ -52,6 +52,12 @@ const RatingRoomSection = ({ id }) => {
     },
     onError: (data) => {
       console.log(data);
+      Swal.fire({
+        title: "Gagal",
+        text: "Gagal Memberikan Review, Silahkan Coba Lagi",
+        icon: "error",
+        timer: 1500,
+      })
     }
   })
   const handleForm = (e) => {
