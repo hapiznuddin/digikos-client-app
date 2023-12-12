@@ -2,7 +2,7 @@ import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useGetProfile } from "../../../../services/landingPage/userPage/useGetProfile";
 import Cookies from "js-cookie";
-import { useIdOccupantStore } from "../../../../lib/idClassRoom";
+import { useIdOccupantStore, useStatusInfoRentStore } from "../../../../lib/idClassRoom";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@chakra-ui/react";
 
@@ -22,6 +22,11 @@ const OccupantInformation = () => {
   useEffect(() => {
     setId(data?.data.id);
   }, [data, setId]);
+
+  const setStatusOccupant = useStatusInfoRentStore((state) => state.setStatus);
+  useEffect(() => {
+    setStatusOccupant(error);
+  }, [error, setStatusOccupant]);
 
   return (
     <div className="flex flex-col w-full gap-6">

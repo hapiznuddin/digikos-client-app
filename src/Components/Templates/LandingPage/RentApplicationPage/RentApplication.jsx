@@ -24,7 +24,7 @@ import { useGetRent1 } from "../../../../services/landingPage/rentPage/useGetRen
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../../../../lib/axios";
-import { useIdOccupantStore } from "../../../../lib/idClassRoom";
+import { useIdOccupantStore, useStatusInfoRentStore } from "../../../../lib/idClassRoom";
 import Swal from "sweetalert2";
 
 const steps = [
@@ -42,6 +42,7 @@ const RentApplication = forwardRef((props, ref) => {
   const [priceRoom, setPriceRoom] = useState(0);
   const [deposit, setDeposit] = useState(0);
   const idOccupant = useIdOccupantStore((state) => state.id);
+  const statusOccupant = useStatusInfoRentStore((state) => state.status);
   const scrollToRef = (ref) => {
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
@@ -238,7 +239,8 @@ const RentApplication = forwardRef((props, ref) => {
             </div>
         </div>
       </div>
-          <ButtonPrimary className="text-lg font-medium w-full lg:w-[58%]" type='button' onClick={() => formik.handleSubmit()}>Ajukan Sewa</ButtonPrimary>
+          {statusOccupant ? (<p className="text-error-500 text-sm font-medium italic -mb-10">Harap isi informasi penyewa dan upload KTP terlebih dahulu</p>) : null}
+          <ButtonPrimary className="text-lg font-medium w-full lg:w-[58%]" type='button' disabled={statusOccupant} onClick={() => formik.handleSubmit()}>Ajukan Sewa</ButtonPrimary>
       </div>
       <div ref={contactRef}/>
     </LandingPageLayout>

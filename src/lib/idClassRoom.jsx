@@ -15,3 +15,8 @@ export const useStatusStore = create((set) => ({
   status: null,
   setStatus: (newStatus) => set({ status: newStatus }),
 }))
+
+export const useStatusInfoRentStore = create((set) => ({
+  status: null,
+  setStatus: (newStatus) => set({ status: newStatus }),
+}))

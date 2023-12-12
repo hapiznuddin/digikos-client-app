@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import { IoCheckmarkCircleOutline, IoImagesOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
-import { useIdOccupantStore } from "../../../../lib/idClassRoom";
+import { useIdOccupantStore, useStatusInfoRentStore } from "../../../../lib/idClassRoom";
 import { useUploadKTP } from "../../../../services/landingPage/rentPage/useUploadKTP";
 import { useGetKTP } from "../../../../services/landingPage/rentPage/useGetKTP";
 import { useUploadKK } from "../../../../services/landingPage/rentPage/useUploadKK";
@@ -15,13 +15,18 @@ const RequirementDocument = () => {
   const [uploadProgressKK, setUploadProgressKK] = useState(0);
   const id = useIdOccupantStore((state) => state.id);
 
-  const [ktp, setKtp] = useState(false);
+  const [ktp, setKtp] = useState(true);
   const [ktpPicture, setKtpPicture] = useState(null);
   const ktpImg = useRef();
 
   const [kk, setKk] = useState(false);
   const [kkPicture, setKkPicture] = useState(null);
   const kkImg = useRef();
+
+  const setStatusKtp = useStatusInfoRentStore((state) => state.setStatus);
+  useEffect(() => {
+    setStatusKtp(ktp)
+  }, [ ktp, setStatusKtp ])
 
   // * KTP
   const formikKtp = useFormik({
@@ -108,9 +113,9 @@ const RequirementDocument = () => {
 
   useEffect(() => {
     if (getKtpFile === undefined ) {
-      setKtp(false);
-    } else {
       setKtp(true);
+    } else {
+      setKtp(false);
     }
   }, [getKtpFile]);
 
@@ -137,11 +142,7 @@ const RequirementDocument = () => {
         {/* Upload KTP */}
         <div className="flex flex-col gap-4 items-center relative">
           <div className="flex w-60 h-40 bg-neutral-100 border-2 border-dashed border-neutral-300 rounded-xl justify-center items-center">
-            {ktp ? (<>
-              {isLoadingKtp ? (<Skeleton className="w-60 h-40 absolute rounded-xl"/>) : null }
-              <img src={imgKtpFile} className="w-full h-full rounded-xl" />
-            </>
-            ) : ktpPicture ? (
+            {ktp ? ktpPicture ? (
               <img src={ktpPicture} className="w-full h-full rounded-xl" />
             ) : (
               <div
@@ -151,6 +152,11 @@ const RequirementDocument = () => {
                 <IoImagesOutline size={32} />
                 Upload disini
               </div>
+            ) : (
+              <>
+              {isLoadingKtp ? (<Skeleton className="w-60 h-40 absolute rounded-xl"/>) : null }
+              <img src={imgKtpFile} className="w-full h-full rounded-xl" />
+            </>
             )}
             <input
               ref={ktpImg}
