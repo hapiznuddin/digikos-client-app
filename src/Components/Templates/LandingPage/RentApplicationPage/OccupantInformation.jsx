@@ -13,7 +13,7 @@ const OccupantInformation = () => {
   const { data, isLoading } = useGetProfile({
     token,
     onError: () => {
-      if (data.data === undefined) {
+      if (data?.data === undefined) {
         setError(true);
       }
     },
