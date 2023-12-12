@@ -113,8 +113,8 @@ const RentApplication = forwardRef((props, ref) => {
         text: "Pengajuan sewa berhasil",
         icon: "success",
         timer: 1500,
-      // }).then(() => {
-      //   navigate(`/pengajuanSewa/${data.rent_id}`);
+      }).then(() => {
+        navigate("/user/riwayatPengajuanSewa")
       });
     },
     onError: (data) => {
