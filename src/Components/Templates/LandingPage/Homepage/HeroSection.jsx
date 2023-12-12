@@ -11,7 +11,7 @@ const HeroSection = forwardRef((props, ref) => {
       <main ref={ref} className="flex flex-col md:flex-row lg:flex-row justify-center items-center w-full gap-10 mt-20 
         md:px-10 md:gap-4 md:mt-32 mx-auto
         lg: lg:gap-12 lg:mt-40 ">
-        <div className="flex flex-col justify-center lg:ml-8 w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
+        <div className="flex flex-col justify-center pl-2 lg:ml-8 w-full md:w-1/2 gap-4 md:gap-4 lg:gap-12">
           <div className="flex flex-col justify-center">
             <motion.h1
               className="text-neutral-800 text-2xl md:text-2xl lg:text-5xl font-bold"
