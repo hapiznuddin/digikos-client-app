@@ -10,7 +10,7 @@ export const useGetDataPenghuni = ({ token, onSuccess, onError }) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const res = await axiosInstance.get(`/rent?status_id=5`, { headers: headers });
+      const res = await axiosInstance.get(`/rent?status_id=6,7`, { headers: headers });
       return res;
     },
     onSuccess,

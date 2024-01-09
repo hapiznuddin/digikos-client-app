@@ -20,7 +20,7 @@ const SelectNoKamar = ({ name, label, classNameLabel, floor, onChange, value, on
   const id = useStore((state) => state.id);
 
   const { data, refetch } = useQuery({
-    queryKey: ["numberRoom"],
+    queryKey: ["numberRoom", floor, id],
     queryFn: async () => {
       const headers = {
         "Content-Type": "application/json",
@@ -30,11 +30,7 @@ const SelectNoKamar = ({ name, label, classNameLabel, floor, onChange, value, on
         `/number-room?floor=${floor}&id=${id}`,
         { headers }
       );
-      return numberRoom;
-    },
-
-    onError: () => {
-      // refetch();
+      return numberRoom.data;
     },
   });
 
@@ -52,7 +48,7 @@ const SelectNoKamar = ({ name, label, classNameLabel, floor, onChange, value, on
             <option value='' disabled selected>
               Pilih nomor kamar
             </option>
-            {data?.data.number_room.map((item, index) => (
+            {data?.number_room.map((item, index) => (
               <option key={index} value={item}>
                 {item}
               </option>

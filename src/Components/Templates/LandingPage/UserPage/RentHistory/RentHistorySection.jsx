@@ -147,7 +147,7 @@ function formatDate(inputDate) {
             className="flex flex-col gap-8 border rounded-xl shadow-md p-4 md:p-6"
             >
               <div className="flex flex-col">
-                {rent.status_id === 5 ? (<div className="badge bg-success-200 text-success-700 px-2 py-1 h-full">{rent.status}</div>) : (<div className="badge bg-warning-200 text-warning-700 px-2 py-1 h-full">{rent.status}</div>)}
+                {rent.status_id === 6 ? (<div className="badge bg-success-200 text-success-700 px-2 py-1 h-full">{rent.status}</div>) : (<div className="badge bg-warning-200 text-warning-700 px-2 py-1 h-full">{rent.status}</div>)}
                 <div className="divider" />
                 <div className="flex flex-col md:flex-row w-full gap-4 ">
                   <div className="w-full h-32 md:w-60 lg:w-60 md:h-32 bg-cover bg-center rounded-xl overflow-hidden">

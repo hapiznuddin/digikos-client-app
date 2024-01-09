@@ -292,8 +292,8 @@ const DetailPengajuanSewa = forwardRef((props, ref) => {
                     <td>{rupiahFormater(data?.data?.total_price)}</td>
                     <td>{rupiahFormater(data?.data?.classroom?.deposit)}</td>
                     <td>
-                      {data?.data.status_id === 5 ? (<div className="badge h-full py-1 px-3 bg-success-200 text-success-800">
-                        {data?.data?.status}
+                      {data?.data.status_id === 6 ? (<div className="badge h-full py-1 px-3 bg-success-200 text-success-800">
+                        Check-In
                       </div>) : (<div className="badge h-full py-1 px-3 bg-secondary-100 text-secondary-800">
                         {data?.data?.status}
                       </div>)}

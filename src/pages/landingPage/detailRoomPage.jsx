@@ -8,10 +8,10 @@ const DetailRoomPage = () => {
   const {id} = useParams();
   const roomRef = useRef(id);
   const setId = useStore((state) => state.setId);
-
+  
   useEffect(() => {
     setId(id);
-  }, [ id, setId ]);
+  }, [ id , setId ]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
