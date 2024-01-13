@@ -24,10 +24,6 @@ export default function TopBar({ showNav, setShowNav, title }) {
 
   const { data } = useGetProfilePic({
     token,
-    onSuccess: () => {},
-    onError: (data) => {
-      console.log(data);
-    },
   });
 
   const imgProfilePic = `${import.meta.env.VITE_DIGIKOS_URL}${data?.data.path}`;

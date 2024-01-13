@@ -66,7 +66,6 @@ const Laporan = () => {
       } else {
         setExpenseType([]);
       }
-      console.log(data);
     },
     onError: (data) => {
       console.log(data);
@@ -74,8 +73,8 @@ const Laporan = () => {
   });
 
   useEffect(() => {
-    setTotalPendapatan(paymentIncome + paymentNewIncome);
-  }, [ paymentIncome, paymentNewIncome ]);
+    setTotalPendapatan(parseInt(paymentIncome) + parseInt(paymentNewIncome));
+  }, [paymentIncome, paymentNewIncome]);
 
   const totalReport = () => {
     if (totalPendapatan === 0) {
