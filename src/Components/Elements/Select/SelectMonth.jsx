@@ -25,7 +25,7 @@ const SelectMonth = ({
         onChangeCapture={onChangeCapture}
         defaultValue={defaultValue}
       >
-        <option value={""} disabled selected>
+        <option value={""} selected>
           Pilih Bulan
         </option>
         <option value={1} >Januari</option>
