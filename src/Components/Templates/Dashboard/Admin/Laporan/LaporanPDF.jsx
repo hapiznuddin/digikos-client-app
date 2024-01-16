@@ -94,7 +94,7 @@ export const LaporanPDF = forwardRef((props, ref) => {
   });
 
   useEffect(() => {
-    setTotalPendapatan(paymentIncome + paymentNewIncome);
+    setTotalPendapatan(parseInt(paymentIncome) + parseInt(paymentNewIncome));
   }, [paymentIncome, paymentNewIncome]);
 
   const totalReport = () => {
