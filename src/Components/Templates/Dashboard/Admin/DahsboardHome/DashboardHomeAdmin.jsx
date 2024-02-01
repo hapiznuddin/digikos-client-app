@@ -9,11 +9,12 @@ import { useGetStatisticRoom } from "../../../../../services/dashboard/admin/use
 
 const DashboardHomeAdmin = () => {
   const token = Cookies.get("token")
+  const role = Cookies.get("role")
   const {data, isLoading} = useGetStatisticRoom({
     token
   })
   return (
-    <AdminLayout title="Dashboard Admin">
+    <AdminLayout title={role === 'Admin' ? 'Dashboard Admin' : role === 'Owner' ? 'Dashboard Owner' : null}>
       <div className="flex flex-col w-full h-full gap-4 md:gap-6 rounded-3xl shadow-lg border border-neutral-100 p-8 bg-neutral-25">
         <div className="flex flex-col md:flex-row w-full gap-4 md:gap-6">
           <div className="flex flex-col justify-center w-full md:w-1/2 h-32 rounded-3xl p-8 bg-purple relative overflow-hidden">
