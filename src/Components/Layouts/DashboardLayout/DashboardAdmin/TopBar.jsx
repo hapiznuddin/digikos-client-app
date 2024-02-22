@@ -117,7 +117,7 @@ export default function TopBar({ showNav, setShowNav, title }) {
                 Ubah Password
               </ButtonPrimary>
               <dialog id="my_modal_4" className="modal">
-                <ChangePasswordModal/>
+                <ChangePasswordModal />
               </dialog>
             </div>
           </div>

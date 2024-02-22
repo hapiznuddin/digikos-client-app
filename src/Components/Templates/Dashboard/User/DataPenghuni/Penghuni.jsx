@@ -165,6 +165,18 @@ const Penghuni = forwardRef((props, ref) => {
                 <div className="skeleton h-4 w-96"></div>
               ) : (
                 <>
+                  <p className="w-1/3 lg:w-40">Jangka Pembayaran</p>
+                  <p className="w-2/3">
+                    : {getOccupant.payment_term === 'bulan' ? 'Perbulan' : getOccupant.payment_term === '6 bulan' ? 'Per 6 Bulan' : 'Pertahun'}
+                  </p>
+                </>
+              )}
+            </div>
+            <div className="flex w-full font-medium text-sm md:text-base">
+            {isLoadingOccupant ? (
+                <div className="skeleton h-4 w-96"></div>
+              ) : (
+                <>
                   <p className="w-1/3 lg:w-40">Tanggal Masuk</p>
                   <p className="w-2/3">
                     : {formatDate(getOccupant.start_date)}

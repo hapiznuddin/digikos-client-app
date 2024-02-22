@@ -170,6 +170,18 @@ const DetailPenghuni = forwardRef((props, ref) => {
               </div>
             ) : null}
             <div className="flex w-full font-medium text-sm md:text-base">
+            {isLoading ? (
+                <div className="skeleton h-4 w-96"></div>
+              ) : (
+                <>
+                  <p className="w-1/3 lg:w-40">Jangka Pembayaran</p>
+                  <p className="w-2/3">
+                    : {data?.data?.payment_term === 'bulan' ? 'Perbulan' : data?.data?.payment_term === '6 bulan' ? 'Per 6 Bulan' : 'Pertahun'}
+                  </p>
+                </>
+              )}
+            </div>
+            <div className="flex w-full font-medium text-sm md:text-base">
               {isLoading ? (
                 <Skeleton height="25px" w={"300px"} />
               ) : (

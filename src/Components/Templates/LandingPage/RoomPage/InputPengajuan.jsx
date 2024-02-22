@@ -109,6 +109,7 @@ const InputPengajuan = ({ hargaKamar }) => {
   });
 
   const { start_date, number_room, payment_term, floor } = formik.errors;
+  console.log(formik.values);  
 
   return (
     <>

@@ -169,19 +169,22 @@ const DetailTipeKamar = forwardRef((props, ref) => {
               )}
             </div>
             <div className="flex gap-4 my-8">
-              <ButtonPrimary className="btn btn-sm md:btn-md w-1/2 h-full font-medium text-xs md:text-sm bg-error-600 hover:bg-error-700 active:bg-error-800"
-              onClick={() => Swal.fire({
-                text: "Apakah Anda Yakin Ingin Menghapus Tipe Kamar?",
-                icon: "warning",
-                showCancelButton: true,
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Hapus",
-                cancelButtonText: "Batal"
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  mutate({id:idParams})
+              <ButtonPrimary
+                className="btn btn-sm md:btn-md w-1/2 h-full font-medium text-xs md:text-sm bg-error-600 hover:bg-error-700 active:bg-error-800"
+                onClick={() =>
+                  Swal.fire({
+                    text: "Apakah Anda Yakin Ingin Menghapus Tipe Kamar?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      mutate({ id: idParams });
+                    }
+                  })
                 }
-              })}
                 // onClick={() => mutate({id:idParams})}
               >
                 Hapus Data Kamar
@@ -208,11 +211,17 @@ const DetailTipeKamar = forwardRef((props, ref) => {
               <ButtonPrimary
                 className="btn btn-sm md:btn-md w-40 font-medium text-sm"
                 onClick={() =>
-                  document.getElementById("my_modal_4").showModal()
+                  document.getElementById("my_modal_2").showModal()
                 }
               >
                 Edit Gambar
               </ButtonPrimary>
+              <dialog id="my_modal_2" className="modal">
+                <EditGambarKamar id={idParams} />
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
             </div>
             <div className="flex flex-col w-full gap-4 p-4 rounded-2xl border border-neutral-200">
               <div className="w-full h-96 bg-neutral-300 rounded-xl">
@@ -223,7 +232,7 @@ const DetailTipeKamar = forwardRef((props, ref) => {
                   />
                 ) : data?.data.images[1]?.path === undefined ? (
                   <div className="flex w-full h-full rounded-xl bg-neutral-300 justify-center items-center">
-                    <p>Untuk menambahkan gamabr silahkan klik Edit Gambar</p>
+                    <p>Untuk menambahkan gambar silahkan klik Edit Gambar</p>
                   </div>
                 ) : (
                   <Link

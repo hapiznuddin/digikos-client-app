@@ -272,7 +272,7 @@ function formatDate(inputDate) {
                 )}
               </div>
               <div className="divider -my-4" />
-              <ButtonPrimary className="text-sm md:text-lg font-medium" disabled={`${rent.status_id === 2 || rent.status_id === 4 || rent.status_id === 5 ? 'disabled': ''}`} onClick={() => mutate({price: rent.total_payment,
+              <ButtonPrimary className="text-sm md:text-lg font-medium" disabled={`${rent.status_id === 2 || rent.status_id === 4 || rent.status_id === 6 ? 'disabled': ''}`} onClick={() => mutate({price: rent.total_payment,
           room_id: rent.room_id,
           rent_id: rent.id,
           occupant_id: rent.occupant_id})} >{rent.status_id === 5 ? 'Silahkan Check In' : 'Bayar Sekarang'}</ButtonPrimary>

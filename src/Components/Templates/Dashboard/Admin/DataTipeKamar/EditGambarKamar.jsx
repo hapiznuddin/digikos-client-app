@@ -96,9 +96,8 @@ const EditGambarKamar = ({ id }) => {
   });
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      
-      <div className="flex flex-col md:flex-row w-full justify-between md:items-center">
+    <div className="modal-box w-11/12 max-w-5xl overflow-auto">
+      <div className="flex flex-col mb-8 md:flex-row w-full justify-between md:items-center">
         <div className="flex flex-col">
           <h1 className="text-neutral-800 mb-4 text-lg md:text-xl font-semibold">
             Edit Gambar Kamar

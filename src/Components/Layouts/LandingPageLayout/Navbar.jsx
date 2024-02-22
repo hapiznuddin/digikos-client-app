@@ -226,7 +226,7 @@ const Navbar = ({
                     </Link>
                   </li>
                   <li className="text-base font-medium">
-                    {statusData?.data[0]?.status_id === 5  ? (
+                    {statusData?.data[0]?.status_id === 6  ? (
                       <Link to={`/user/dashboard/${userData?.data.user_id}`}>
                         <RxDashboard size={24} />
                         <p>Dashboard</p>

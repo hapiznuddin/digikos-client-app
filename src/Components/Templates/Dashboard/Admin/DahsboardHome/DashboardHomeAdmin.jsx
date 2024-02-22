@@ -40,6 +40,23 @@ const DashboardHomeAdmin = () => {
             <TbHome className="absolute -bottom-3 -right-6 text-[#037DB2] text-8xl md:text-9xl"/>
           </div>
         </div>
+        <div className="flex flex-col md:flex-row w-full gap-4 md:gap-6">
+          <div className="flex flex-col justify-center w-full md:w-1/2 h-32 rounded-3xl p-8 bg-error relative overflow-hidden">
+            {isLoading ? (<span className="loading loading-dots loading-lg bg-neutral-25"></span>) :(<h1 className="text-neutral-25 text-2xl font-medium">{data.total_monthly}</h1>)}
+            <p className="text-neutral-25 text-lg font-medium">Pembayaran Perbulan</p>
+            {/* <MdAddHome className="absolute -bottom-2 -right-2 text-[#089A95] text-8xl md:text-9xl"/> */}
+          </div>
+          <div className="flex flex-col justify-center p-8 w-full md:w-1/2 h-32 rounded-3xl bg-warning relative overflow-hidden">
+          {isLoading ? (<span className="loading loading-dots loading-lg bg-neutral-25"></span>) :(<h1 className="text-neutral-25 text-2xl font-medium">{data.total_6_month}</h1>)}
+            <p className="text-neutral-25 text-lg font-medium">Pembayaran Per 6 Bulan</p>
+            {/* <TbHome className="absolute -bottom-3 -right-6 text-[#037DB2] text-8xl md:text-9xl"/> */}
+          </div>
+          <div className="flex flex-col justify-center p-8 w-full md:w-1/2 h-32 rounded-3xl bg-success relative overflow-hidden">
+          {isLoading ? (<span className="loading loading-dots loading-lg bg-neutral-25"></span>) :(<h1 className="text-neutral-25 text-2xl font-medium">{data.total_yearly}</h1>)}
+            <p className="text-neutral-25 text-lg font-medium">Pembayaran Pertahun</p>
+            {/* <TbHome className="absolute -bottom-3 -right-6 text-[#037DB2] text-8xl md:text-9xl"/> */}
+          </div>
+        </div>
       </div>
         <InvoiceTable/>
     </AdminLayout>

@@ -7,19 +7,17 @@ import { useEffect, useState } from "react";
 // import { DataNameEmailApi } from "../../../services/authApi.services";
 // import { useEffect, useState } from "react";
 
-
 export default function TopBar({ showNav, setShowNav, title }) {
   const name = Cookies.get("name");
   const token = Cookies.get("token");
   const [img, setImg] = useState(false);
 
-
   TopBar.propTypes = {
     showNav: PropTypes.bool,
-    setShowNav : PropTypes.func,
-    title: PropTypes.string
+    setShowNav: PropTypes.func,
+    title: PropTypes.string,
   };
-  
+
   const { data } = useGetProfilePic({
     token,
   });
@@ -35,44 +33,48 @@ export default function TopBar({ showNav, setShowNav, title }) {
 
   return (
     <>
-    <div
-      className={`fixed w-full bg-slate-50/30 backdrop-blur shadow-sm h-16 flex justify-between items-center transition-all duration-[400ms] z-10 ${
-        showNav ? "pl-56" : ""
-      }`}
-    ></div>
-    <div
-      className={`fixed w-full h-16 flex justify-between items-center transition-all z-10 duration-[400ms] ${
-        showNav ? "pl-56" : ""
-      }`}
-    >
-      <div className="flex items-center gap-4 pl-4 md:pl-12 ">
-        <BiMenu
-          className="h-8 w-8 text-gray-700 cursor-pointer rounded-full hover:bg-blue-100"
-          onClick={() => setShowNav(!showNav)}
-        />
-        <h1 className="md:text-xl font-semibold text-gray-600">{title}</h1>
-      </div>
-      <div className="flex items-center pr-4 md:pr-12">
-        <Menu as="div" className="relative inline-block text-left pr-3">
-          <div>
-            <div className="inline-flex w-full justify-center gap-4 items-center">
-            <div className="avatar">
-                      <div className="w-9 rounded-full">
-                        <img
-                          src= {img ? imgProfilePic : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"}
-                        />
-                      </div>
-                    </div>
-                
-              <span className="hidden md:block text-lg font-medium text-gray-800 ">
-              {name}
-              </span>
-              {/* <AiOutlineUser className="ml-2 h-4 w-4 text-gray-700" /> */}
+      <div
+        className={`fixed w-full bg-slate-50/30 backdrop-blur shadow-sm h-16 flex justify-between items-center transition-all duration-[400ms] z-10 ${
+          showNav ? "pl-56" : ""
+        }`}
+      ></div>
+      <div
+        className={`fixed w-full h-16 flex justify-between items-center transition-all z-10 duration-[400ms] ${
+          showNav ? "pl-56" : ""
+        }`}
+      >
+        <div className="flex items-center gap-4 pl-4 md:pl-12 ">
+          <BiMenu
+            className="h-8 w-8 text-gray-700 cursor-pointer rounded-full hover:bg-blue-100"
+            onClick={() => setShowNav(!showNav)}
+          />
+          <h1 className="md:text-xl font-semibold text-gray-600">{title}</h1>
+        </div>
+        <div className="flex items-center pr-4 md:pr-12">
+          <Menu as="div" className="relative inline-block text-left pr-3">
+            <div>
+              <div className="inline-flex w-full justify-center gap-4 items-center">
+                <div className="avatar">
+                  <div className="w-9 rounded-full">
+                    <img
+                      src={
+                        img
+                          ? imgProfilePic
+                          : "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                      }
+                    />
+                  </div>
+                </div>
+
+                <span className="hidden md:block text-lg font-medium text-gray-800 ">
+                  {name}
+                </span>
+                {/* <AiOutlineUser className="ml-2 h-4 w-4 text-gray-700" /> */}
+              </div>
             </div>
-          </div>
-        </Menu>
+          </Menu>
+        </div>
       </div>
-    </div>
     </>
   );
 }
